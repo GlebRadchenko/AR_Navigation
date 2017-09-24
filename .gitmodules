@@ -1,0 +1,6 @@
+[submodule "MenuContainer"]
+	path = MenuContainer
+	url = https://github.com/GlebRadchenko/MenuContainer.git
+[submodule "JsonMapper"]
+	path = JsonMapper
+	url = https://github.com/GlebRadchenko/JsonMapper.git
