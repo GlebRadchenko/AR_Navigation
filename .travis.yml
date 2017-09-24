@@ -1,4 +1,4 @@
 
 language: objective-c
 osx_image: xcode9
-script: xcodebuild clean build -project AR_Navigation/AR_Navigation.xcodeproj
+script: xcodebuild clean build -project AR_Navigation.xcodeproj
