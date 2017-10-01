@@ -15,9 +15,9 @@ class MapViewPresenter: NSObject, Presenter {
     typealias Router = MapViewRouterInput
     typealias Interactor = MapViewInteractorInput
     
-    weak var view: View!
-    var router: Router!
     var interactor: Interactor!
+    var router: Router!
+    weak var view: View!
     
     var state: MapState = .pin
 }

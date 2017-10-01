@@ -6,4 +6,19 @@
 //  Copyright © 2017 Gleb Radchenko. All rights reserved.
 //
 
-import Foundation
+import ARKit
+import SceneKit
+
+protocol ARViewInteractorInput: class {
+    
+}
+
+protocol ARViewInteractorOutput: class {
+    
+}
+
+class ARViewInteractor: ARViewInteractorInput, Interactor {
+    typealias Presenter = ARViewInteractorOutput
+    
+    weak var output: Presenter!
+}

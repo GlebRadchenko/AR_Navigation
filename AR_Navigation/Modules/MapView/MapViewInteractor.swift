@@ -18,8 +18,9 @@ protocol MapViewInteractorOutput: class {
     
 }
 
-class MapViewInteractor: MapViewInteractorInput {
-    weak var output: MapViewInteractorOutput!
+class MapViewInteractor: MapViewInteractorInput, Interactor {
+    typealias Presenter = MapViewInteractorOutput
+    weak var output: Presenter!
     
     init() {
         

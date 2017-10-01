@@ -12,7 +12,6 @@
 		F77B326A1F78183A004259B8 /* JsonMapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F77B32641F781827004259B8 /* JsonMapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F77B327B1F782234004259B8 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77B327A1F782234004259B8 /* ARViewController.swift */; };
 		F77B327F1F7822D6004259B8 /* AR.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F77B327E1F7822D6004259B8 /* AR.storyboard */; };
-		F77DF69E1F780EFA00E4EC42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77DF69D1F780EFA00E4EC42 /* AppDelegate.swift */; };
 		F77DF6B51F780EFB00E4EC42 /* AR_NavigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77DF6B41F780EFB00E4EC42 /* AR_NavigationTests.swift */; };
 		F77DF6CC1F7810EF00E4EC42 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F77DF6C11F7810EE00E4EC42 /* Assets.xcassets */; };
 		F77DF6CF1F7810EF00E4EC42 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F77DF6C81F7810EE00E4EC42 /* LaunchScreen.storyboard */; };
@@ -20,7 +19,11 @@
 		F79F163F1F81117000B6ABF6 /* ARViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79F163E1F81117000B6ABF6 /* ARViewPresenter.swift */; };
 		F79F16441F81117D00B6ABF6 /* ARViewInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79F16431F81117D00B6ABF6 /* ARViewInteractor.swift */; };
 		F79F16461F81118800B6ABF6 /* ARViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79F16451F81118800B6ABF6 /* ARViewRouter.swift */; };
-		F7C92BF71F80D72F00A5A2F5 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C92BF61F80D72F00A5A2F5 /* MapViewController.swift */; };
+		F79F16481F81132700B6ABF6 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79F16471F81132700B6ABF6 /* Router.swift */; };
+		F79F164A1F81133600B6ABF6 /* Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79F16491F81133600B6ABF6 /* Interactor.swift */; };
+		F79F164C1F81134700B6ABF6 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79F164B1F81134700B6ABF6 /* View.swift */; };
+		F79F164F1F811AED00B6ABF6 /* ApplicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79F164E1F811AED00B6ABF6 /* ApplicationManager.swift */; };
+		F7C92BF71F80D72F00A5A2F5 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C92BF61F80D72F00A5A2F5 /* MapView.swift */; };
 		F7C92BF91F80D75300A5A2F5 /* MapView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7C92BF81F80D75300A5A2F5 /* MapView.storyboard */; };
 		F7C92BFB1F80E59700A5A2F5 /* MapViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C92BFA1F80E59700A5A2F5 /* MapViewPresenter.swift */; };
 		F7C92BFD1F80E5E900A5A2F5 /* MapViewInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C92BFC1F80E5E900A5A2F5 /* MapViewInteractor.swift */; };
@@ -96,7 +99,6 @@
 		F77B327A1F782234004259B8 /* ARViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
 		F77B327E1F7822D6004259B8 /* AR.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AR.storyboard; sourceTree = "<group>"; };
 		F77DF69A1F780EFA00E4EC42 /* AR_Navigation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AR_Navigation.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		F77DF69D1F780EFA00E4EC42 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F77DF6B01F780EFB00E4EC42 /* AR_NavigationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AR_NavigationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F77DF6B41F780EFB00E4EC42 /* AR_NavigationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AR_NavigationTests.swift; sourceTree = "<group>"; };
 		F77DF6B61F780EFB00E4EC42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -107,7 +109,11 @@
 		F79F163E1F81117000B6ABF6 /* ARViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewPresenter.swift; sourceTree = "<group>"; };
 		F79F16431F81117D00B6ABF6 /* ARViewInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewInteractor.swift; sourceTree = "<group>"; };
 		F79F16451F81118800B6ABF6 /* ARViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewRouter.swift; sourceTree = "<group>"; };
-		F7C92BF61F80D72F00A5A2F5 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		F79F16471F81132700B6ABF6 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		F79F16491F81133600B6ABF6 /* Interactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interactor.swift; sourceTree = "<group>"; };
+		F79F164B1F81134700B6ABF6 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		F79F164E1F811AED00B6ABF6 /* ApplicationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationManager.swift; sourceTree = "<group>"; };
+		F7C92BF61F80D72F00A5A2F5 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		F7C92BF81F80D75300A5A2F5 /* MapView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MapView.storyboard; sourceTree = "<group>"; };
 		F7C92BFA1F80E59700A5A2F5 /* MapViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewPresenter.swift; sourceTree = "<group>"; };
 		F7C92BFC1F80E5E900A5A2F5 /* MapViewInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewInteractor.swift; sourceTree = "<group>"; };
@@ -159,7 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				F7C92C001F80E81700A5A2F5 /* Basic */,
-				F7C92BF21F80D71000A5A2F5 /* MapViewController */,
+				F7C92BF21F80D71000A5A2F5 /* MapView */,
 				F77B32791F782221004259B8 /* AR */,
 			);
 			path = Modules;
@@ -200,6 +206,7 @@
 		F77DF69C1F780EFA00E4EC42 /* AR_Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				F79F164D1F811AC200B6ABF6 /* Application */,
 				F7C92C0A1F80ED6E00A5A2F5 /* Extensions */,
 				F7C92C0B1F80ED6E00A5A2F5 /* Protocols */,
 				F77B32731F781DB2004259B8 /* Modules */,
@@ -208,7 +215,6 @@
 				F77DF6C01F7810EE00E4EC42 /* Resources */,
 				F77DF6C71F7810EE00E4EC42 /* Storyboards */,
 				F77DF6C41F7810EE00E4EC42 /* Views */,
-				F77DF69D1F780EFA00E4EC42 /* AppDelegate.swift */,
 			);
 			path = AR_Navigation;
 			sourceTree = "<group>";
@@ -272,16 +278,24 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		F7C92BF21F80D71000A5A2F5 /* MapViewController */ = {
+		F79F164D1F811AC200B6ABF6 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				F79F164E1F811AED00B6ABF6 /* ApplicationManager.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		F7C92BF21F80D71000A5A2F5 /* MapView */ = {
 			isa = PBXGroup;
 			children = (
 				F7C92BF81F80D75300A5A2F5 /* MapView.storyboard */,
-				F7C92BF61F80D72F00A5A2F5 /* MapViewController.swift */,
+				F7C92BF61F80D72F00A5A2F5 /* MapView.swift */,
 				F7C92BFA1F80E59700A5A2F5 /* MapViewPresenter.swift */,
 				F7C92BFC1F80E5E900A5A2F5 /* MapViewInteractor.swift */,
 				F7C92BFE1F80E5FF00A5A2F5 /* MapViewRouter.swift */,
 			);
-			path = MapViewController;
+			path = MapView;
 			sourceTree = "<group>";
 		};
 		F7C92C001F80E81700A5A2F5 /* Basic */ = {
@@ -289,6 +303,9 @@
 			children = (
 				F7C92C011F80E82300A5A2F5 /* Module.swift */,
 				F7C92C031F80E85400A5A2F5 /* Presenter.swift */,
+				F79F16471F81132700B6ABF6 /* Router.swift */,
+				F79F16491F81133600B6ABF6 /* Interactor.swift */,
+				F79F164B1F81134700B6ABF6 /* View.swift */,
 			);
 			path = Basic;
 			sourceTree = "<group>";
@@ -468,24 +485,27 @@
 			files = (
 				F7C92C041F80E85400A5A2F5 /* Presenter.swift in Sources */,
 				F7C92C351F80FCF900A5A2F5 /* FloatingPoint+Extensions.swift in Sources */,
+				F79F164A1F81133600B6ABF6 /* Interactor.swift in Sources */,
 				F7C92C0D1F80ED7F00A5A2F5 /* Reusable.swift in Sources */,
 				F7C92C291F80F32700A5A2F5 /* NSAttributedString+Extensions.swift in Sources */,
 				F7C92C081F80ED2300A5A2F5 /* MapActionCollectionViewCell.swift in Sources */,
 				F7C92BFB1F80E59700A5A2F5 /* MapViewPresenter.swift in Sources */,
 				F7C92C3C1F81054D00A5A2F5 /* UIView+Extensions.swift in Sources */,
 				F7C92BFF1F80E5FF00A5A2F5 /* MapViewRouter.swift in Sources */,
+				F79F164C1F81134700B6ABF6 /* View.swift in Sources */,
 				F79F163F1F81117000B6ABF6 /* ARViewPresenter.swift in Sources */,
-				F77DF69E1F780EFA00E4EC42 /* AppDelegate.swift in Sources */,
+				F79F16481F81132700B6ABF6 /* Router.swift in Sources */,
 				F77B327B1F782234004259B8 /* ARViewController.swift in Sources */,
 				F7C92C311F80F92B00A5A2F5 /* BottomSlideContainer.swift in Sources */,
 				F79F16461F81118800B6ABF6 /* ARViewRouter.swift in Sources */,
 				F79F16441F81117D00B6ABF6 /* ARViewInteractor.swift in Sources */,
 				F7C92C3A1F80FDCF00A5A2F5 /* ARSceneViewManager.swift in Sources */,
+				F79F164F1F811AED00B6ABF6 /* ApplicationManager.swift in Sources */,
 				F71033F81F80CBE90074F6E8 /* NavigationManager.swift in Sources */,
 				F7C92C021F80E82300A5A2F5 /* Module.swift in Sources */,
 				F7C92C151F80EF4000A5A2F5 /* UICollectionView+Reusable.swift in Sources */,
 				F7C92BFD1F80E5E900A5A2F5 /* MapViewInteractor.swift in Sources */,
-				F7C92BF71F80D72F00A5A2F5 /* MapViewController.swift in Sources */,
+				F7C92BF71F80D72F00A5A2F5 /* MapView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

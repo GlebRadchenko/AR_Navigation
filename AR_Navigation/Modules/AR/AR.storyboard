@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Initial View Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
                 <viewController id="BV1-FR-VrT" customClass="ARViewController" customModule="AR_Navigation" customModuleProvider="target" sceneMemberID="viewController">
@@ -21,7 +21,13 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
+                <customObject id="Bnj-e6-Ax3" customClass="ApplicationManager" customModule="AR_Navigation" customModuleProvider="target">
+                    <connections>
+                        <outlet property="initialViewController" destination="BV1-FR-VrT" id="RBO-a2-B5m"/>
+                    </connections>
+                </customObject>
             </objects>
+            <point key="canvasLocation" x="6" y="-27"/>
         </scene>
     </scenes>
 </document>

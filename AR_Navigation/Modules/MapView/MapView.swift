@@ -25,7 +25,8 @@ protocol MapViewViewOutput: class, UITextFieldDelegate {
     func handleGoAction()
 }
 
-class MapViewController: UIViewController {
+class MapViewController: UIViewController, View {
+    static var storyboardName: String { return "MapView" }
     
     @IBOutlet weak var mapView: MKMapView!
     

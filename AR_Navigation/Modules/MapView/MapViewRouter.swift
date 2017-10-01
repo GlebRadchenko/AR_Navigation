@@ -13,15 +13,12 @@ protocol MapViewRouterInput {
     
 }
 
-enum MapViewRouterError: Error {
-    case wrongView
-}
-
-class MapViewRouter: MapViewRouterInput {
+class MapViewRouter: MapViewRouterInput, Router {
+    typealias ModuleView = MapViewController
     
     static func module() throws -> Module {
-        guard let view = UIStoryboard(name: "MapView", bundle: nil).instantiateInitialViewController() as? MapViewController else {
-            throw MapViewRouterError.wrongView
+        guard let view = UIStoryboard(name: ModuleView.storyboardName, bundle: nil).instantiateInitialViewController() as? ModuleView else {
+            throw RouterError.wrongView
         }
         
         let presenter = MapViewPresenter()
@@ -39,3 +36,4 @@ class MapViewRouter: MapViewRouterInput {
         return Module(view: view, input: presenter)
     }
 }
+

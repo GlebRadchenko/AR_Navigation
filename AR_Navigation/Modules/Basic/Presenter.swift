@@ -11,12 +11,12 @@ import UIKit
 
 protocol ModuleInput { }
 
-protocol Presenter: ModuleInput {
+protocol Presenter: class, ModuleInput {
     associatedtype View
     associatedtype Router
     associatedtype Interactor
     
-    var view: View! { get }
-    var interactor: Interactor! { get }
-    var router: Router! { get }
+    var view: View! { get set }
+    var interactor: Interactor! { get set }
+    var router: Router! { get set }
 }

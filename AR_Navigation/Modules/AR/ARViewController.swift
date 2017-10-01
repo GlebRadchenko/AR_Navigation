@@ -10,20 +10,28 @@ import UIKit
 import SceneKit
 import ARKit
 
-class ARViewController: UIViewController {
+protocol ARViewViewInput: class {
+    
+}
+
+protocol ARViewViewOutput: class {
+    
+}
+
+class ARViewController: UIViewController, View {
+    static var storyboardName: String { return "AR" }
     
     @IBOutlet var sceneView: ARSCNView!
     weak var slideContainer: BottomSlideContainer!
     var slideContainerTopConstraint: NSLayoutConstraint!
     
-    var mapModule: Module!
+    var output: ARViewViewOutput!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         UIApplication.shared.isIdleTimerDisabled = true
         setupBottomContainer()
-        loadMapModule()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -37,16 +45,11 @@ class ARViewController: UIViewController {
     }
 }
 
-extension ARViewController {
-    func loadMapModule() {
-        do {
-            mapModule = try MapViewRouter.module()
-            slideContainer.embed(viewController: mapModule.view, caller: self)
-        } catch {
-            debugPrint(error)
-        }
-    }
+extension ARViewController: ARViewViewInput {
     
+}
+
+extension ARViewController {
     func setupBottomContainer() {
         let container = BottomSlideContainer(topViewHeight: 30)
         container.translatesAutoresizingMaskIntoConstraints = false

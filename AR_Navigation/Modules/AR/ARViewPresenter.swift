@@ -6,4 +6,23 @@
 //  Copyright © 2017 Gleb Radchenko. All rights reserved.
 //
 
-import Foundation
+import ARKit
+import SceneKit
+
+class ARViewPresenter: NSObject, Presenter {
+    typealias View = ARViewViewInput
+    typealias Router = ARViewRouterInput
+    typealias Interactor = ARViewInteractorInput
+    
+    weak var view: View!
+    var interactor: Interactor!
+    var router: Router!
+}
+
+extension ARViewPresenter: ARViewViewOutput {
+    
+}
+
+extension ARViewPresenter: ARViewInteractorOutput {
+    
+}
