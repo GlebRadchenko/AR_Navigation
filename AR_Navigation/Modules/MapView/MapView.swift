@@ -11,6 +11,11 @@ import MapKit
 import CoreLocation
 
 protocol MapViewViewInput: class {
+    var mapView: MKMapView! { get }
+    
+    func endEditing()
+    func type(for textField: UITextField) -> TextFieldType
+    
     func updateViews(for state: MapState, animated: Bool)
     func updateActions(with items: [MapActionDisplayable])
     
@@ -23,6 +28,9 @@ protocol MapViewViewOutput: class, UITextFieldDelegate {
     
     func handleActionSelection(at index: Int)
     func handleGoAction()
+    func handleLocationAction()
+    
+    func textFieldDidChange(_ textFieldType: TextFieldType, text: String)
 }
 
 class MapViewController: UIViewController, View {
@@ -64,27 +72,65 @@ class MapViewController: UIViewController, View {
     func configureTextFields() {
         firstTextField.delegate = output
         secondTextField.delegate = output
+        
+        firstTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        secondTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
     func configureCollectionView() {
+        actionsCollectionView.backgroundColor = .clear
         actionsCollectionView.register(MapActionCollectionViewCell.self)
     }
     
     func configureMapView() {
-        
+        mapView.showsScale = true
+        mapView.showsCompass = true
+        mapView.showsBuildings = true
+        mapView.showsPointsOfInterest = true
+        mapView.showsUserLocation = true
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        output.textFieldDidChange(type(for: textField), text: textField.text ?? "")
     }
     
     @IBAction func goButtonTouched(_ sender: UIButton) {
-        
+        output.handleGoAction()
     }
+    
+    @IBAction func locationButtonTouched(_ sender: UIButton) {
+        output.handleLocationAction()
+    }
+}
+
+enum TextFieldType {
+    case source
+    case destination
+    case unknown
 }
 
 extension MapViewController: MapViewViewInput {
     
+    func endEditing() {
+        view.endEditing(true)
+    }
+    
+    func type(for textField: UITextField) -> TextFieldType {
+        if textField == firstTextField {
+            return .source
+        }
+        
+        if textField == secondTextField {
+            return .destination
+        }
+        
+        return .unknown
+    }
+    
     func updateViews(for state: MapState, animated: Bool) {
         visualEffectTopConstraint.constant = state.shouldDisplaySearchPanel
             ? 0
-            : -35
+            : -BottomSlideContainer.topViewHeight
         
         secondContainerView.isHidden = !state.bothTextFieldsAreDisplayed
         
@@ -106,7 +152,7 @@ extension MapViewController: MapViewViewInput {
     }
     
     func updateActions(with items: [MapActionDisplayable]) {
-        self.actions = items
+        actions = items
         actionsCollectionView.reloadData()
     }
     

@@ -12,7 +12,11 @@ import ARKit
 
 protocol ARViewViewInput: class {
     var sceneView: ARSCNView! { get }
+    
+    func endEditing()
     func embedToContainer(viewController: UIViewController)
+    func toggleContainer(open: Bool, animated: Bool)
+    func updateViews(for keyboardFrame: CGRect?, duration: TimeInterval)
 }
 
 protocol ARViewViewOutput: class {
@@ -53,20 +57,27 @@ class ARViewController: UIViewController, View {
     }
     
     func addGestureRecognizers() {
-        let viewTap = UITapGestureRecognizer(target: self, action: #selector(handleViewTap(tap:)))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleViewTap(tap:)))
         let pan = UIPanGestureRecognizer(target: self, action: #selector(handleContainerPan(pan:)))
         
-        view.addGestureRecognizer(viewTap)
+        slideContainer.topView.addGestureRecognizer(tap)
         slideContainer.addGestureRecognizer(pan)
     }
     
     @objc func handleViewTap(tap: UITapGestureRecognizer) {
-        print(tap)
+        view.endEditing(true)
+        
+        switch containerState {
+        case .presented: toggleContainer(open: false, animated: true)
+        case .hidden: toggleContainer(open: true, animated: true)
+        default: break
+        }
     }
     
     fileprivate var yTranslation: CGFloat = 0.0
     fileprivate var containerWasOpened: Bool = false
     fileprivate var previousStopFactor: CGFloat = 1
+    fileprivate var keyboardHeight: CGFloat = 0
     
     @objc func handleContainerPan(pan: UIPanGestureRecognizer) {
         switch pan.state {
@@ -84,12 +95,33 @@ class ARViewController: UIViewController, View {
             slideContainer(with: yTranslation, velocity: pan.velocity(in: view).y)
             self.yTranslation = yTranslation
         default:
+            view.endEditing(true)
             completeSliding(with: yTranslation)
         }
     }
 }
 
 extension ARViewController: ARViewViewInput {
+    func endEditing() {
+        view.endEditing(true)
+    }
+    
+    func updateViews(for keyboardFrame: CGRect?, duration: TimeInterval) {
+        let initialTranslation = containerState == .presented ? containerHeight() : BottomSlideContainer.topViewHeight
+        
+        if let keyboardFrame = keyboardFrame {
+            keyboardHeight = keyboardFrame.height
+            slideContainerTopConstraint.constant = -(initialTranslation + keyboardFrame.height)
+        } else {
+            keyboardHeight = 0
+            slideContainerTopConstraint.constant = -initialTranslation
+        }
+        
+        UIView.animate(withDuration: duration) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
     func embedToContainer(viewController: UIViewController) {
         slideContainer.embed(viewController: viewController, caller: self)
     }
@@ -104,14 +136,14 @@ enum SlideContainerState {
 //MARK: - Container Setuping and Managing
 extension ARViewController {
     func setupBottomContainer() {
-        let container = BottomSlideContainer(topViewHeight: 30)
+        let container = BottomSlideContainer(topViewHeight: BottomSlideContainer.topViewHeight)
         container.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(container)
         
         container.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         container.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        container.heightAnchor.constraint(equalTo: container.widthAnchor, multiplier: 1 / .goldenSection, constant: 30).isActive = true
-        slideContainerTopConstraint = container.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -30)
+        container.heightAnchor.constraint(equalTo: container.widthAnchor, multiplier: 1 / .goldenSection, constant: BottomSlideContainer.topViewHeight).isActive = true
+        slideContainerTopConstraint = container.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -BottomSlideContainer.topViewHeight)
         slideContainerTopConstraint.isActive = true
         
         self.slideContainer = container
@@ -119,15 +151,15 @@ extension ARViewController {
     
     func slideContainer(with translation: CGFloat, velocity: CGFloat) {
         if velocity == 0 { return }
-        let initialTranslation = containerWasOpened ? containerHeight() : 30
+        let initialTranslation = (containerWasOpened ? containerHeight() : BottomSlideContainer.topViewHeight) + keyboardHeight
         var translation = translation
         
         if containerWasOpened && translation < 0 {
             translation = translation * previousStopFactor
-            previousStopFactor *= 0.9
+            previousStopFactor *= 0.99
         } else if !containerWasOpened && translation < -containerHeight() {
             translation = translation * previousStopFactor
-            previousStopFactor *= 0.9
+            previousStopFactor *= 0.99
         }
         
         moveContainer(yTranslation: translation - initialTranslation)
@@ -141,13 +173,13 @@ extension ARViewController {
         previousStopFactor = 1
         
         if containerWasOpened {
-            if yTranslation > 30 {
+            if yTranslation > BottomSlideContainer.topViewHeight {
                 toggleContainer(open: false, animated: true)
             } else {
                 toggleContainer(open: true, animated: true)
             }
         } else {
-            if yTranslation < -30 {
+            if yTranslation < -BottomSlideContainer.topViewHeight {
                 toggleContainer(open: true, animated: true)
             } else {
                 toggleContainer(open: false, animated: true)
@@ -156,15 +188,15 @@ extension ARViewController {
     }
     
     func toggleContainer(open: Bool, animated: Bool) {
-        let constant = open ? -containerHeight() : -30
-        moveContainer(yTranslation: constant)
+        let constant = (open ? containerHeight() : BottomSlideContainer.topViewHeight) + keyboardHeight
+        moveContainer(yTranslation: -constant)
         containerState = open ? .presented : .hidden
         
         if animated {
             var options: UIViewAnimationOptions = [.beginFromCurrentState]
             open ? options.formUnion(.curveEaseIn) : options.formUnion(.curveEaseOut)
             
-            UIView.animate(withDuration: 0.5,
+            UIView.animate(withDuration: 0.2,
                            delay: 0,
                            options: options,
                            animations: { self.view.layoutIfNeeded() },
@@ -173,7 +205,7 @@ extension ARViewController {
     }
     
     func containerHeight() -> CGFloat {
-        return view.bounds.width / .goldenSection + 30
+        return view.bounds.width / .goldenSection + BottomSlideContainer.topViewHeight
     }
 }
 

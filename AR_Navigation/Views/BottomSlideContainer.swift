@@ -8,11 +8,14 @@
 
 import UIKit
 class BottomSlideContainer: UIView {
+    static var topViewHeight: CGFloat = 40
+    
     var topViewHeight: CGFloat
     
     weak var containerView: UIView!
+    weak var topView: UIView!
     weak var embededViewController: UIViewController?
-    
+
     init(topViewHeight: CGFloat) {
         self.topViewHeight = topViewHeight
         super.init(frame: .zero)
@@ -21,7 +24,7 @@ class BottomSlideContainer: UIView {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        topViewHeight = 20
+        topViewHeight = BottomSlideContainer.topViewHeight
         super.init(coder: aDecoder)
     }
     
@@ -40,6 +43,7 @@ class BottomSlideContainer: UIView {
         
         caller?.addChildViewController(viewController)
         containerView.embed(other: embedingView)
+        containerView.layoutIfNeeded()
         viewController.didMove(toParentViewController: caller)
     }
 }
@@ -50,13 +54,14 @@ extension BottomSlideContainer {
         topView.backgroundColor = .clear
         topView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(topView)
+        self.topView = topView
         
         [topView.leadingAnchor.constraint(equalTo: leadingAnchor),
          topView.trailingAnchor.constraint(equalTo: trailingAnchor),
          topView.topAnchor.constraint(equalTo: topAnchor),
          topView.heightAnchor.constraint(equalToConstant: topViewHeight)].forEach { $0.isActive = true }
         
-        let accessoryView = UIVisualEffectView(effect: UIBlurEffect(style: .prominent))
+        let accessoryView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
         accessoryView.layer.cornerRadius = 3
         accessoryView.clipsToBounds = true
         accessoryView.translatesAutoresizingMaskIntoConstraints = false
@@ -65,7 +70,7 @@ extension BottomSlideContainer {
         [accessoryView.centerXAnchor.constraint(equalTo: topView.centerXAnchor),
          accessoryView.centerYAnchor.constraint(equalTo: topView.centerYAnchor),
          accessoryView.heightAnchor.constraint(equalToConstant: 6),
-         accessoryView.widthAnchor.constraint(equalToConstant: 30)].forEach { $0.isActive = true }
+         accessoryView.widthAnchor.constraint(equalToConstant: BottomSlideContainer.topViewHeight)].forEach { $0.isActive = true }
         
         let container = UIView()
         container.backgroundColor = .clear
