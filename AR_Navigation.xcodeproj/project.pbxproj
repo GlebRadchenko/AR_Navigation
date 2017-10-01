@@ -7,10 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F71033F81F80CBE90074F6E8 /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71033F71F80CBE90074F6E8 /* NavigationManager.swift */; };
 		F77B32691F78183A004259B8 /* JsonMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F77B32641F781827004259B8 /* JsonMapper.framework */; };
 		F77B326A1F78183A004259B8 /* JsonMapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F77B32641F781827004259B8 /* JsonMapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F77B326D1F78183A004259B8 /* MenuContainer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F77B325A1F78181B004259B8 /* MenuContainer.framework */; };
-		F77B326E1F78183A004259B8 /* MenuContainer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F77B325A1F78181B004259B8 /* MenuContainer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F77B327B1F782234004259B8 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77B327A1F782234004259B8 /* ARViewController.swift */; };
 		F77B327F1F7822D6004259B8 /* AR.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F77B327E1F7822D6004259B8 /* AR.storyboard */; };
 		F77DF69E1F780EFA00E4EC42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77DF69D1F780EFA00E4EC42 /* AppDelegate.swift */; };
@@ -18,23 +17,28 @@
 		F77DF6CC1F7810EF00E4EC42 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F77DF6C11F7810EE00E4EC42 /* Assets.xcassets */; };
 		F77DF6CF1F7810EF00E4EC42 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F77DF6C81F7810EE00E4EC42 /* LaunchScreen.storyboard */; };
 		F77DF70B1F78135300E4EC42 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F77DF70A1F78135300E4EC42 /* MapKit.framework */; };
+		F79F163F1F81117000B6ABF6 /* ARViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79F163E1F81117000B6ABF6 /* ARViewPresenter.swift */; };
+		F79F16441F81117D00B6ABF6 /* ARViewInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79F16431F81117D00B6ABF6 /* ARViewInteractor.swift */; };
+		F79F16461F81118800B6ABF6 /* ARViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79F16451F81118800B6ABF6 /* ARViewRouter.swift */; };
+		F7C92BF71F80D72F00A5A2F5 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C92BF61F80D72F00A5A2F5 /* MapViewController.swift */; };
+		F7C92BF91F80D75300A5A2F5 /* MapView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7C92BF81F80D75300A5A2F5 /* MapView.storyboard */; };
+		F7C92BFB1F80E59700A5A2F5 /* MapViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C92BFA1F80E59700A5A2F5 /* MapViewPresenter.swift */; };
+		F7C92BFD1F80E5E900A5A2F5 /* MapViewInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C92BFC1F80E5E900A5A2F5 /* MapViewInteractor.swift */; };
+		F7C92BFF1F80E5FF00A5A2F5 /* MapViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C92BFE1F80E5FF00A5A2F5 /* MapViewRouter.swift */; };
+		F7C92C021F80E82300A5A2F5 /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C92C011F80E82300A5A2F5 /* Module.swift */; };
+		F7C92C041F80E85400A5A2F5 /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C92C031F80E85400A5A2F5 /* Presenter.swift */; };
+		F7C92C081F80ED2300A5A2F5 /* MapActionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C92C061F80ED2300A5A2F5 /* MapActionCollectionViewCell.swift */; };
+		F7C92C091F80ED2300A5A2F5 /* MapActionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C92C071F80ED2300A5A2F5 /* MapActionCollectionViewCell.xib */; };
+		F7C92C0D1F80ED7F00A5A2F5 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C92C0C1F80ED7F00A5A2F5 /* Reusable.swift */; };
+		F7C92C151F80EF4000A5A2F5 /* UICollectionView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C92C141F80EF4000A5A2F5 /* UICollectionView+Reusable.swift */; };
+		F7C92C291F80F32700A5A2F5 /* NSAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C92C281F80F32700A5A2F5 /* NSAttributedString+Extensions.swift */; };
+		F7C92C311F80F92B00A5A2F5 /* BottomSlideContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C92C301F80F92B00A5A2F5 /* BottomSlideContainer.swift */; };
+		F7C92C351F80FCF900A5A2F5 /* FloatingPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C92C341F80FCF900A5A2F5 /* FloatingPoint+Extensions.swift */; };
+		F7C92C3A1F80FDCF00A5A2F5 /* ARSceneViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C92C391F80FDCF00A5A2F5 /* ARSceneViewManager.swift */; };
+		F7C92C3C1F81054D00A5A2F5 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C92C3B1F81054D00A5A2F5 /* UIView+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		F77B32591F78181B004259B8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F77B32541F78181B004259B8 /* MenuContainer.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F767E9E01F6A9CD100AD3088;
-			remoteInfo = MenuContainer;
-		};
-		F77B325B1F78181B004259B8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F77B32541F78181B004259B8 /* MenuContainer.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F767EA1D1F6AA10F00AD3088;
-			remoteInfo = Test;
-		};
 		F77B32631F781827004259B8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F77B325D1F781827004259B8 /* JsonMapper.xcodeproj */;
@@ -63,13 +67,6 @@
 			remoteGlobalIDString = F7AA56371E86DC9D00709C4C;
 			remoteInfo = JsonMapper;
 		};
-		F77B326F1F78183A004259B8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F77B32541F78181B004259B8 /* MenuContainer.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = F767E9DF1F6A9CD100AD3088;
-			remoteInfo = MenuContainer;
-		};
 		F77DF6B11F780EFB00E4EC42 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F77DF6921F780EFA00E4EC42 /* Project object */;
@@ -87,7 +84,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				F77B326A1F78183A004259B8 /* JsonMapper.framework in Embed Frameworks */,
-				F77B326E1F78183A004259B8 /* MenuContainer.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -95,7 +91,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		F77B32541F78181B004259B8 /* MenuContainer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MenuContainer.xcodeproj; path = MenuContainer/MenuContainer/MenuContainer.xcodeproj; sourceTree = "<group>"; };
+		F71033F71F80CBE90074F6E8 /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
 		F77B325D1F781827004259B8 /* JsonMapper.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JsonMapper.xcodeproj; path = JsonMapper/JsonMapper/JsonMapper.xcodeproj; sourceTree = "<group>"; };
 		F77B327A1F782234004259B8 /* ARViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
 		F77B327E1F7822D6004259B8 /* AR.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AR.storyboard; sourceTree = "<group>"; };
@@ -108,6 +104,25 @@
 		F77DF6C21F7810EE00E4EC42 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F77DF6C91F7810EF00E4EC42 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F77DF70A1F78135300E4EC42 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		F79F163E1F81117000B6ABF6 /* ARViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewPresenter.swift; sourceTree = "<group>"; };
+		F79F16431F81117D00B6ABF6 /* ARViewInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewInteractor.swift; sourceTree = "<group>"; };
+		F79F16451F81118800B6ABF6 /* ARViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewRouter.swift; sourceTree = "<group>"; };
+		F7C92BF61F80D72F00A5A2F5 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		F7C92BF81F80D75300A5A2F5 /* MapView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MapView.storyboard; sourceTree = "<group>"; };
+		F7C92BFA1F80E59700A5A2F5 /* MapViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewPresenter.swift; sourceTree = "<group>"; };
+		F7C92BFC1F80E5E900A5A2F5 /* MapViewInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewInteractor.swift; sourceTree = "<group>"; };
+		F7C92BFE1F80E5FF00A5A2F5 /* MapViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewRouter.swift; sourceTree = "<group>"; };
+		F7C92C011F80E82300A5A2F5 /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
+		F7C92C031F80E85400A5A2F5 /* Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenter.swift; sourceTree = "<group>"; };
+		F7C92C061F80ED2300A5A2F5 /* MapActionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapActionCollectionViewCell.swift; sourceTree = "<group>"; };
+		F7C92C071F80ED2300A5A2F5 /* MapActionCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapActionCollectionViewCell.xib; sourceTree = "<group>"; };
+		F7C92C0C1F80ED7F00A5A2F5 /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
+		F7C92C141F80EF4000A5A2F5 /* UICollectionView+Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Reusable.swift"; sourceTree = "<group>"; };
+		F7C92C281F80F32700A5A2F5 /* NSAttributedString+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Extensions.swift"; sourceTree = "<group>"; };
+		F7C92C301F80F92B00A5A2F5 /* BottomSlideContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSlideContainer.swift; sourceTree = "<group>"; };
+		F7C92C341F80FCF900A5A2F5 /* FloatingPoint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FloatingPoint+Extensions.swift"; sourceTree = "<group>"; };
+		F7C92C391F80FDCF00A5A2F5 /* ARSceneViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARSceneViewManager.swift; sourceTree = "<group>"; };
+		F7C92C3B1F81054D00A5A2F5 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,7 +130,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F77B326D1F78183A004259B8 /* MenuContainer.framework in Frameworks */,
 				F77DF70B1F78135300E4EC42 /* MapKit.framework in Frameworks */,
 				F77B32691F78183A004259B8 /* JsonMapper.framework in Frameworks */,
 			);
@@ -131,15 +145,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		F77B32551F78181B004259B8 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				F77B325A1F78181B004259B8 /* MenuContainer.framework */,
-				F77B325C1F78181B004259B8 /* Test.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		F77B325E1F781827004259B8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -153,6 +158,8 @@
 		F77B32731F781DB2004259B8 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				F7C92C001F80E81700A5A2F5 /* Basic */,
+				F7C92BF21F80D71000A5A2F5 /* MapViewController */,
 				F77B32791F782221004259B8 /* AR */,
 			);
 			path = Modules;
@@ -163,6 +170,9 @@
 			children = (
 				F77B327E1F7822D6004259B8 /* AR.storyboard */,
 				F77B327A1F782234004259B8 /* ARViewController.swift */,
+				F79F163E1F81117000B6ABF6 /* ARViewPresenter.swift */,
+				F79F16431F81117D00B6ABF6 /* ARViewInteractor.swift */,
+				F79F16451F81118800B6ABF6 /* ARViewRouter.swift */,
 			);
 			path = AR;
 			sourceTree = "<group>";
@@ -171,7 +181,6 @@
 			isa = PBXGroup;
 			children = (
 				F77B325D1F781827004259B8 /* JsonMapper.xcodeproj */,
-				F77B32541F78181B004259B8 /* MenuContainer.xcodeproj */,
 				F77DF69C1F780EFA00E4EC42 /* AR_Navigation */,
 				F77DF6B31F780EFB00E4EC42 /* AR_NavigationTests */,
 				F77DF69B1F780EFA00E4EC42 /* Products */,
@@ -191,8 +200,9 @@
 		F77DF69C1F780EFA00E4EC42 /* AR_Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				F7C92C0A1F80ED6E00A5A2F5 /* Extensions */,
+				F7C92C0B1F80ED6E00A5A2F5 /* Protocols */,
 				F77B32731F781DB2004259B8 /* Modules */,
-				F77DF6BF1F7810EE00E4EC42 /* Controllers */,
 				F77DF6C61F7810EE00E4EC42 /* Managers */,
 				F77DF6C31F7810EE00E4EC42 /* Models */,
 				F77DF6C01F7810EE00E4EC42 /* Resources */,
@@ -210,13 +220,6 @@
 				F77DF6B61F780EFB00E4EC42 /* Info.plist */,
 			);
 			path = AR_NavigationTests;
-			sourceTree = "<group>";
-		};
-		F77DF6BF1F7810EE00E4EC42 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Controllers;
 			sourceTree = "<group>";
 		};
 		F77DF6C01F7810EE00E4EC42 /* Resources */ = {
@@ -238,6 +241,8 @@
 		F77DF6C41F7810EE00E4EC42 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F7C92C051F80ECDA00A5A2F5 /* Cells */,
+				F7C92C301F80F92B00A5A2F5 /* BottomSlideContainer.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -245,6 +250,8 @@
 		F77DF6C61F7810EE00E4EC42 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				F71033F71F80CBE90074F6E8 /* NavigationManager.swift */,
+				F7C92C391F80FDCF00A5A2F5 /* ARSceneViewManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -265,6 +272,55 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		F7C92BF21F80D71000A5A2F5 /* MapViewController */ = {
+			isa = PBXGroup;
+			children = (
+				F7C92BF81F80D75300A5A2F5 /* MapView.storyboard */,
+				F7C92BF61F80D72F00A5A2F5 /* MapViewController.swift */,
+				F7C92BFA1F80E59700A5A2F5 /* MapViewPresenter.swift */,
+				F7C92BFC1F80E5E900A5A2F5 /* MapViewInteractor.swift */,
+				F7C92BFE1F80E5FF00A5A2F5 /* MapViewRouter.swift */,
+			);
+			path = MapViewController;
+			sourceTree = "<group>";
+		};
+		F7C92C001F80E81700A5A2F5 /* Basic */ = {
+			isa = PBXGroup;
+			children = (
+				F7C92C011F80E82300A5A2F5 /* Module.swift */,
+				F7C92C031F80E85400A5A2F5 /* Presenter.swift */,
+			);
+			path = Basic;
+			sourceTree = "<group>";
+		};
+		F7C92C051F80ECDA00A5A2F5 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				F7C92C061F80ED2300A5A2F5 /* MapActionCollectionViewCell.swift */,
+				F7C92C071F80ED2300A5A2F5 /* MapActionCollectionViewCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		F7C92C0A1F80ED6E00A5A2F5 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F7C92C141F80EF4000A5A2F5 /* UICollectionView+Reusable.swift */,
+				F7C92C281F80F32700A5A2F5 /* NSAttributedString+Extensions.swift */,
+				F7C92C341F80FCF900A5A2F5 /* FloatingPoint+Extensions.swift */,
+				F7C92C3B1F81054D00A5A2F5 /* UIView+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F7C92C0B1F80ED6E00A5A2F5 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				F7C92C0C1F80ED7F00A5A2F5 /* Reusable.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -281,7 +337,6 @@
 			);
 			dependencies = (
 				F77B326C1F78183A004259B8 /* PBXTargetDependency */,
-				F77B32701F78183A004259B8 /* PBXTargetDependency */,
 			);
 			name = AR_Navigation;
 			productName = AR_Navigation;
@@ -351,10 +406,6 @@
 					ProductGroup = F77B325E1F781827004259B8 /* Products */;
 					ProjectRef = F77B325D1F781827004259B8 /* JsonMapper.xcodeproj */;
 				},
-				{
-					ProductGroup = F77B32551F78181B004259B8 /* Products */;
-					ProjectRef = F77B32541F78181B004259B8 /* MenuContainer.xcodeproj */;
-				},
 			);
 			projectRoot = "";
 			targets = (
@@ -365,20 +416,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		F77B325A1F78181B004259B8 /* MenuContainer.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = MenuContainer.framework;
-			remoteRef = F77B32591F78181B004259B8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F77B325C1F78181B004259B8 /* Test.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = Test.app;
-			remoteRef = F77B325B1F78181B004259B8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		F77B32641F781827004259B8 /* JsonMapper.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -407,8 +444,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7C92BF91F80D75300A5A2F5 /* MapView.storyboard in Resources */,
 				F77DF6CF1F7810EF00E4EC42 /* LaunchScreen.storyboard in Resources */,
 				F77DF6CC1F7810EF00E4EC42 /* Assets.xcassets in Resources */,
+				F7C92C091F80ED2300A5A2F5 /* MapActionCollectionViewCell.xib in Resources */,
 				F77B327F1F7822D6004259B8 /* AR.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -427,8 +466,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7C92C041F80E85400A5A2F5 /* Presenter.swift in Sources */,
+				F7C92C351F80FCF900A5A2F5 /* FloatingPoint+Extensions.swift in Sources */,
+				F7C92C0D1F80ED7F00A5A2F5 /* Reusable.swift in Sources */,
+				F7C92C291F80F32700A5A2F5 /* NSAttributedString+Extensions.swift in Sources */,
+				F7C92C081F80ED2300A5A2F5 /* MapActionCollectionViewCell.swift in Sources */,
+				F7C92BFB1F80E59700A5A2F5 /* MapViewPresenter.swift in Sources */,
+				F7C92C3C1F81054D00A5A2F5 /* UIView+Extensions.swift in Sources */,
+				F7C92BFF1F80E5FF00A5A2F5 /* MapViewRouter.swift in Sources */,
+				F79F163F1F81117000B6ABF6 /* ARViewPresenter.swift in Sources */,
 				F77DF69E1F780EFA00E4EC42 /* AppDelegate.swift in Sources */,
 				F77B327B1F782234004259B8 /* ARViewController.swift in Sources */,
+				F7C92C311F80F92B00A5A2F5 /* BottomSlideContainer.swift in Sources */,
+				F79F16461F81118800B6ABF6 /* ARViewRouter.swift in Sources */,
+				F79F16441F81117D00B6ABF6 /* ARViewInteractor.swift in Sources */,
+				F7C92C3A1F80FDCF00A5A2F5 /* ARSceneViewManager.swift in Sources */,
+				F71033F81F80CBE90074F6E8 /* NavigationManager.swift in Sources */,
+				F7C92C021F80E82300A5A2F5 /* Module.swift in Sources */,
+				F7C92C151F80EF4000A5A2F5 /* UICollectionView+Reusable.swift in Sources */,
+				F7C92BFD1F80E5E900A5A2F5 /* MapViewInteractor.swift in Sources */,
+				F7C92BF71F80D72F00A5A2F5 /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -447,11 +504,6 @@
 			isa = PBXTargetDependency;
 			name = JsonMapper;
 			targetProxy = F77B326B1F78183A004259B8 /* PBXContainerItemProxy */;
-		};
-		F77B32701F78183A004259B8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = MenuContainer;
-			targetProxy = F77B326F1F78183A004259B8 /* PBXContainerItemProxy */;
 		};
 		F77DF6B21F780EFB00E4EC42 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
