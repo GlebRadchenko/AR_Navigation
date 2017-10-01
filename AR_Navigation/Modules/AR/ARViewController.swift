@@ -142,7 +142,7 @@ extension ARViewController {
         
         container.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         container.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        container.heightAnchor.constraint(equalTo: container.widthAnchor, multiplier: 1 / .goldenSection, constant: BottomSlideContainer.topViewHeight).isActive = true
+        container.heightAnchor.constraint(equalToConstant: containerHeight()).isActive = true
         slideContainerTopConstraint = container.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -BottomSlideContainer.topViewHeight)
         slideContainerTopConstraint.isActive = true
         
@@ -205,7 +205,8 @@ extension ARViewController {
     }
     
     func containerHeight() -> CGFloat {
-        return view.bounds.width / .goldenSection + BottomSlideContainer.topViewHeight
+        let margins: CGFloat = 16 + 16
+        return (view.bounds.width - margins) / .goldenSection + BottomSlideContainer.topViewHeight * 2
     }
 }
 

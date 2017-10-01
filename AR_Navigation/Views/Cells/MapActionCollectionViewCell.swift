@@ -10,7 +10,7 @@ import UIKit
 import Foundation
 
 protocol MapActionDisplayable {
-    var imageName: String { get }
+    var stringValue: String { get }
 }
 
 extension MapState: MapActionDisplayable { }
