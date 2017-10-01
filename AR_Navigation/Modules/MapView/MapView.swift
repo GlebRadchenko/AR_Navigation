@@ -61,6 +61,7 @@ class MapViewController: UIViewController, View {
         
         configureViews()
         output.viewDidLoad()
+        activityView.startAnimating()
     }
     
     func configureViews() {
@@ -136,14 +137,12 @@ extension MapViewController: MapViewViewInput {
         
         firstTextField.text = ""
         firstTextField.placeholder = state.firstPlaceholder
-        firstTextField.resignFirstResponder()
         
         secondTextField.text = ""
         secondTextField.placeholder = state.secondPlaceholder
-        secondTextField.resignFirstResponder()
         
         if animated {
-            UIView.animate(withDuration: 0.5,
+            UIView.animate(withDuration: 0.25,
                            delay: 0,
                            options:[.curveEaseInOut, .beginFromCurrentState],
                            animations: { self.view.layoutIfNeeded() },

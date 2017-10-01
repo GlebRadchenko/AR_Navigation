@@ -147,6 +147,7 @@ extension ARViewController {
         slideContainerTopConstraint.isActive = true
         
         self.slideContainer = container
+        view.layoutIfNeeded()
     }
     
     func slideContainer(with translation: CGFloat, velocity: CGFloat) {

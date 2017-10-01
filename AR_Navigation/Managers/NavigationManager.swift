@@ -78,6 +78,8 @@ extension NavigationManager: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+        guard newHeading.headingAccuracy >= 0 else { return }
+        
         delegate?.navigationManager(self, didUpdateHeading: newHeading)
     }
     
