@@ -25,7 +25,10 @@ open class ARSceneViewManager: NSObject {
         self.scene = scene
         
         super.init()
-        setup()
+        
+        if ARWorldTrackingConfiguration.isSupported {
+            setup()
+        }
     }
     
     //MARK: - Setup
@@ -49,16 +52,22 @@ open class ARSceneViewManager: NSObject {
     
     //MARK: - Session Managing
     public func launchSession() {
+        guard ARWorldTrackingConfiguration.isSupported else { return }
+        
         clearStoredDate()
         let configuration = state.configuration
         session.run(configuration)
     }
     
     public func pauseSession() {
+        guard ARWorldTrackingConfiguration.isSupported else { return }
+        
         session.pause()
     }
     
     public func updateSession() {
+        guard ARWorldTrackingConfiguration.isSupported else { return }
+        
         let options: ARSession.RunOptions =  []
 
         let configuration = state.configuration

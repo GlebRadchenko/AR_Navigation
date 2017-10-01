@@ -14,9 +14,7 @@ class ApplicationManager: NSObject {
     var window: UIWindow?
     
     @IBOutlet weak var initialViewController: UIViewController! {
-        didSet {
-            configure()
-        }
+        didSet { configure() }
     }
     
     var initialModule: Module!
