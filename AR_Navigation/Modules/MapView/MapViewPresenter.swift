@@ -21,6 +21,7 @@ class MapViewPresenter: NSObject, Presenter {
     
     var state: MapState = .pin
     
+    lazy var searchTable: SearchTableViewController<MKMapItem> = SearchTableViewController<MKMapItem>()
 }
 
 extension MapViewPresenter: MapViewViewOutput {
