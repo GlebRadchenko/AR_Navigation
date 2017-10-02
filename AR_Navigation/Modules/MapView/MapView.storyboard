@@ -47,20 +47,20 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nli-wj-ORD">
                                                             <rect key="frame" x="0.0" y="0.0" width="154" height="40"/>
                                                             <subviews>
-                                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="From" minimumFontSize="14" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="SaR-AW-EId">
-                                                                    <rect key="frame" x="4" y="5" width="146" height="30"/>
+                                                                <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Enter" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EHT-Bl-t7F">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="154" height="40"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <color key="tintColor" red="0.96749073269999997" green="0.79327744249999999" blue="0.28215938810000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                                    <nil key="textColor"/>
-                                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                                    <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <textInputTraits key="textInputTraits"/>
-                                                                </textField>
+                                                                </searchBar>
                                                             </subviews>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="trailing" secondItem="SaR-AW-EId" secondAttribute="trailing" constant="4" id="2gm-jI-GH4"/>
-                                                                <constraint firstItem="SaR-AW-EId" firstAttribute="centerY" secondItem="Nli-wj-ORD" secondAttribute="centerY" id="hNO-Ck-xod"/>
-                                                                <constraint firstItem="SaR-AW-EId" firstAttribute="leading" secondItem="Nli-wj-ORD" secondAttribute="leading" constant="4" id="rpB-0r-8Vb"/>
+                                                                <constraint firstItem="EHT-Bl-t7F" firstAttribute="top" secondItem="Nli-wj-ORD" secondAttribute="top" id="49X-sp-Vqy"/>
+                                                                <constraint firstAttribute="trailing" secondItem="EHT-Bl-t7F" secondAttribute="trailing" id="GSz-TT-OcR"/>
+                                                                <constraint firstAttribute="bottom" secondItem="EHT-Bl-t7F" secondAttribute="bottom" id="Vgw-Vv-fe4"/>
+                                                                <constraint firstItem="EHT-Bl-t7F" firstAttribute="leading" secondItem="Nli-wj-ORD" secondAttribute="leading" id="ZKU-6O-0WS"/>
                                                             </constraints>
                                                         </view>
                                                         <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="6zd-XR-eOt">
@@ -73,20 +73,21 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CbD-hu-waM">
                                                             <rect key="frame" x="189" y="0.0" width="154" height="40"/>
                                                             <subviews>
-                                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="To" minimumFontSize="14" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="Gb0-Xj-BgB">
-                                                                    <rect key="frame" x="4" y="5" width="146" height="30"/>
+                                                                <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Enter" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wtj-cd-cIt">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="154" height="40"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <color key="tintColor" red="0.96749073269999997" green="0.79327744249999999" blue="0.28215938810000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                                    <nil key="textColor"/>
-                                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                                    <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <offsetWrapper key="searchTextPositionAdjustment" horizontal="0.0" vertical="0.0"/>
                                                                     <textInputTraits key="textInputTraits"/>
-                                                                </textField>
+                                                                </searchBar>
                                                             </subviews>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
-                                                                <constraint firstItem="Gb0-Xj-BgB" firstAttribute="centerY" secondItem="CbD-hu-waM" secondAttribute="centerY" id="MdT-5z-GLZ"/>
-                                                                <constraint firstItem="Gb0-Xj-BgB" firstAttribute="leading" secondItem="CbD-hu-waM" secondAttribute="leading" constant="4" id="gMc-I5-ENB"/>
-                                                                <constraint firstItem="Gb0-Xj-BgB" firstAttribute="width" secondItem="CbD-hu-waM" secondAttribute="width" constant="-8" id="z1h-o6-GJJ"/>
+                                                                <constraint firstAttribute="bottom" secondItem="wtj-cd-cIt" secondAttribute="bottom" id="K2o-gi-a84"/>
+                                                                <constraint firstItem="wtj-cd-cIt" firstAttribute="leading" secondItem="CbD-hu-waM" secondAttribute="leading" id="Kn7-o9-a2I"/>
+                                                                <constraint firstItem="wtj-cd-cIt" firstAttribute="width" secondItem="CbD-hu-waM" secondAttribute="width" id="bkP-Ek-Uxc"/>
+                                                                <constraint firstItem="wtj-cd-cIt" firstAttribute="top" secondItem="CbD-hu-waM" secondAttribute="top" id="ik4-Lp-4dz"/>
                                                             </constraints>
                                                         </view>
                                                     </subviews>
@@ -205,10 +206,10 @@
                         <outlet property="actionsCollectionView" destination="Aaf-J3-SFD" id="XS2-gd-J9g"/>
                         <outlet property="activityView" destination="6zd-XR-eOt" id="IHd-c5-w3T"/>
                         <outlet property="firstContainerView" destination="Nli-wj-ORD" id="V03-93-YuC"/>
-                        <outlet property="firstTextField" destination="SaR-AW-EId" id="ZZe-DP-6Ox"/>
+                        <outlet property="firstSearchBar" destination="EHT-Bl-t7F" id="8NG-hy-fa6"/>
                         <outlet property="mapView" destination="iAS-AF-kqx" id="qGj-1B-pib"/>
                         <outlet property="secondContainerView" destination="CbD-hu-waM" id="04r-ht-bpT"/>
-                        <outlet property="secondTextField" destination="Gb0-Xj-BgB" id="nUo-0i-uJM"/>
+                        <outlet property="secondSearchBar" destination="wtj-cd-cIt" id="5wk-13-bRC"/>
                         <outlet property="stackViewContainer" destination="UtA-Lc-TGZ" id="1mj-7l-GT8"/>
                         <outlet property="visualEffectTopConstraint" destination="SYz-tg-mOM" id="2ps-Yc-hSv"/>
                         <outlet property="visualEffectViewContainer" destination="h1D-6T-6V2" id="C4A-MK-IQQ"/>
@@ -216,7 +217,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g5f-eY-vJR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-730" y="111"/>
+            <point key="canvasLocation" x="-730.39999999999998" y="110.64467766116942"/>
         </scene>
     </scenes>
     <resources>

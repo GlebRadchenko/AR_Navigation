@@ -20,19 +20,7 @@ class MapViewPresenter: NSObject, Presenter {
     weak var view: View!
     
     var state: MapState = .pin
-    var storedLocations: [CLLocation] = []
-    lazy var navigationManager: NavigationManager = NavigationManager()
     
-    func addNewLocation(_ location: CLLocation) {
-        if storedLocations.isEmpty {
-            let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
-            let region = MKCoordinateRegion(center: location.coordinate, span: span)
-            
-            view.mapView.setRegion(region, animated: true)
-        }
-        
-        storedLocations.append(location)
-    }
 }
 
 extension MapViewPresenter: MapViewViewOutput {
@@ -41,8 +29,7 @@ extension MapViewPresenter: MapViewViewOutput {
         view.updateViews(for: state, animated: false)
         view.updateActions(with: MapState.actions(except: state))
         
-        navigationManager.delegate = self
-        navigationManager.launchUpdating()
+        interactor.launchUpdatingLocationAndHeading()
     }
     
     func handleActionSelection(at index: Int) {
@@ -56,56 +43,55 @@ extension MapViewPresenter: MapViewViewOutput {
     }
     
     func handleLocationAction() {
-        guard let lastLocation = storedLocations.first else { return }
+        guard let lastLocation = interactor.lastLocation else { return }
         
         let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
         let region = MKCoordinateRegion(center: lastLocation.coordinate, span: span)
         
         view.mapView.setRegion(region, animated: true)
     }
-    
-    func textFieldDidChange(_ textFieldType: TextFieldType, text: String) {
-        switch textFieldType {
-        case .source:
-            break
-        case .destination:
-            break
-        default: break
-        }
-    }
-}
-
-extension MapViewPresenter: NavigationManagerDelegate {
-    func navigationManager(_ manager: NavigationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.first else { return }
-        addNewLocation(location)
-    }
-    
-    func navigationManager(_ manager: NavigationManager, didUpdateHeading newHeading: CLHeading) {
-       // print(newHeading)
-    }
-    
-    func navigationManager(_ manager: NavigationManager, didFailWithError error: Error) {
-        print(error)
-    }
-    
-    func navigationManager(_ manager: NavigationManager, didReceiveNoAuthorization state: CLAuthorizationStatus) {
-        print(state)
-    }
 }
 
 extension MapViewPresenter: MapViewInteractorOutput {
-    
+    func handleLocationUpdate(newLocation: CLLocation, previous: CLLocation?) {
+        if previous == nil {
+            let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+            let region = MKCoordinateRegion(center: newLocation.coordinate, span: span)
+            
+            view.mapView.setRegion(region, animated: true)
+        }
+        
+        //process with ar
+    }
 }
 
-extension MapViewPresenter: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        view.endEditing()
-        return true
+extension MapViewPresenter: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty { return }
+        
+        interactor.requestPlaces(for: searchText) { [weak self] (region, items) in
+            guard let wSelf = self else { return }
+            items.forEach { (item) in
+                
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = item.placemark.coordinate
+                annotation.title = item.placemark.name
+                
+                if let city = item.placemark.locality, let area = item.placemark.administrativeArea {
+                    annotation.subtitle = city + ". " + area
+                }
+                
+                wSelf.view.mapView.addAnnotation(annotation)
+            }
+        }
     }
     
-    func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        return true
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        
     }
 }
 

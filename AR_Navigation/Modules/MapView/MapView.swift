@@ -14,7 +14,7 @@ protocol MapViewViewInput: class {
     var mapView: MKMapView! { get }
     
     func endEditing()
-    func type(for textField: UITextField) -> TextFieldType
+    func type(for searchBar: UISearchBar) -> SearchBarType
     
     func updateViews(for state: MapState, animated: Bool)
     func updateActions(with items: [MapActionDisplayable])
@@ -23,14 +23,12 @@ protocol MapViewViewInput: class {
     func hideActivityIndicator()
 }
 
-protocol MapViewViewOutput: class, UITextFieldDelegate {
+protocol MapViewViewOutput: class, UISearchBarDelegate {
     func viewDidLoad()
     
     func handleActionSelection(at index: Int)
     func handleGoAction()
     func handleLocationAction()
-    
-    func textFieldDidChange(_ textFieldType: TextFieldType, text: String)
 }
 
 class MapViewController: UIViewController, View {
@@ -45,10 +43,10 @@ class MapViewController: UIViewController, View {
     @IBOutlet weak var activityView: UIActivityIndicatorView!
     
     @IBOutlet weak var firstContainerView: UIView!
-    @IBOutlet weak var firstTextField: UITextField!
+    @IBOutlet weak var firstSearchBar: UISearchBar!
     
     @IBOutlet weak var secondContainerView: UIView!
-    @IBOutlet weak var secondTextField: UITextField!
+    @IBOutlet weak var secondSearchBar: UISearchBar!
     
     @IBOutlet weak var actionsCollectionView: UICollectionView!
     
@@ -61,7 +59,6 @@ class MapViewController: UIViewController, View {
         
         configureViews()
         output.viewDidLoad()
-        activityView.startAnimating()
     }
     
     func configureViews() {
@@ -71,11 +68,11 @@ class MapViewController: UIViewController, View {
     }
     
     func configureTextFields() {
-        firstTextField.delegate = output
-        secondTextField.delegate = output
+        firstSearchBar.delegate = output
+        secondSearchBar.delegate = output
         
-        firstTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        secondTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+       // firstTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+       // secondTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
     func configureCollectionView() {
@@ -91,10 +88,6 @@ class MapViewController: UIViewController, View {
         mapView.showsUserLocation = true
     }
     
-    @objc func textFieldDidChange(_ textField: UITextField) {
-        output.textFieldDidChange(type(for: textField), text: textField.text ?? "")
-    }
-    
     @IBAction func goButtonTouched(_ sender: UIButton) {
         output.handleGoAction()
     }
@@ -104,7 +97,7 @@ class MapViewController: UIViewController, View {
     }
 }
 
-enum TextFieldType {
+enum SearchBarType {
     case source
     case destination
     case unknown
@@ -116,12 +109,12 @@ extension MapViewController: MapViewViewInput {
         view.endEditing(true)
     }
     
-    func type(for textField: UITextField) -> TextFieldType {
-        if textField == firstTextField {
+    func type(for searchBar: UISearchBar) -> SearchBarType {
+        if searchBar == firstSearchBar {
             return .source
         }
         
-        if textField == secondTextField {
+        if searchBar == secondSearchBar {
             return .destination
         }
         
@@ -135,11 +128,11 @@ extension MapViewController: MapViewViewInput {
         
         secondContainerView.isHidden = !state.bothTextFieldsAreDisplayed
         
-        firstTextField.text = ""
-        firstTextField.placeholder = state.firstPlaceholder
+        firstSearchBar.text = ""
+        firstSearchBar.placeholder = state.firstPlaceholder
         
-        secondTextField.text = ""
-        secondTextField.placeholder = state.secondPlaceholder
+        secondSearchBar.text = ""
+        secondSearchBar.placeholder = state.secondPlaceholder
         
         if animated {
             UIView.animate(withDuration: 0.25,

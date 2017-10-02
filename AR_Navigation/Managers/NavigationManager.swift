@@ -27,6 +27,8 @@ class NavigationManager: NSObject {
     lazy var locationManager = CLLocationManager()
     
     weak var delegate: NavigationManagerDelegate?
+    fileprivate var currentSearch: MKLocalSearch?
+    fileprivate var queue = DispatchQueue(label: "navigation-manager-queue", qos: .default, attributes: .concurrent)
     
     override init() {
         super.init()
@@ -63,6 +65,33 @@ extension NavigationManager {
         let directions = MKDirections(request: request)
         directions.calculate { (response, error) in
             completion(response?.routes.first, error)
+        }
+    }
+    
+    func requestPlaces(for text: String, from location: CLLocation?, callback: @escaping (_ region: MKCoordinateRegion, _ items: [MKMapItem]) -> Void) {
+        let request = MKLocalSearchRequest()
+        request.naturalLanguageQuery = text
+        
+        if let location = location {
+            let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+            request.region = MKCoordinateRegion(center: location.coordinate, span: span)
+        }
+        
+        currentSearch?.cancel()
+        let search = MKLocalSearch(request: request)
+        currentSearch = search
+        
+        queue.async { [weak self] in
+            guard let wSelf = self else { return }
+            search.start { (response, error) in
+                guard let response = response else {
+                    debugPrint(error?.localizedDescription ?? "")
+                    return
+                }
+                
+                callback(response.boundingRegion, response.mapItems)
+                wSelf.currentSearch = nil
+            }
         }
     }
 }
@@ -116,3 +145,4 @@ extension Array where Element == Double {
         return CLLocationCoordinate2D(latitude: self[0], longitude: self[1])
     }
 }
+

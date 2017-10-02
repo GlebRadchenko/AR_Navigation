@@ -19,5 +19,9 @@ extension UIView {
          view.topAnchor.constraint(equalTo: topAnchor),
          view.bottomAnchor.constraint(equalTo: bottomAnchor)].forEach { $0.isActive = true }
     }
+    
+    func subview<T: UIView>() -> T? {
+        return subviews.first(where: { $0 is T }) as? T
+    }
 }
 
