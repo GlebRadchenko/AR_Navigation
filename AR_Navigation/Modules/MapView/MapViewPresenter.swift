@@ -10,14 +10,24 @@ import Foundation
 import MapKit
 import CoreLocation
 
-class MapViewPresenter: NSObject, Presenter {
+
+protocol MapViewModuleInput: ModuleInput {
+    var viewController: UIViewController! { get }
+}
+
+class MapViewPresenter: NSObject, Presenter, MapViewModuleInput {
+    
     typealias View = MapViewViewInput
     typealias Router = MapViewRouterInput
     typealias Interactor = MapViewInteractorInput
     
     var interactor: Interactor!
     var router: Router!
-    weak var view: View!
+    var view: View!
+    
+    var viewController: UIViewController! {
+        return view as? UIViewController
+    }
     
     var state: MapState = .pin
     

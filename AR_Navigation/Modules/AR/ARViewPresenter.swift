@@ -14,11 +14,11 @@ class ARViewPresenter: NSObject, Presenter {
     typealias Router = ARViewRouterInput
     typealias Interactor = ARViewInteractorInput
     
-    weak var view: View!
+    var view: View!
     var interactor: Interactor!
     var router: Router!
     
-    var mapModule: Module!
+    var mapModule: MapViewModuleInput!
     var sceneViewManager: ARSceneViewManager!
     lazy var keyboardManager: KeyboardEventsManager = KeyboardEventsManager()
     
@@ -58,9 +58,9 @@ class ARViewPresenter: NSObject, Presenter {
 extension ARViewPresenter: ARViewViewOutput {
     func viewDidLoad() {
         sceneViewManager = ARSceneViewManager(with: view.sceneView)
-        mapModule = try? MapViewRouter.module()
+        mapModule = try? MapViewRouter.moduleInput()
         
-        view.embedToContainer(viewController: mapModule.view)
+        view.embedToContainer(viewController: mapModule.viewController)
         view.toggleContainer(open: true, animated: true)
     }
     
@@ -76,3 +76,4 @@ extension ARViewPresenter: ARViewViewOutput {
 extension ARViewPresenter: ARViewInteractorOutput {
     
 }
+

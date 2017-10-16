@@ -32,6 +32,8 @@ protocol MapViewViewOutput: class, UISearchBarDelegate {
 }
 
 class MapViewController: UIViewController, View {
+    typealias Presenter = MapViewViewOutput
+    
     static var storyboardName: String { return "MapView" }
     
     @IBOutlet weak var mapView: MKMapView!
@@ -52,7 +54,7 @@ class MapViewController: UIViewController, View {
     
     var actions: [MapActionDisplayable] = []
     
-    var output: MapViewViewOutput!
+    weak var output: MapViewViewOutput!
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -14,7 +14,7 @@ protocol ARViewRouterInput: class {
 class ARViewRouter: Router, ARViewRouterInput {
     typealias ModuleView = ARViewController
     
-    static func module(with view: UIViewController) throws -> Module {
+    static func moduleInput<T>(with view: UIViewController) throws -> T {
         guard let view = view as? ModuleView else {
             throw RouterError.wrongView
         }
@@ -31,10 +31,10 @@ class ARViewRouter: Router, ARViewRouterInput {
         
         interactor.output = presenter
         
-        return Module(view: view, input: presenter)
+        return try presenter.specific()
     }
     
-    static func module() throws -> Module {
+    static func moduleInput<T>() throws -> T {
         guard let view = UIStoryboard(name: ModuleView.storyboardName, bundle: nil).instantiateInitialViewController() as? ModuleView else {
             throw RouterError.wrongView
         }
@@ -51,6 +51,7 @@ class ARViewRouter: Router, ARViewRouterInput {
         
         interactor.output = presenter
         
-        return Module(view: view, input: presenter)
+        return try presenter.specific()
     }
 }
+

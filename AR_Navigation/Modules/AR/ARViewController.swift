@@ -26,6 +26,8 @@ protocol ARViewViewOutput: class {
 }
 
 class ARViewController: UIViewController, View {
+    typealias Presenter = ARViewViewOutput
+    
     static var storyboardName: String { return "AR" }
     
     @IBOutlet var sceneView: ARSCNView!
@@ -34,7 +36,7 @@ class ARViewController: UIViewController, View {
     var slideContainerTopConstraint: NSLayoutConstraint!
     var containerState: SlideContainerState = .hidden
     
-    var output: ARViewViewOutput!
+    weak var output: ARViewViewOutput!
     
     override func viewDidLoad() {
         super.viewDidLoad()

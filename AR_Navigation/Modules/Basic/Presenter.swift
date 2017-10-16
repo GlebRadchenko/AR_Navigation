@@ -9,9 +9,23 @@
 import Foundation
 import UIKit
 
-protocol ModuleInput { }
+enum PresenterError: Error {
+    case wrongInput
+}
 
-protocol Presenter: class, ModuleInput {
+protocol ModuleInput: class { }
+
+extension ModuleInput {
+    func specific<T>() throws -> T {
+        guard let specified = self as? T else {
+            throw PresenterError.wrongInput
+        }
+        
+        return specified
+    }
+}
+
+protocol Presenter: ModuleInput {
     associatedtype View
     associatedtype Router
     associatedtype Interactor

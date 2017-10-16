@@ -32,7 +32,6 @@
 		F7C92BFB1F80E59700A5A2F5 /* MapViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C92BFA1F80E59700A5A2F5 /* MapViewPresenter.swift */; };
 		F7C92BFD1F80E5E900A5A2F5 /* MapViewInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C92BFC1F80E5E900A5A2F5 /* MapViewInteractor.swift */; };
 		F7C92BFF1F80E5FF00A5A2F5 /* MapViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C92BFE1F80E5FF00A5A2F5 /* MapViewRouter.swift */; };
-		F7C92C021F80E82300A5A2F5 /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C92C011F80E82300A5A2F5 /* Module.swift */; };
 		F7C92C041F80E85400A5A2F5 /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C92C031F80E85400A5A2F5 /* Presenter.swift */; };
 		F7C92C081F80ED2300A5A2F5 /* MapActionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C92C061F80ED2300A5A2F5 /* MapActionCollectionViewCell.swift */; };
 		F7C92C091F80ED2300A5A2F5 /* MapActionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C92C071F80ED2300A5A2F5 /* MapActionCollectionViewCell.xib */; };
@@ -128,7 +127,6 @@
 		F7C92BFA1F80E59700A5A2F5 /* MapViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewPresenter.swift; sourceTree = "<group>"; };
 		F7C92BFC1F80E5E900A5A2F5 /* MapViewInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewInteractor.swift; sourceTree = "<group>"; };
 		F7C92BFE1F80E5FF00A5A2F5 /* MapViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewRouter.swift; sourceTree = "<group>"; };
-		F7C92C011F80E82300A5A2F5 /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
 		F7C92C031F80E85400A5A2F5 /* Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenter.swift; sourceTree = "<group>"; };
 		F7C92C061F80ED2300A5A2F5 /* MapActionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapActionCollectionViewCell.swift; sourceTree = "<group>"; };
 		F7C92C071F80ED2300A5A2F5 /* MapActionCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapActionCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -316,7 +314,6 @@
 		F7C92C001F80E81700A5A2F5 /* Basic */ = {
 			isa = PBXGroup;
 			children = (
-				F7C92C011F80E82300A5A2F5 /* Module.swift */,
 				F7C92C031F80E85400A5A2F5 /* Presenter.swift */,
 				F79F16471F81132700B6ABF6 /* Router.swift */,
 				F79F16491F81133600B6ABF6 /* Interactor.swift */,
@@ -532,7 +529,6 @@
 				F79F164F1F811AED00B6ABF6 /* ApplicationManager.swift in Sources */,
 				F7BAFD691F827E54004734DA /* UITableView+Reusable.swift in Sources */,
 				F71033F81F80CBE90074F6E8 /* NavigationManager.swift in Sources */,
-				F7C92C021F80E82300A5A2F5 /* Module.swift in Sources */,
 				F7C92C151F80EF4000A5A2F5 /* UICollectionView+Reusable.swift in Sources */,
 				F7C92BFD1F80E5E900A5A2F5 /* MapViewInteractor.swift in Sources */,
 				F7ED61D31F8252EB00EE3224 /* SearchTableViewController.swift in Sources */,

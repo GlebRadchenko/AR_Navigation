@@ -11,7 +11,7 @@ import UIKit
 
 protocol Router: class {
     associatedtype ModuleView: View
-    static func module() throws -> Module
+    static func moduleInput<T>() throws -> T
 }
 
 enum RouterError: Error {

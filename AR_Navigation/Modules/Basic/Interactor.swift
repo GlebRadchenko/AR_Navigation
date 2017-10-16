@@ -10,5 +10,6 @@ import Foundation
 
 protocol Interactor: class {
     associatedtype Presenter
+    
     var output: Presenter! { get set }
 }

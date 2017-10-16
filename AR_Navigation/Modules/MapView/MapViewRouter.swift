@@ -16,7 +16,7 @@ protocol MapViewRouterInput {
 class MapViewRouter: MapViewRouterInput, Router {
     typealias ModuleView = MapViewController
     
-    static func module() throws -> Module {
+    static func moduleInput<T>() throws -> T {
         guard let view = UIStoryboard(name: ModuleView.storyboardName, bundle: nil).instantiateInitialViewController() as? ModuleView else {
             throw RouterError.wrongView
         }
@@ -33,7 +33,7 @@ class MapViewRouter: MapViewRouterInput, Router {
         
         interactor.output = presenter
         
-        return Module(view: view, input: presenter)
+        return try presenter.specific()
     }
 }
 

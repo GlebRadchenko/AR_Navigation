@@ -19,10 +19,10 @@ class ApplicationManager: NSObject {
         didSet { configure() }
     }
     
-    var initialModule: Module!
+    var initialModule: ModuleInput!
     
     func configure() {
-        initialModule = try? ARViewRouter.module(with: initialViewController)
+        initialModule = try? ARViewRouter.moduleInput(with: initialViewController)
     }
     
     override public func awakeAfter(using aDecoder: NSCoder) -> Any? {
