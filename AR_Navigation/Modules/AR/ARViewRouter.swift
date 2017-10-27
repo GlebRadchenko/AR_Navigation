@@ -8,8 +8,7 @@
 
 import UIKit
 
-protocol ARViewRouterInput: class {
-}
+protocol ARViewRouterInput: class { }
 
 class ARViewRouter: Router, ARViewRouterInput {
     typealias ModuleView = ARViewController
@@ -35,10 +34,7 @@ class ARViewRouter: Router, ARViewRouterInput {
     }
     
     static func moduleInput<T>() throws -> T {
-        guard let view = UIStoryboard(name: ModuleView.storyboardName, bundle: nil).instantiateInitialViewController() as? ModuleView else {
-            throw RouterError.wrongView
-        }
-        
+        let view: ModuleView = try UIStoryboard.extractView()
         let presenter = ARViewPresenter()
         let interactor = ARViewInteractor()
         let router = ARViewRouter()

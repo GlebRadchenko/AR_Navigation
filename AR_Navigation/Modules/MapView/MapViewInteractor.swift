@@ -19,6 +19,7 @@ protocol MapViewInteractorInput: class {
 
 protocol MapViewInteractorOutput: class {
     func handleLocationUpdate(newLocation: CLLocation, previous: CLLocation?)
+    func handleHeadingUpdate(newHeading: CLHeading)
 }
 
 class MapViewInteractor: Interactor {
@@ -54,7 +55,7 @@ extension MapViewInteractor: NavigationManagerDelegate {
     }
     
     func navigationManager(_ manager: NavigationManager, didUpdateHeading newHeading: CLHeading) {
-        // print(newHeading)
+        output.handleHeadingUpdate(newHeading: newHeading)
     }
     
     func navigationManager(_ manager: NavigationManager, didFailWithError error: Error) {

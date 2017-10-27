@@ -17,10 +17,7 @@ class MapViewRouter: MapViewRouterInput, Router {
     typealias ModuleView = MapViewController
     
     static func moduleInput<T>() throws -> T {
-        guard let view = UIStoryboard(name: ModuleView.storyboardName, bundle: nil).instantiateInitialViewController() as? ModuleView else {
-            throw RouterError.wrongView
-        }
-        
+        let view: ModuleView = try UIStoryboard.extractView()
         let presenter = MapViewPresenter()
         let interactor = MapViewInteractor()
         let router = MapViewRouter()

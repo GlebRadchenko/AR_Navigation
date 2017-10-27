@@ -16,11 +16,11 @@ extension UICollectionView {
     
     func registerHeaderFooter(_ viewType: Reusable.Type, suplementaryViewOfKind: String) {
         let nib = UINib.nib(for: viewType)
-        self.register(nib, forSupplementaryViewOfKind: suplementaryViewOfKind, withReuseIdentifier: viewType.reuseIdentifier)
+        register(nib, forSupplementaryViewOfKind: suplementaryViewOfKind, withReuseIdentifier: viewType.reuseIdentifier)
     }
     
     func registerCellClass(_ cellType: Reusable.Type) {
-        self.register(cellType, forCellWithReuseIdentifier: cellType.reuseIdentifier)
+        register(cellType, forCellWithReuseIdentifier: cellType.reuseIdentifier)
     }
     
     func dequeueReusableCell(forCell type: Reusable.Type, indexPath: IndexPath) -> Reusable {
@@ -37,4 +37,3 @@ extension UINib {
         return UINib(nibName: cellType.nibName, bundle: Bundle(for: cellType))
     }
 }
-

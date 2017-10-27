@@ -18,6 +18,7 @@ protocol MapViewViewInput: class {
     
     func updateViews(for state: MapState, animated: Bool)
     func updateActions(with items: [MapActionDisplayable])
+    func updateUserHeading(_ heading: CLHeading)
     
     func showActivityIndicator()
     func hideActivityIndicator()
@@ -52,6 +53,8 @@ class MapViewController: UIViewController, View {
     
     @IBOutlet weak var actionsCollectionView: UICollectionView!
     
+    weak var headingImageView: UIImageView!
+    
     var actions: [MapActionDisplayable] = []
     
     weak var output: MapViewViewOutput!
@@ -72,9 +75,6 @@ class MapViewController: UIViewController, View {
     func configureTextFields() {
         firstSearchBar.delegate = output
         secondSearchBar.delegate = output
-        
-       // firstTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-       // secondTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
     func configureCollectionView() {
@@ -83,11 +83,13 @@ class MapViewController: UIViewController, View {
     }
     
     func configureMapView() {
+        mapView.delegate = self
         mapView.showsScale = true
         mapView.showsCompass = true
         mapView.showsBuildings = true
-        mapView.showsPointsOfInterest = true
         mapView.showsUserLocation = true
+        mapView.showsPointsOfInterest = true
+        mapView.userTrackingMode = .followWithHeading
     }
     
     @IBAction func goButtonTouched(_ sender: UIButton) {
@@ -96,6 +98,27 @@ class MapViewController: UIViewController, View {
     
     @IBAction func locationButtonTouched(_ sender: UIButton) {
         output.handleLocationAction()
+    }
+    
+    func addHeadingArrow(to view: MKAnnotationView) {
+        guard headingImageView == nil else { return }
+        let bounds = view.bounds
+        
+        let arrow = #imageLiteral(resourceName: "icon_heading_arrow").withRenderingMode(.alwaysTemplate)
+        let arrowSize: CGFloat = 15
+        
+        let imageView = UIImageView()
+        imageView.tintColor = .darkGray
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = arrow
+        
+        imageView.frame = CGRect(x: (bounds.size.width - arrowSize) / 2,
+                                 y: (bounds.size.height - arrowSize) / 2,
+                                 width: arrowSize,
+                                 height: arrowSize)
+        
+        view.addSubview(imageView)
+        headingImageView = imageView
     }
 }
 
@@ -150,6 +173,29 @@ extension MapViewController: MapViewViewInput {
         actionsCollectionView.reloadData()
     }
     
+    
+    func updateUserHeading(_ heading: CLHeading) {
+        guard let headingImageView = headingImageView else { return }
+        guard heading.headingAccuracy >= 0 else { return }
+        
+        let degreesAngle = heading.trueHeading > 0 ? heading.trueHeading : heading.magneticHeading
+        let radAngle = CGFloat(degreesAngle / 180 * .pi)
+        
+        let rotation = CGAffineTransform(rotationAngle: radAngle)
+        
+        let x: CGFloat = 0
+        let y: CGFloat = -11
+        
+        let tX = x * cos(radAngle) - y * sin(radAngle)
+        let tY = x * sin(radAngle) + y * cos(radAngle)
+        
+        let translation = CGAffineTransform(translationX: tX, y: tY)
+        
+        let transform = rotation.concatenating(translation)
+        
+        headingImageView.transform = transform
+    }
+    
     func showActivityIndicator() {
         activityView.startAnimating()
     }
@@ -183,6 +229,31 @@ extension MapViewController: UICollectionViewDataSource {
         cell.configure(with: actions[indexPath.item])
         
         return cell
+    }
+}
+
+extension MapViewController: MKMapViewDelegate {
+    //public func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView?
+    
+    public func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
+        guard let userLocationAnnotation = views.first(where: { $0.annotation is MKUserLocation }) else { return }
+        addHeadingArrow(to: userLocationAnnotation)
+    }
+    
+    public func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+    }
+    
+    public func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        
+    }
+    
+    public func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+        
+    }
+    
+    
+    public func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, didChange newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
+        
     }
 }
 

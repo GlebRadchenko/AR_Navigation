@@ -64,6 +64,10 @@ extension MapViewPresenter: MapViewViewOutput {
 }
 
 extension MapViewPresenter: MapViewInteractorOutput {
+    func handleHeadingUpdate(newHeading: CLHeading) {
+        view.updateUserHeading(newHeading)
+    }
+    
     func handleLocationUpdate(newLocation: CLLocation, previous: CLLocation?) {
         if previous == nil {
             let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
@@ -98,7 +102,7 @@ extension MapViewPresenter: UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
+        view.endEditing()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

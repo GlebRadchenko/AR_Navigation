@@ -22,7 +22,11 @@ class ApplicationManager: NSObject {
     var initialModule: ModuleInput!
     
     func configure() {
-        initialModule = try? ARViewRouter.moduleInput(with: initialViewController)
+        do {
+            initialModule = try ARViewRouter.moduleInput(with: initialViewController)
+        } catch {
+            debugPrint(error)
+        }
     }
     
     override public func awakeAfter(using aDecoder: NSCoder) -> Any? {
@@ -33,3 +37,4 @@ class ApplicationManager: NSObject {
 extension ApplicationManager: UIApplicationDelegate {
     
 }
+

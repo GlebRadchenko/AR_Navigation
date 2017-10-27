@@ -16,7 +16,7 @@ extension UITableView {
     
     func registerHeaderFooter(_ viewType: Reusable.Type, suplementaryViewOfKind: String) {
         let nib = UINib.nib(for: viewType)
-        self.register(nib, forHeaderFooterViewReuseIdentifier: viewType.reuseIdentifier)
+        register(nib, forHeaderFooterViewReuseIdentifier: viewType.reuseIdentifier)
     }
     
     func registerCellClass(_ cellType: Reusable.Type) {
