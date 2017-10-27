@@ -68,6 +68,15 @@ extension NavigationManager {
         }
     }
     
+    func requestPlaces(for coordinates: CLLocationCoordinate2D, callback: @escaping (_ mark: CLPlacemark?, _ error: Error?) -> Void) {
+        let geocoder = CLGeocoder()
+        let location = CLLocation(latitude: coordinates.latitude, longitude: coordinates.longitude)
+        
+        geocoder.reverseGeocodeLocation(location) { (placeMarks, error) in
+            callback(placeMarks?.first, error)
+        }
+    }
+    
     func requestPlaces(for text: String, from location: CLLocation?, callback: @escaping (_ region: MKCoordinateRegion, _ items: [MKMapItem]) -> Void) {
         let request = MKLocalSearchRequest()
         request.naturalLanguageQuery = text

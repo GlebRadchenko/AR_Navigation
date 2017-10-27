@@ -88,8 +88,7 @@ extension MapViewPresenter: UISearchBarDelegate {
             guard let wSelf = self else { return }
             items.forEach { (item) in
                 
-                let annotation = MKPointAnnotation()
-                annotation.coordinate = item.placemark.coordinate
+                let annotation = MapAnnotation(coordinate: item.placemark.coordinate)
                 annotation.title = item.placemark.name
                 
                 if let city = item.placemark.locality, let area = item.placemark.administrativeArea {

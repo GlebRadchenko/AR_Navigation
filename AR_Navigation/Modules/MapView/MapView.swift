@@ -233,7 +233,16 @@ extension MapViewController: UICollectionViewDataSource {
 }
 
 extension MapViewController: MKMapViewDelegate {
-    //public func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView?
+    public func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard let mapAnnotation = annotation as? MapAnnotation else { return nil }
+        
+        let annotationView: MKMarkerAnnotationView = mapView.dequeueReusableAnnotationView() ?? MKMarkerAnnotationView(annotation: mapAnnotation)
+        annotationView.animatesWhenAdded = true
+        annotationView.markerTintColor = MKPinAnnotationView.purplePinColor()
+        annotationView.isDraggable = true
+        
+        return annotationView
+    }
     
     public func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
         guard let userLocationAnnotation = views.first(where: { $0.annotation is MKUserLocation }) else { return }
@@ -251,9 +260,7 @@ extension MapViewController: MKMapViewDelegate {
         
     }
     
-    
     public func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, didChange newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
-        
     }
 }
 
