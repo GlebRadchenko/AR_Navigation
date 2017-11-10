@@ -1,0 +1,1 @@
+Place templates folder to /Library/Developer/Xcode/Templates/File\ Templates/

@@ -233,10 +233,10 @@
 			isa = PBXGroup;
 			children = (
 				F79F164D1F811AC200B6ABF6 /* Application */,
+				F77B32731F781DB2004259B8 /* Modules */,
 				F7C92C0A1F80ED6E00A5A2F5 /* Extensions */,
 				F7C92C0B1F80ED6E00A5A2F5 /* Protocols */,
 				F7ED61CF1F8252CE00EE3224 /* Controllers */,
-				F77B32731F781DB2004259B8 /* Modules */,
 				F77DF6C61F7810EE00E4EC42 /* Managers */,
 				F77DF6C31F7810EE00E4EC42 /* Models */,
 				F77DF6C01F7810EE00E4EC42 /* Resources */,
