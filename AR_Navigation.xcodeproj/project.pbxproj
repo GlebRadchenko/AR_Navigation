@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		F71033F81F80CBE90074F6E8 /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71033F71F80CBE90074F6E8 /* NavigationManager.swift */; };
+		F71A08271FB8687E008B259C /* MatrixTransformations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71A08261FB8687E008B259C /* MatrixTransformations.swift */; };
+		F71A082B1FB873A2008B259C /* DirectionNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71A082A1FB873A2008B259C /* DirectionNode.swift */; };
+		F71A082D1FB8788B008B259C /* SphereNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71A082C1FB8788B008B259C /* SphereNode.swift */; };
+		F71A082F1FB878A7008B259C /* AnnotationNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71A082E1FB878A7008B259C /* AnnotationNode.swift */; };
 		F73F3B0B1FA3372600D3622E /* UIStoryboard+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73F3B0A1FA3372600D3622E /* UIStoryboard+Extensions.swift */; };
 		F77B32691F78183A004259B8 /* JsonMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F77B32641F781827004259B8 /* JsonMapper.framework */; };
 		F77B326A1F78183A004259B8 /* JsonMapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F77B32641F781827004259B8 /* JsonMapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -18,6 +22,7 @@
 		F77DF6CF1F7810EF00E4EC42 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F77DF6C81F7810EE00E4EC42 /* LaunchScreen.storyboard */; };
 		F77DF70B1F78135300E4EC42 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F77DF70A1F78135300E4EC42 /* MapKit.framework */; };
 		F7800B3A1F813FD500998A68 /* KeyboardEventsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7800B391F813FD500998A68 /* KeyboardEventsManager.swift */; };
+		F787BFFE1FB7790900079C40 /* CLLocationCoordinate2D+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F787BFFD1FB7790900079C40 /* CLLocationCoordinate2D+Extensions.swift */; };
 		F79F163F1F81117000B6ABF6 /* ARViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79F163E1F81117000B6ABF6 /* ARViewPresenter.swift */; };
 		F79F16441F81117D00B6ABF6 /* ARViewInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79F16431F81117D00B6ABF6 /* ARViewInteractor.swift */; };
 		F79F16461F81118800B6ABF6 /* ARViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79F16451F81118800B6ABF6 /* ARViewRouter.swift */; };
@@ -25,6 +30,7 @@
 		F79F164A1F81133600B6ABF6 /* Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79F16491F81133600B6ABF6 /* Interactor.swift */; };
 		F79F164C1F81134700B6ABF6 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79F164B1F81134700B6ABF6 /* View.swift */; };
 		F79F164F1F811AED00B6ABF6 /* ApplicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79F164E1F811AED00B6ABF6 /* ApplicationManager.swift */; };
+		F79F9FB91FB77ED80014773A /* SCNVector3+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79F9FB81FB77ED80014773A /* SCNVector3+Extensions.swift */; };
 		F7BAFD641F827E33004734DA /* SearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BAFD621F827E33004734DA /* SearchResultTableViewCell.swift */; };
 		F7BAFD651F827E33004734DA /* SearchResultTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7BAFD631F827E33004734DA /* SearchResultTableViewCell.xib */; };
 		F7BAFD691F827E54004734DA /* UITableView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BAFD681F827E54004734DA /* UITableView+Reusable.swift */; };
@@ -104,6 +110,10 @@
 
 /* Begin PBXFileReference section */
 		F71033F71F80CBE90074F6E8 /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
+		F71A08261FB8687E008B259C /* MatrixTransformations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixTransformations.swift; sourceTree = "<group>"; };
+		F71A082A1FB873A2008B259C /* DirectionNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionNode.swift; sourceTree = "<group>"; };
+		F71A082C1FB8788B008B259C /* SphereNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphereNode.swift; sourceTree = "<group>"; };
+		F71A082E1FB878A7008B259C /* AnnotationNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationNode.swift; sourceTree = "<group>"; };
 		F73F3B0A1FA3372600D3622E /* UIStoryboard+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+Extensions.swift"; sourceTree = "<group>"; };
 		F77B325D1F781827004259B8 /* JsonMapper.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JsonMapper.xcodeproj; path = JsonMapper/JsonMapper/JsonMapper.xcodeproj; sourceTree = "<group>"; };
 		F77B327A1F782234004259B8 /* ARViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
@@ -117,6 +127,7 @@
 		F77DF6C91F7810EF00E4EC42 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F77DF70A1F78135300E4EC42 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		F7800B391F813FD500998A68 /* KeyboardEventsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardEventsManager.swift; sourceTree = "<group>"; };
+		F787BFFD1FB7790900079C40 /* CLLocationCoordinate2D+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Extensions.swift"; sourceTree = "<group>"; };
 		F79F163E1F81117000B6ABF6 /* ARViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewPresenter.swift; sourceTree = "<group>"; };
 		F79F16431F81117D00B6ABF6 /* ARViewInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewInteractor.swift; sourceTree = "<group>"; };
 		F79F16451F81118800B6ABF6 /* ARViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewRouter.swift; sourceTree = "<group>"; };
@@ -124,6 +135,7 @@
 		F79F16491F81133600B6ABF6 /* Interactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interactor.swift; sourceTree = "<group>"; };
 		F79F164B1F81134700B6ABF6 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		F79F164E1F811AED00B6ABF6 /* ApplicationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationManager.swift; sourceTree = "<group>"; };
+		F79F9FB81FB77ED80014773A /* SCNVector3+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNVector3+Extensions.swift"; sourceTree = "<group>"; };
 		F7BAFD621F827E33004734DA /* SearchResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTableViewCell.swift; sourceTree = "<group>"; };
 		F7BAFD631F827E33004734DA /* SearchResultTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchResultTableViewCell.xib; sourceTree = "<group>"; };
 		F7BAFD681F827E54004734DA /* UITableView+Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Reusable.swift"; sourceTree = "<group>"; };
@@ -232,6 +244,7 @@
 		F77DF69C1F780EFA00E4EC42 /* AR_Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				F787BFF81FB775C600079C40 /* Nodes */,
 				F79F164D1F811AC200B6ABF6 /* Application */,
 				F77B32731F781DB2004259B8 /* Modules */,
 				F7C92C0A1F80ED6E00A5A2F5 /* Extensions */,
@@ -308,6 +321,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		F787BFF81FB775C600079C40 /* Nodes */ = {
+			isa = PBXGroup;
+			children = (
+				F71A082A1FB873A2008B259C /* DirectionNode.swift */,
+				F71A082C1FB8788B008B259C /* SphereNode.swift */,
+				F71A082E1FB878A7008B259C /* AnnotationNode.swift */,
+			);
+			path = Nodes;
+			sourceTree = "<group>";
+		};
 		F79F164D1F811AC200B6ABF6 /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -361,6 +384,9 @@
 				F7BAFD681F827E54004734DA /* UITableView+Reusable.swift */,
 				F73F3B0A1FA3372600D3622E /* UIStoryboard+Extensions.swift */,
 				F7FBE2991FA37D28008830AE /* MKMapView+Reusable.swift */,
+				F787BFFD1FB7790900079C40 /* CLLocationCoordinate2D+Extensions.swift */,
+				F79F9FB81FB77ED80014773A /* SCNVector3+Extensions.swift */,
+				F71A08261FB8687E008B259C /* MatrixTransformations.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -529,12 +555,14 @@
 			files = (
 				F7C92C041F80E85400A5A2F5 /* Presenter.swift in Sources */,
 				F7C92C351F80FCF900A5A2F5 /* FloatingPoint+Extensions.swift in Sources */,
+				F71A082F1FB878A7008B259C /* AnnotationNode.swift in Sources */,
 				F79F164A1F81133600B6ABF6 /* Interactor.swift in Sources */,
 				F7C92C0D1F80ED7F00A5A2F5 /* Reusable.swift in Sources */,
 				F7C92C291F80F32700A5A2F5 /* NSAttributedString+Extensions.swift in Sources */,
 				F7C92C081F80ED2300A5A2F5 /* MapActionCollectionViewCell.swift in Sources */,
 				F73F3B0B1FA3372600D3622E /* UIStoryboard+Extensions.swift in Sources */,
 				F7C92BFB1F80E59700A5A2F5 /* MapViewPresenter.swift in Sources */,
+				F71A082D1FB8788B008B259C /* SphereNode.swift in Sources */,
 				F7FBE29A1FA37D28008830AE /* MKMapView+Reusable.swift in Sources */,
 				F7C92C3C1F81054D00A5A2F5 /* UIView+Extensions.swift in Sources */,
 				F7C92BFF1F80E5FF00A5A2F5 /* MapViewRouter.swift in Sources */,
@@ -545,6 +573,7 @@
 				F77B327B1F782234004259B8 /* ARViewController.swift in Sources */,
 				F7C92C311F80F92B00A5A2F5 /* BottomSlideContainer.swift in Sources */,
 				F79F16461F81118800B6ABF6 /* ARViewRouter.swift in Sources */,
+				F71A08271FB8687E008B259C /* MatrixTransformations.swift in Sources */,
 				F7800B3A1F813FD500998A68 /* KeyboardEventsManager.swift in Sources */,
 				F79F16441F81117D00B6ABF6 /* ARViewInteractor.swift in Sources */,
 				F7BAFD641F827E33004734DA /* SearchResultTableViewCell.swift in Sources */,
@@ -555,9 +584,12 @@
 				F7FBE2941FA3777C008830AE /* MapAnnotationView.swift in Sources */,
 				F7C92C151F80EF4000A5A2F5 /* UICollectionView+Reusable.swift in Sources */,
 				F7C92BFD1F80E5E900A5A2F5 /* MapViewInteractor.swift in Sources */,
+				F79F9FB91FB77ED80014773A /* SCNVector3+Extensions.swift in Sources */,
 				F7ED61D31F8252EB00EE3224 /* SearchTableViewController.swift in Sources */,
 				F7C92BF71F80D72F00A5A2F5 /* MapView.swift in Sources */,
+				F787BFFE1FB7790900079C40 /* CLLocationCoordinate2D+Extensions.swift in Sources */,
 				F7FFFB421F8165540039A39B /* MapState.swift in Sources */,
+				F71A082B1FB873A2008B259C /* DirectionNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
