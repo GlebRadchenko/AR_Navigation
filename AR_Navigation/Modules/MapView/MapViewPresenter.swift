@@ -11,8 +11,16 @@ import MapKit
 import CoreLocation
 
 
+
 protocol MapViewModuleInput: ModuleInput {
+    var moduleOutput: MapViewModuleOutput? { get set }
     var viewController: UIViewController! { get }
+    
+    
+}
+
+protocol MapViewModuleOutput: class {
+    
 }
 
 class MapViewPresenter: NSObject, Presenter, MapViewModuleInput {
@@ -24,6 +32,8 @@ class MapViewPresenter: NSObject, Presenter, MapViewModuleInput {
     var interactor: Interactor!
     var router: Router!
     var view: View!
+    
+    weak var moduleOutput: MapViewModuleOutput?
     
     var viewController: UIViewController! {
         return view as? UIViewController

@@ -8,6 +8,8 @@
 
 import ARKit
 import SceneKit
+import CoreLocation
+import MapKit
 
 class ARViewPresenter: NSObject, Presenter {
     typealias View = ARViewViewInput
@@ -59,6 +61,7 @@ extension ARViewPresenter: ARViewViewOutput {
     func viewDidLoad() {
         sceneViewManager = ARSceneViewManager(with: view.sceneView)
         mapModule = try? MapViewRouter.moduleInput()
+        mapModule.moduleOutput = self
         
         view.embedToContainer(viewController: mapModule.viewController)
         view.toggleContainer(open: true, animated: true)
@@ -71,6 +74,10 @@ extension ARViewPresenter: ARViewViewOutput {
     func viewWillDisappear() {
         sceneViewManager?.pauseSession()
     }
+}
+
+extension ARViewPresenter: MapViewModuleOutput {
+    
 }
 
 extension ARViewPresenter: ARViewInteractorOutput {
