@@ -77,7 +77,17 @@ extension ARViewPresenter: ARViewViewOutput {
 }
 
 extension ARViewPresenter: MapViewModuleOutput {
+    func handleMapContainerChanges() {
+        
+    }
     
+    func handleHeadingUpdate(newHeading: CLHeading) {
+        
+    }
+    
+    func handleLocationUpdate(newLocation: CLLocation, previous: CLLocation?) {
+        
+    }
 }
 
 extension ARViewPresenter: ARViewInteractorOutput {

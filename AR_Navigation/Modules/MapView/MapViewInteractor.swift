@@ -15,6 +15,7 @@ protocol MapViewInteractorInput: class {
     
     func launchUpdatingLocationAndHeading()
     func requestPlaces(for text: String, callback: @escaping (_ region: MKCoordinateRegion, _ items: [MKMapItem]) -> Void)
+    func requestPlaces(for coordinate: CLLocationCoordinate2D, callback: @escaping (CLPlacemark?) -> Void)
 }
 
 protocol MapViewInteractorOutput: class {
@@ -42,6 +43,13 @@ extension MapViewInteractor: MapViewInteractorInput {
     
     func requestPlaces(for text: String, callback: @escaping (_ region: MKCoordinateRegion, _ items: [MKMapItem]) -> Void) {
         navigationManager.requestPlaces(for: text, from: storedLocations.last, callback: callback)
+    }
+    
+    func requestPlaces(for coordinate: CLLocationCoordinate2D, callback: @escaping (CLPlacemark?) -> Void) {
+        navigationManager.requestPlaces(for: coordinate) { (placemark, error) in
+            if let error = error { debugPrint(error) }
+            callback(placemark)
+        }
     }
 }
 

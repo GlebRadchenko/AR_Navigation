@@ -10,17 +10,16 @@ import Foundation
 import MapKit
 import CoreLocation
 
-
-
 protocol MapViewModuleInput: ModuleInput {
     var moduleOutput: MapViewModuleOutput? { get set }
     var viewController: UIViewController! { get }
-    
-    
+    var moduleContainer: MapModuleContainer { get set }
 }
 
 protocol MapViewModuleOutput: class {
-    
+    func handleMapContainerChanges()
+    func handleHeadingUpdate(newHeading: CLHeading)
+    func handleLocationUpdate(newLocation: CLLocation, previous: CLLocation?)
 }
 
 class MapViewPresenter: NSObject, Presenter, MapViewModuleInput {
@@ -39,28 +38,46 @@ class MapViewPresenter: NSObject, Presenter, MapViewModuleInput {
         return view as? UIViewController
     }
     
-    var state: MapState = .pin
-    
-    lazy var searchTable: SearchTableViewController<MKMapItem> = SearchTableViewController<MKMapItem>()
+    var state: MapAction = .pin
+    var moduleContainer = MapModuleContainer()
 }
 
 extension MapViewPresenter: MapViewViewOutput {
     
     func viewDidLoad() {
         view.updateViews(for: state, animated: false)
-        view.updateActions(with: MapState.actions(except: state))
+        view.updateActions(with: MapAction.actions(except: state))
         
         interactor.launchUpdatingLocationAndHeading()
     }
     
     func handleActionSelection(at index: Int) {
-        state = MapState.actions(except: state)[index]
+        state = MapAction.actions(except: state)[index]
         view.updateViews(for: state, animated: true)
-        view.updateActions(with: MapState.actions(except: state))
+        view.updateActions(with: MapAction.actions(except: state))
+        
+        if state == .clear {
+            view.clearAllPins()
+            moduleContainer.clear()
+            moduleOutput?.handleMapContainerChanges()
+        }
     }
     
     func handleGoAction() {
+        //TODO: - Add handling of container and build route,
+        //then add route to container and call output
         view.endEditing()
+        
+        switch state {
+        case .pin:
+            break
+        case .searchPin:
+            break
+        case .searchRoute:
+            break
+        case .clear:
+            break
+        }
     }
     
     func handleLocationAction() {
@@ -71,11 +88,83 @@ extension MapViewPresenter: MapViewViewOutput {
         
         view.mapView.setRegion(region, animated: true)
     }
+    
+    func handleDragAction(for container: LocationContainer) {
+        processAddAnnotation(for: container)
+        moduleOutput?.handleMapContainerChanges()
+    }
+    
+    func handleTapAction(for location: CLLocationCoordinate2D) {
+        switch state {
+        case .pin:
+            let container = LocationContainer(coordinate: location)
+            moduleContainer.add(new: container)
+            processAddAnnotation(for: container)
+            moduleOutput?.handleMapContainerChanges()
+        default:
+            break
+        }
+    }
+    
+    fileprivate func processAddAnnotation(for container: LocationContainer) {
+        interactor.requestPlaces(for: container.coordinate) { [weak self] (placemark) in
+            guard let wSelf = self else { return }
+            
+            DispatchQueue.main.async {
+                guard let placemark = placemark else { wSelf.view.removeAnnotation(for: container); return }
+                wSelf.view.addOrUpdateAnnotation(for: container, decoratorBlock: { (annotation) in
+                    annotation.title = placemark.mainInfo
+                    annotation.subtitle = placemark.subInfo
+                })
+            }
+        }
+    }
+    
+    fileprivate func handleMapItemSelection(item: MKMapItem, searchBarType: SearchBarType?) {
+        let container = LocationContainer(coordinate: item.placemark.coordinate)
+        
+        if let searchBarType = searchBarType {
+            switch state {
+            case .searchPin:
+                if let old = moduleContainer.endLocation {
+                    view.removeAnnotation(for: old)
+                }
+                moduleContainer.endLocation = container
+            case .searchRoute:
+                switch searchBarType {
+                case .source:
+                    if let old = moduleContainer.startLocation {
+                        view.removeAnnotation(for: old)
+                    }
+                    moduleContainer.startLocation = container
+                case .destination:
+                    if let old = moduleContainer.endLocation {
+                        view.removeAnnotation(for: old)
+                    }
+                    moduleContainer.endLocation = container
+                default:
+                    break
+                }
+            default:
+                break
+            }
+        } else {
+            moduleContainer.add(new: container)
+        }
+        
+        moduleOutput?.handleMapContainerChanges()
+        
+        view.addOrUpdateAnnotation(for: container) { (annotation) in
+            annotation.title = item.mainInfo
+            annotation.subtitle = item.subInfo
+        }
+    }
 }
 
 extension MapViewPresenter: MapViewInteractorOutput {
     func handleHeadingUpdate(newHeading: CLHeading) {
         view.updateUserHeading(newHeading)
+        moduleOutput?.handleHeadingUpdate(newHeading: newHeading)
     }
     
     func handleLocationUpdate(newLocation: CLLocation, previous: CLLocation?) {
@@ -86,7 +175,7 @@ extension MapViewPresenter: MapViewInteractorOutput {
             view.mapView.setRegion(region, animated: true)
         }
         
-        //process with ar
+        moduleOutput?.handleLocationUpdate(newLocation: newLocation, previous: previous)
     }
 }
 
@@ -94,24 +183,52 @@ extension MapViewPresenter: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty { return }
         
-        interactor.requestPlaces(for: searchText) { [weak self] (region, items) in
-            guard let wSelf = self else { return }
-            items.forEach { (item) in
-                
-                let annotation = MapAnnotation(coordinate: item.placemark.coordinate)
-                annotation.title = item.placemark.name
-                
-                if let city = item.placemark.locality, let area = item.placemark.administrativeArea {
-                    annotation.subtitle = city + ". " + area
-                }
-                
-                wSelf.view.mapView.addAnnotation(annotation)
-            }
-        }
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         view.endEditing()
+        
+        let searchBarType = view.type(for: searchBar)
+        guard let text = searchBar.text else { return }
+        guard !text.isEmpty else { return }
+        
+        view.showActivityIndicator()
+        interactor.requestPlaces(for: text) { [weak self] (region, mapItems) in
+            guard let wSelf = self else { return }
+            
+            DispatchQueue.main.async {
+                let vc = wSelf.preparedTableViewController(items: mapItems)
+                vc.onSelectItem = { [weak vc] (mapItem) in
+                    guard let controller = vc else { return }
+                    wSelf.handleMapItemSelection(item: mapItem, searchBarType: searchBarType)
+                    
+                    wSelf.view.mapView.setRegion(region, animated: true)
+                    wSelf.view.mapView.setCenter(mapItem.placemark.coordinate, animated: true)
+                    
+                    controller.dismiss(animated: true, completion: nil)
+                }
+                
+                wSelf.view.present(vc: vc,
+                                   popoverSize: CGSize(width: 300, height: 200 * .goldenSection),
+                                   from: searchBar,
+                                   arrowDirections: [.down, .left, .right]) {
+                                    vc.tableView.reloadData()
+                }
+            }
+        }
+    }
+    
+    func preparedTableViewController(items: [MKMapItem]) -> SearchTableViewController<MKMapItem> {
+        let tableViewController = SearchTableViewController<MKMapItem>()
+        tableViewController.multipleSelectionEnabled = false
+        tableViewController.reload(with: items)
+        
+        tableViewController.onHide = { [weak self] in
+            guard let wSelf = self else { return }
+            wSelf.view.hideActivityIndicator()
+        }
+        
+        return tableViewController
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

@@ -11,11 +11,11 @@ import MapKit
 
 extension MKMapItem: SearchResultDisplayable {
     var mainInfo: String {
-        return ""
+        return placemark.mainInfo
     }
     
     var subInfo: String {
-        return ""
+        return placemark.subInfo
     }
 }
 
@@ -29,6 +29,7 @@ class SearchTableViewController<T: SearchResultDisplayable>: UITableViewControll
     }
     
     var onSelectItem: ((_ item: T) -> Void)?
+    var onHide: (() -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +40,12 @@ class SearchTableViewController<T: SearchResultDisplayable>: UITableViewControll
         
         tableView.register(SearchResultTableViewCell.self)
         tableView.allowsSelection = true
+        tableView.separatorStyle = .none
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        onHide?()
     }
     
     func reload(with items: [T], multipleSelectionEnabled: Bool = false) {

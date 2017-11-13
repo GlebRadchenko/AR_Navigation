@@ -10,13 +10,17 @@ import UIKit
 import MapKit
 import CoreLocation
 
-protocol MapViewViewInput: class {
+protocol MapViewViewInput: PopoverDisplayer {
     var mapView: MKMapView! { get }
     
     func endEditing()
     func type(for searchBar: UISearchBar) -> SearchBarType
     
-    func updateViews(for state: MapState, animated: Bool)
+    func addOrUpdateAnnotation(for container: LocationContainer, decoratorBlock: @escaping (_ annotation: MapAnnotation) -> Void)
+    func removeAnnotation(for container: LocationContainer)
+    func clearAllPins()
+    
+    func updateViews(for state: MapAction, animated: Bool)
     func updateActions(with items: [MapActionDisplayable])
     func updateUserHeading(_ heading: CLHeading)
     
@@ -30,6 +34,9 @@ protocol MapViewViewOutput: class, UISearchBarDelegate {
     func handleActionSelection(at index: Int)
     func handleGoAction()
     func handleLocationAction()
+    
+    func handleDragAction(for container: LocationContainer)
+    func handleTapAction(for location: CLLocationCoordinate2D)
 }
 
 class MapViewController: UIViewController, View {
@@ -64,6 +71,9 @@ class MapViewController: UIViewController, View {
         
         configureViews()
         output.viewDidLoad()
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(tap:)))
+        mapView.addGestureRecognizer(tap)
     }
     
     func configureViews() {
@@ -90,6 +100,12 @@ class MapViewController: UIViewController, View {
         mapView.showsUserLocation = true
         mapView.showsPointsOfInterest = true
         mapView.userTrackingMode = .followWithHeading
+    }
+    
+    @objc func handleTap(tap: UITapGestureRecognizer) {
+        let tapLocation = tap.location(in: mapView)
+        let coordinate = mapView.convert(tapLocation, toCoordinateFrom: view)
+        output.handleTapAction(for: coordinate)
     }
     
     @IBAction func goButtonTouched(_ sender: UIButton) {
@@ -146,7 +162,11 @@ extension MapViewController: MapViewViewInput {
         return .unknown
     }
     
-    func updateViews(for state: MapState, animated: Bool) {
+    func clearAllPins() {
+        mapView.removeAnnotations(mapView.annotations)
+    }
+    
+    func updateViews(for state: MapAction, animated: Bool) {
         visualEffectTopConstraint.constant = state.shouldDisplaySearchPanel
             ? 0
             : -BottomSlideContainer.topViewHeight
@@ -166,6 +186,22 @@ extension MapViewController: MapViewViewInput {
                            animations: { self.view.layoutIfNeeded() },
                            completion: nil)
         }
+    }
+    
+    func addOrUpdateAnnotation(for container: LocationContainer, decoratorBlock: @escaping (_ annotation: MapAnnotation) -> Void) {
+        removeAnnotation(for: container)
+        let newAnnotation = MapAnnotation(container: container)
+        decoratorBlock(newAnnotation)
+        mapView.addAnnotation(newAnnotation)
+    }
+    
+    func removeAnnotation(for container: LocationContainer) {
+        guard let removing = mapView.annotations.first(where: { (annotation) -> Bool in
+            guard let mapAnnotation = annotation as? MapAnnotation else { return false }
+            return mapAnnotation.locationContainer.id == container.id
+        }) else { return }
+        
+        mapView.removeAnnotation(removing)
     }
     
     func updateActions(with items: [MapActionDisplayable]) {
@@ -237,6 +273,7 @@ extension MapViewController: MKMapViewDelegate {
         guard let mapAnnotation = annotation as? MapAnnotation else { return nil }
         
         let annotationView: MKMarkerAnnotationView = mapView.dequeueReusableAnnotationView() ?? MKMarkerAnnotationView(annotation: mapAnnotation)
+
         annotationView.animatesWhenAdded = true
         annotationView.markerTintColor = MKPinAnnotationView.purplePinColor()
         annotationView.isDraggable = true
@@ -261,6 +298,13 @@ extension MapViewController: MKMapViewDelegate {
     }
     
     public func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, didChange newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
+        guard let annotation = view.annotation as? MapAnnotation else { return }
+        switch newState {
+        case .ending, .canceling:
+            annotation.locationContainer.coordinate = annotation.coordinate
+            output?.handleDragAction(for: annotation.locationContainer)
+        default: break
+        }
     }
 }
 

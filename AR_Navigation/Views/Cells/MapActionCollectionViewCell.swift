@@ -13,7 +13,7 @@ protocol MapActionDisplayable {
     var stringValue: String { get }
 }
 
-extension MapState: MapActionDisplayable { }
+extension MapAction: MapActionDisplayable { }
 
 class MapActionCollectionViewCell: UICollectionViewCell, Reusable {
 

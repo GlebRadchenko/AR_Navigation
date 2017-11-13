@@ -8,36 +8,36 @@
 
 import Foundation
 
-enum MapState {
+enum MapAction {
     case pin
     case searchPin
-    case route
     case searchRoute
+    case clear
     
-    static var actions: [MapState] {
-        return [pin, searchPin, route, searchRoute]
+    static var actions: [MapAction] {
+        return [pin, searchPin, searchRoute, clear]
     }
     
-    static func actions(except: MapState) -> [MapState] {
+    static func actions(except: MapAction) -> [MapAction] {
         return actions.filter { $0 != except }
     }
     
     var stringValue: String {
         switch self {
         case .pin:
-            return "Select place"
+            return "Select places"
         case .searchPin:
             return "Find place"
-        case .route:
-            return "Select route"
         case .searchRoute:
             return "Search route"
+        case .clear:
+            return "Clear"
         }
     }
     
     var shouldDisplaySearchPanel: Bool {
         switch self {
-        case .pin, .route:
+        case .pin, .clear:
             return false
         default:
             return true

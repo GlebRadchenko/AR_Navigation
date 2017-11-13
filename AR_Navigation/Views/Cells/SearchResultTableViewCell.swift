@@ -20,6 +20,7 @@ class SearchResultTableViewCell: UITableViewCell, Reusable {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        contentView.backgroundColor = .clear
     }
     
     func configure(with item: SearchResultDisplayable) {
