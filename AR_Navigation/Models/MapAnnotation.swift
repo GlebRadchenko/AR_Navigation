@@ -15,11 +15,11 @@ class MapAnnotation: NSObject, MKAnnotation {
     var title: String?
     var subtitle: String?
     
-    var locationContainer: LocationContainer
+    var locationContainer: Container<CLLocationCoordinate2D>
     
-    init(container: LocationContainer) {
+    init(container: Container<CLLocationCoordinate2D>) {
         self.locationContainer = container
-        self.coordinate = container.coordinate
+        self.coordinate = container.element
     }
 }
 

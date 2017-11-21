@@ -12,11 +12,14 @@ import MapKit
 
 class MapModuleContainer {
     
-    var startLocation: LocationContainer?
-    var endLocation: LocationContainer?
-    var selectedLocations: [LocationContainer] = []
+    var startLocation: Container<CLLocationCoordinate2D>?
+    var endLocation: Container<CLLocationCoordinate2D>?
+    var selectedLocations: [Container<CLLocationCoordinate2D>] = []
     
-    var routes: [MKRoute] = []
+    var routeColors: [String: UIColor] = [:]
+    var routes: [Container<MKRoute>] = [] {
+        didSet { updateRouteColors() }
+    }
     
     func clear() {
         startLocation = nil
@@ -25,30 +28,49 @@ class MapModuleContainer {
         routes = []
     }
     
-    func add(new container: LocationContainer) {
+    func add(new container: Container<CLLocationCoordinate2D>) {
         selectedLocations.append(container)
     }
     
-    func prepareForRoute(with start: LocationContainer?) {
+    func prepareForRoute(with start: Container<CLLocationCoordinate2D>?) {
         if let start = start {
             startLocation = start
         } else if !selectedLocations.isEmpty {
             startLocation = selectedLocations.removeFirst()
         }
     }
+    
+    func extractColor(for route: Container<MKRoute>) -> UIColor {
+        let color = routeColors[route.id] ?? UIColor.randomPrettyColor
+        routeColors[route.id] = color
+        return color
+    }
+    
+    func updateRouteColors() {
+        routeColors.removeAll()
+        routes.forEach { routeColors[$0.id] = UIColor.randomPrettyColor }
+    }
 }
 
-class LocationContainer: Hashable {
+class Container<Element>: Hashable {
     var id = UUID().uuidString
     var hashValue: Int { return id.hashValue }
     
-    static func ==(lhs: LocationContainer, rhs: LocationContainer) -> Bool {
+    static func ==(lhs: Container, rhs: Container) -> Bool {
         return lhs.id == rhs.id
     }
     
-    var coordinate: CLLocationCoordinate2D
+    var element: Element
     
-    init(coordinate: CLLocationCoordinate2D) {
-        self.coordinate = coordinate
+    init(element: Element) {
+        self.element = element
+    }
+    
+    static func container<T>(for element: T) -> Container<T> {
+        return Container<T>(element: element)
+    }
+    
+    static func containers<T>(for elements: [T]) -> [Container<T>] {
+        return elements.map { container(for: $0) }
     }
 }

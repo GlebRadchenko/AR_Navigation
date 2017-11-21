@@ -82,9 +82,9 @@ extension MapViewPresenter: MapViewViewOutput {
     func handleGoAction() {
         view.endEditing()
         
-        var lastLocationContainer: LocationContainer? = nil
+        var lastLocationContainer: Container<CLLocationCoordinate2D>? = nil
         if let lastLocation = interactor.lastLocation {
-            lastLocationContainer = LocationContainer(coordinate: lastLocation.coordinate)
+            lastLocationContainer = Container(element: lastLocation.coordinate)
         }
         
         switch state {
@@ -97,7 +97,7 @@ extension MapViewPresenter: MapViewViewOutput {
         buildRouteIfNeeded()
     }
     
-    func handleDragAction(for container: LocationContainer) {
+    func handleDragAction(for container: Container<CLLocationCoordinate2D>) {
         processAddAnnotation(for: container)
         
         if moduleContainer.routes.isEmpty {
@@ -110,7 +110,7 @@ extension MapViewPresenter: MapViewViewOutput {
     func handleLongPressAction(for location: CLLocationCoordinate2D) {
         switch state {
         case .pin:
-            let container = LocationContainer(coordinate: location)
+            let container = Container(element: location)
             moduleContainer.add(new: container)
             processAddAnnotation(for: container)
             moduleOutput?.handleMapContainerChanges()
@@ -119,8 +119,8 @@ extension MapViewPresenter: MapViewViewOutput {
         }
     }
     
-    fileprivate func processAddAnnotation(for container: LocationContainer) {
-        interactor.requestPlaces(for: container.coordinate) { [weak self] (placemark) in
+    fileprivate func processAddAnnotation(for container: Container<CLLocationCoordinate2D>) {
+        interactor.requestPlaces(for: container.element) { [weak self] (placemark) in
             guard let wSelf = self else { return }
             
             DispatchQueue.main.async {
@@ -134,7 +134,7 @@ extension MapViewPresenter: MapViewViewOutput {
     }
     
     fileprivate func handleMapItemSelection(item: MKMapItem, searchBarType: SearchBarType?) {
-        let container = LocationContainer(coordinate: item.placemark.coordinate)
+        let container = Container(element: item.placemark.coordinate)
         
         if let searchBarType = searchBarType {
             switch state {
@@ -172,6 +172,16 @@ extension MapViewPresenter: MapViewViewOutput {
             annotation.subtitle = item.subInfo
         }
     }
+    
+    func color(for overlay: MKOverlay) -> UIColor {
+        guard let routeContainer = moduleContainer.routes.first(where: { (container) -> Bool in
+            return container.element.polyline === overlay
+        }) else {
+            return UIColor.randomPrettyColor
+        }
+        
+        return moduleContainer.extractColor(for: routeContainer)
+    }
 }
 
 //MARK: - Routes managing
@@ -189,14 +199,14 @@ extension MapViewPresenter {
             return
         }
         
-        var locationContainers: [LocationContainer] = []
+        var locationContainers: [Container<CLLocationCoordinate2D>] = []
         
         if moduleContainer.startLocation != nil { locationContainers.append(start) }
         locationContainers.append(contentsOf: moduleContainer.selectedLocations)
         if moduleContainer.endLocation != nil { locationContainers.append(end) }
         
         view.showActivityIndicator()
-        interactor.requestRoutes(for: locationContainers.map { $0.coordinate },
+        interactor.requestRoutes(for: locationContainers.map { $0.element },
                                  routes: [],
                                  type: .walking) { [weak self] (routes, error) in
                                     guard let wSelf = self else { return }
@@ -205,7 +215,6 @@ extension MapViewPresenter {
                                     if let error = error { wSelf.moduleOutput?.handleMapModuleError(error) }
                                     
                                     let routes = routes ?? []
-                                    print(routes.count)
                                     DispatchQueue.main.async {
                                         wSelf.handleReceiveNewRoutes(routes)
                                         wSelf.moduleOutput?.handleMapContainerChanges()
@@ -225,9 +234,9 @@ extension MapViewPresenter {
     
     func updateRoutes(_ newRoutes: [MKRoute]) {
         clearRoutes()
-        moduleContainer.routes = newRoutes
-        moduleContainer.routes.forEach { (route) in
-            view.mapView.add(route.polyline, level: .aboveRoads)
+        moduleContainer.routes = Container<MKRoute>.containers(for: newRoutes)
+        moduleContainer.routes.forEach { (container) in
+            view.mapView.add(container.element.polyline, level: .aboveRoads)
         }
     }
 }
@@ -305,5 +314,3 @@ extension MapViewPresenter: UISearchBarDelegate {
         
     }
 }
-
-

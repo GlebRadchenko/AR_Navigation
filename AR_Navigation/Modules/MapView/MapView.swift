@@ -16,8 +16,8 @@ protocol MapViewViewInput: PopoverDisplayer {
     func endEditing()
     func type(for searchBar: UISearchBar) -> SearchBarType
     
-    func addOrUpdateAnnotation(for container: LocationContainer, decoratorBlock: @escaping (_ annotation: MapAnnotation) -> Void)
-    func removeAnnotation(for container: LocationContainer)
+    func addOrUpdateAnnotation(for container: Container<CLLocationCoordinate2D>, decoratorBlock: @escaping (_ annotation: MapAnnotation) -> Void)
+    func removeAnnotation(for container: Container<CLLocationCoordinate2D>)
     func clearAllPins()
     
     func updateViews(for state: MapAction, animated: Bool)
@@ -37,8 +37,10 @@ protocol MapViewViewOutput: class, UISearchBarDelegate {
     func handleGoAction()
     func handleLocationAction()
     
-    func handleDragAction(for container: LocationContainer)
+    func handleDragAction(for container: Container<CLLocationCoordinate2D>)
     func handleLongPressAction(for location: CLLocationCoordinate2D)
+    
+    func color(for overlay: MKOverlay) -> UIColor
 }
 
 class MapViewController: UIViewController, View {
@@ -197,14 +199,14 @@ extension MapViewController: MapViewViewInput {
         }
     }
     
-    func addOrUpdateAnnotation(for container: LocationContainer, decoratorBlock: @escaping (_ annotation: MapAnnotation) -> Void) {
+    func addOrUpdateAnnotation(for container: Container<CLLocationCoordinate2D>, decoratorBlock: @escaping (_ annotation: MapAnnotation) -> Void) {
         removeAnnotation(for: container)
         let newAnnotation = MapAnnotation(container: container)
         decoratorBlock(newAnnotation)
         mapView.addAnnotation(newAnnotation)
     }
     
-    func removeAnnotation(for container: LocationContainer) {
+    func removeAnnotation(for container: Container<CLLocationCoordinate2D>) {
         guard let removing = mapView.annotations.first(where: { (annotation) -> Bool in
             guard let mapAnnotation = annotation as? MapAnnotation else { return false }
             return mapAnnotation.locationContainer.id == container.id
@@ -290,7 +292,7 @@ extension MapViewController: MKMapViewDelegate {
         guard let mapAnnotation = annotation as? MapAnnotation else { return nil }
         
         let annotationView: MKMarkerAnnotationView = mapView.dequeueReusableAnnotationView() ?? MKMarkerAnnotationView(annotation: mapAnnotation)
-
+        
         annotationView.animatesWhenAdded = true
         annotationView.markerTintColor = MKPinAnnotationView.purplePinColor()
         annotationView.isDraggable = true
@@ -318,7 +320,7 @@ extension MapViewController: MKMapViewDelegate {
         guard let annotation = view.annotation as? MapAnnotation else { return }
         switch newState {
         case .ending, .canceling:
-            annotation.locationContainer.coordinate = annotation.coordinate
+            annotation.locationContainer.element = annotation.coordinate
             output?.handleDragAction(for: annotation.locationContainer)
         default: break
         }
@@ -327,10 +329,11 @@ extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(overlay: overlay)
         
-        renderer.strokeColor = .randomPrettyColor
+        renderer.strokeColor = output?.color(for: overlay) ?? .randomPrettyColor
         renderer.lineWidth = 4.0
         renderer.lineDashPattern = [1, 10]
         
         return renderer
     }
 }
+
