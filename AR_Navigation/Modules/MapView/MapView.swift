@@ -73,6 +73,7 @@ class MapViewController: UIViewController, View {
         output.viewDidLoad()
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(tap:)))
+        tap.delegate = self
         mapView.addGestureRecognizer(tap)
     }
     
@@ -233,11 +234,15 @@ extension MapViewController: MapViewViewInput {
     }
     
     func showActivityIndicator() {
-        activityView.startAnimating()
+        DispatchQueue.main.async {
+            self.activityView.startAnimating()
+        }
     }
     
     func hideActivityIndicator() {
-        activityView.stopAnimating()
+        DispatchQueue.main.async {
+            self.activityView.stopAnimating()
+        }
     }
 }
 
@@ -305,6 +310,20 @@ extension MapViewController: MKMapViewDelegate {
             output?.handleDragAction(for: annotation.locationContainer)
         default: break
         }
+    }
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let renderer = MKPolylineRenderer(overlay: overlay)
+        //TODO: - add nice random colors
+        renderer.strokeColor = .blue
+        renderer.lineWidth = 4.0
+        return renderer
+    }
+}
+
+extension MapViewController: UIGestureRecognizerDelegate {
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return false
     }
 }
 

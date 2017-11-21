@@ -10,6 +10,11 @@ import Foundation
 import MapKit
 import CoreLocation
 
+
+enum MapModuleError: Error {
+    case invalidRoute
+}
+
 protocol MapViewModuleInput: ModuleInput {
     var moduleOutput: MapViewModuleOutput? { get set }
     var viewController: UIViewController! { get }
@@ -17,9 +22,10 @@ protocol MapViewModuleInput: ModuleInput {
 }
 
 protocol MapViewModuleOutput: class {
+    func handleMapModuleError(_ error: Error)
     func handleMapContainerChanges()
-    func handleHeadingUpdate(newHeading: CLHeading)
-    func handleLocationUpdate(newLocation: CLLocation, previous: CLLocation?)
+    func handleHeadingUpdate(_ newHeading: CLHeading)
+    func handleLocationUpdate(_ newLocation: CLLocation, previous: CLLocation?)
 }
 
 class MapViewPresenter: NSObject, Presenter, MapViewModuleInput {
@@ -51,35 +57,6 @@ extension MapViewPresenter: MapViewViewOutput {
         interactor.launchUpdatingLocationAndHeading()
     }
     
-    func handleActionSelection(at index: Int) {
-        state = MapAction.actions(except: state)[index]
-        view.updateViews(for: state, animated: true)
-        view.updateActions(with: MapAction.actions(except: state))
-        
-        if state == .clear {
-            view.clearAllPins()
-            moduleContainer.clear()
-            moduleOutput?.handleMapContainerChanges()
-        }
-    }
-    
-    func handleGoAction() {
-        //TODO: - Add handling of container and build route,
-        //then add route to container and call output
-        view.endEditing()
-        
-        switch state {
-        case .pin:
-            break
-        case .searchPin:
-            break
-        case .searchRoute:
-            break
-        case .clear:
-            break
-        }
-    }
-    
     func handleLocationAction() {
         guard let lastLocation = interactor.lastLocation else { return }
         
@@ -89,9 +66,45 @@ extension MapViewPresenter: MapViewViewOutput {
         view.mapView.setRegion(region, animated: true)
     }
     
+    func handleActionSelection(at index: Int) {
+        state = MapAction.actions(except: state)[index]
+        view.updateViews(for: state, animated: true)
+        view.updateActions(with: MapAction.actions(except: state))
+        
+        if state == .clear {
+            view.clearAllPins()
+            clearRoutes()
+            moduleContainer.clear()
+            moduleOutput?.handleMapContainerChanges()
+        }
+    }
+    
+    func handleGoAction() {
+        view.endEditing()
+        
+        var lastLocationContainer: LocationContainer? = nil
+        if let lastLocation = interactor.lastLocation {
+            lastLocationContainer = LocationContainer(coordinate: lastLocation.coordinate)
+        }
+        
+        switch state {
+        case .pin, .searchPin:
+            moduleContainer.prepareForRoute(with: lastLocationContainer)
+        case .searchRoute: break
+        case .clear: return
+        }
+        
+        buildRouteIfNeeded()
+    }
+    
     func handleDragAction(for container: LocationContainer) {
         processAddAnnotation(for: container)
-        moduleOutput?.handleMapContainerChanges()
+        
+        if moduleContainer.routes.isEmpty {
+            moduleOutput?.handleMapContainerChanges()
+        } else {
+            buildRouteIfNeeded()
+        }
     }
     
     func handleTapAction(for location: CLLocationCoordinate2D) {
@@ -126,10 +139,10 @@ extension MapViewPresenter: MapViewViewOutput {
         if let searchBarType = searchBarType {
             switch state {
             case .searchPin:
-                if let old = moduleContainer.endLocation {
+                if let old = moduleContainer.selectedLocations.first {
                     view.removeAnnotation(for: old)
                 }
-                moduleContainer.endLocation = container
+                moduleContainer.add(new: container)
             case .searchRoute:
                 switch searchBarType {
                 case .source:
@@ -161,10 +174,59 @@ extension MapViewPresenter: MapViewViewOutput {
     }
 }
 
+//MARK: - Routes managing
+extension MapViewPresenter {
+    func buildRouteIfNeeded() {
+        guard let start = moduleContainer.startLocation, let end = moduleContainer.endLocation else {
+            moduleOutput?.handleMapContainerChanges()
+            moduleOutput?.handleMapModuleError(MapModuleError.invalidRoute)
+            return
+        }
+        
+        var locationContainers: [LocationContainer] = []
+        locationContainers.append(start)
+        locationContainers.append(contentsOf: moduleContainer.selectedLocations)
+        locationContainers.append(end)
+        
+        view.showActivityIndicator()
+        interactor.requestRoutes(for: locationContainers.map { $0.coordinate },
+                                 routes: [],
+                                 type: .walking) { [weak self] (routes, error) in
+                                    guard let wSelf = self else { return }
+                                    wSelf.view.hideActivityIndicator()
+                                    
+                                    if let error = error { wSelf.moduleOutput?.handleMapModuleError(error) }
+                                    
+                                    let routes = routes ?? []
+                                    DispatchQueue.main.async {
+                                        wSelf.handleReceiveNewRoutes(routes)
+                                        wSelf.moduleOutput?.handleMapContainerChanges()
+                                    }
+        }
+    }
+    
+    func handleReceiveNewRoutes(_ newRoutes: [MKRoute]) {
+        updateRoutes(newRoutes)
+    }
+    
+    func clearRoutes() {
+        let oldOverlays = view.mapView.overlays
+        view.mapView.removeOverlays(oldOverlays)
+    }
+    
+    func updateRoutes(_ newRoutes: [MKRoute]) {
+        clearRoutes()
+        moduleContainer.routes = newRoutes
+        moduleContainer.routes.forEach { (route) in
+            view.mapView.add(route.polyline, level: .aboveRoads)
+        }
+    }
+}
+
 extension MapViewPresenter: MapViewInteractorOutput {
     func handleHeadingUpdate(newHeading: CLHeading) {
         view.updateUserHeading(newHeading)
-        moduleOutput?.handleHeadingUpdate(newHeading: newHeading)
+        moduleOutput?.handleHeadingUpdate(newHeading)
     }
     
     func handleLocationUpdate(newLocation: CLLocation, previous: CLLocation?) {
@@ -175,14 +237,13 @@ extension MapViewPresenter: MapViewInteractorOutput {
             view.mapView.setRegion(region, animated: true)
         }
         
-        moduleOutput?.handleLocationUpdate(newLocation: newLocation, previous: previous)
+        moduleOutput?.handleLocationUpdate(newLocation, previous: previous)
     }
 }
 
 extension MapViewPresenter: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty { return }
-        
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

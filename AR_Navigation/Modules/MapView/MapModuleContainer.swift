@@ -8,23 +8,37 @@
 
 import Foundation
 import CoreLocation
+import MapKit
 
 class MapModuleContainer {
     
     var startLocation: LocationContainer?
     var endLocation: LocationContainer?
-    
     var selectedLocations: [LocationContainer] = []
+    
+    var routes: [MKRoute] = []
     
     func clear() {
         startLocation = nil
         endLocation = nil
         selectedLocations = []
+        routes = []
     }
     
     func add(new container: LocationContainer) {
-        guard !selectedLocations.contains(container) else { return }
         selectedLocations.append(container)
+    }
+    
+    func prepareForRoute(with start: LocationContainer?) {
+        if let start = start {
+            startLocation = start
+        } else if !selectedLocations.isEmpty {
+            startLocation = selectedLocations.removeFirst()
+        }
+        
+        if endLocation == nil && !selectedLocations.isEmpty {
+            endLocation = selectedLocations.removeLast()
+        }
     }
 }
 

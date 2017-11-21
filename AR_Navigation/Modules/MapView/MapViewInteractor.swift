@@ -16,6 +16,14 @@ protocol MapViewInteractorInput: class {
     func launchUpdatingLocationAndHeading()
     func requestPlaces(for text: String, callback: @escaping (_ region: MKCoordinateRegion, _ items: [MKMapItem]) -> Void)
     func requestPlaces(for coordinate: CLLocationCoordinate2D, callback: @escaping (CLPlacemark?) -> Void)
+    func requestDirections(from source: CLLocationCoordinate2D,
+                           to destination: CLLocationCoordinate2D,
+                           type: MKDirectionsTransportType,
+                           completion: @escaping (_ route: MKRoute?, _ error: Error?) -> Void)
+    func requestRoutes(for locations: [CLLocationCoordinate2D],
+                       routes: [MKRoute],
+                       type: MKDirectionsTransportType,
+                       completion: @escaping (_ routes: [MKRoute]?, _ error: Error?) -> Void)
 }
 
 protocol MapViewInteractorOutput: class {
@@ -49,6 +57,34 @@ extension MapViewInteractor: MapViewInteractorInput {
         navigationManager.requestPlaces(for: coordinate) { (placemark, error) in
             if let error = error { debugPrint(error) }
             callback(placemark)
+        }
+    }
+    
+    func requestDirections(from source: CLLocationCoordinate2D,
+                           to destination: CLLocationCoordinate2D,
+                           type: MKDirectionsTransportType,
+                           completion: @escaping (_ route: MKRoute?, _ error: Error?) -> Void) {
+        navigationManager.requestDirections(from: source, to: destination, type: type, completion: completion)
+    }
+    
+    func requestRoutes(for locations: [CLLocationCoordinate2D],
+                       routes: [MKRoute],
+                       type: MKDirectionsTransportType,
+                       completion: @escaping (_ routes: [MKRoute]?, _ error: Error?) -> Void) {
+        
+        var routes = routes
+        var locations = locations
+        if locations.count < 2 { completion(routes, nil); return }
+        
+        let source = locations.removeFirst()
+        let destination = locations[0]
+        
+        requestDirections(from: source, to: destination, type: type) { [weak self] (route, error) in
+            guard let wSelf = self else { return }
+            
+            guard let route = route else { completion(nil, error); return }
+            routes.append(route)
+            wSelf.requestRoutes(for: locations, routes: routes, type: type, completion: completion)
         }
     }
 }
