@@ -35,10 +35,6 @@ class MapModuleContainer {
         } else if !selectedLocations.isEmpty {
             startLocation = selectedLocations.removeFirst()
         }
-        
-        if endLocation == nil && !selectedLocations.isEmpty {
-            endLocation = selectedLocations.removeLast()
-        }
     }
 }
 

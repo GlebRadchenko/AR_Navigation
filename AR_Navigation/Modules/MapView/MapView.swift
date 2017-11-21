@@ -24,6 +24,8 @@ protocol MapViewViewInput: PopoverDisplayer {
     func updateActions(with items: [MapActionDisplayable])
     func updateUserHeading(_ heading: CLHeading)
     
+    func showAllAnnotations()
+    
     func showActivityIndicator()
     func hideActivityIndicator()
 }
@@ -36,7 +38,7 @@ protocol MapViewViewOutput: class, UISearchBarDelegate {
     func handleLocationAction()
     
     func handleDragAction(for container: LocationContainer)
-    func handleTapAction(for location: CLLocationCoordinate2D)
+    func handleLongPressAction(for location: CLLocationCoordinate2D)
 }
 
 class MapViewController: UIViewController, View {
@@ -72,9 +74,11 @@ class MapViewController: UIViewController, View {
         configureViews()
         output.viewDidLoad()
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(tap:)))
-        tap.delegate = self
-        mapView.addGestureRecognizer(tap)
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(press:)))
+        mapView.addGestureRecognizer(longPress)
+        (mapView.gestureRecognizers ?? []).forEach { (gesture) in
+            gesture.require(toFail: longPress)
+        }
     }
     
     func configureViews() {
@@ -103,10 +107,14 @@ class MapViewController: UIViewController, View {
         mapView.userTrackingMode = .followWithHeading
     }
     
-    @objc func handleTap(tap: UITapGestureRecognizer) {
-        let tapLocation = tap.location(in: mapView)
-        let coordinate = mapView.convert(tapLocation, toCoordinateFrom: view)
-        output.handleTapAction(for: coordinate)
+    @objc func handleLongPress(press: UILongPressGestureRecognizer) {
+        switch press.state {
+        case .ended:
+            let endLocation = press.location(in: mapView)
+            let coordinate = mapView.convert(endLocation, toCoordinateFrom: view)
+            output.handleLongPressAction(for: coordinate)
+        default: break
+        }
     }
     
     @IBAction func goButtonTouched(_ sender: UIButton) {
@@ -233,6 +241,10 @@ extension MapViewController: MapViewViewInput {
         headingImageView.transform = transform
     }
     
+    func showAllAnnotations() {
+        mapView.showAnnotations(mapView.annotations, animated: true)
+    }
+    
     func showActivityIndicator() {
         DispatchQueue.main.async {
             self.activityView.startAnimating()
@@ -314,16 +326,11 @@ extension MapViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(overlay: overlay)
-        //TODO: - add nice random colors
-        renderer.strokeColor = .blue
+        
+        renderer.strokeColor = .randomPrettyColor
         renderer.lineWidth = 4.0
+        renderer.lineDashPattern = [1, 10]
+        
         return renderer
     }
 }
-
-extension MapViewController: UIGestureRecognizerDelegate {
-    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return false
-    }
-}
-

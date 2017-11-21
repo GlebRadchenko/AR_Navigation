@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F7037B081FC4577900BCC36C /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7037B071FC4577900BCC36C /* UIColor+Extensions.swift */; };
 		F71033F81F80CBE90074F6E8 /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71033F71F80CBE90074F6E8 /* NavigationManager.swift */; };
 		F71446A21FB9CEE90068AE4E /* MapModuleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71446A11FB9CEE90068AE4E /* MapModuleContainer.swift */; };
 		F71A08271FB8687E008B259C /* MatrixTransformations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71A08261FB8687E008B259C /* MatrixTransformations.swift */; };
@@ -112,6 +113,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F7037B071FC4577900BCC36C /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		F71033F71F80CBE90074F6E8 /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
 		F71446A11FB9CEE90068AE4E /* MapModuleContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapModuleContainer.swift; sourceTree = "<group>"; };
 		F71A08261FB8687E008B259C /* MatrixTransformations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixTransformations.swift; sourceTree = "<group>"; };
@@ -395,6 +397,7 @@
 				F79F9FB81FB77ED80014773A /* SCNVector3+Extensions.swift */,
 				F71A08261FB8687E008B259C /* MatrixTransformations.swift */,
 				F7AAD00F1FB9E75B0054BB45 /* CLPlacemark+Extensions.swift */,
+				F7037B071FC4577900BCC36C /* UIColor+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -600,6 +603,7 @@
 				F7ED61D31F8252EB00EE3224 /* SearchTableViewController.swift in Sources */,
 				F7C92BF71F80D72F00A5A2F5 /* MapView.swift in Sources */,
 				F787BFFE1FB7790900079C40 /* CLLocationCoordinate2D+Extensions.swift in Sources */,
+				F7037B081FC4577900BCC36C /* UIColor+Extensions.swift in Sources */,
 				F7FFFB421F8165540039A39B /* MapAction.swift in Sources */,
 				F71A082B1FB873A2008B259C /* DirectionNode.swift in Sources */,
 			);

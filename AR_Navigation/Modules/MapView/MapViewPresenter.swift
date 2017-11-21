@@ -107,7 +107,7 @@ extension MapViewPresenter: MapViewViewOutput {
         }
     }
     
-    func handleTapAction(for location: CLLocationCoordinate2D) {
+    func handleLongPressAction(for location: CLLocationCoordinate2D) {
         switch state {
         case .pin:
             let container = LocationContainer(coordinate: location)
@@ -177,16 +177,23 @@ extension MapViewPresenter: MapViewViewOutput {
 //MARK: - Routes managing
 extension MapViewPresenter {
     func buildRouteIfNeeded() {
-        guard let start = moduleContainer.startLocation, let end = moduleContainer.endLocation else {
+        guard let start = moduleContainer.startLocation ?? moduleContainer.selectedLocations.first else {
+            moduleOutput?.handleMapContainerChanges()
+            moduleOutput?.handleMapModuleError(MapModuleError.invalidRoute)
+            return
+        }
+        
+        guard let end = moduleContainer.endLocation ?? moduleContainer.selectedLocations.last else {
             moduleOutput?.handleMapContainerChanges()
             moduleOutput?.handleMapModuleError(MapModuleError.invalidRoute)
             return
         }
         
         var locationContainers: [LocationContainer] = []
-        locationContainers.append(start)
+        
+        if moduleContainer.startLocation != nil { locationContainers.append(start) }
         locationContainers.append(contentsOf: moduleContainer.selectedLocations)
-        locationContainers.append(end)
+        if moduleContainer.endLocation != nil { locationContainers.append(end) }
         
         view.showActivityIndicator()
         interactor.requestRoutes(for: locationContainers.map { $0.coordinate },
@@ -198,6 +205,7 @@ extension MapViewPresenter {
                                     if let error = error { wSelf.moduleOutput?.handleMapModuleError(error) }
                                     
                                     let routes = routes ?? []
+                                    print(routes.count)
                                     DispatchQueue.main.async {
                                         wSelf.handleReceiveNewRoutes(routes)
                                         wSelf.moduleOutput?.handleMapContainerChanges()
@@ -207,6 +215,7 @@ extension MapViewPresenter {
     
     func handleReceiveNewRoutes(_ newRoutes: [MKRoute]) {
         updateRoutes(newRoutes)
+        view.showAllAnnotations()
     }
     
     func clearRoutes() {
