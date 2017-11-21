@@ -12,7 +12,7 @@ import SceneKit
 
 open class ARSceneViewManager: NSObject {
     
-    var updateQueue: DispatchQueue = DispatchQueue(label: "Scene-update-queue")
+    var updateQueue: DispatchQueue = DispatchQueue(label: "scene-update-queue")
     
     public weak var scene: ARSCNView!
     var state: ARSceneViewState = .limitedInitializing
@@ -86,6 +86,7 @@ extension ARSceneViewManager {
 //MARK: - ARSCNViewDelegate
 extension ARSceneViewManager: ARSCNViewDelegate {
     public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+        
     }
     
     public func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
@@ -97,6 +98,7 @@ extension ARSceneViewManager: ARSCNViewDelegate {
     }
     
     public func renderer(_ renderer: SCNSceneRenderer, didRemove node: SCNNode, for anchor: ARAnchor) {
+        
     }
 }
 

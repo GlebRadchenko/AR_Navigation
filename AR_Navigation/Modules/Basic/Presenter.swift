@@ -17,10 +17,7 @@ protocol ModuleInput: class { }
 
 extension ModuleInput {
     func specific<T>() throws -> T {
-        guard let specified = self as? T else {
-            throw PresenterError.wrongInput
-        }
-        
+        guard let specified = self as? T else { throw PresenterError.wrongInput }
         return specified
     }
 }
@@ -34,3 +31,4 @@ protocol Presenter: ModuleInput {
     var interactor: Interactor! { get set }
     var router: Router! { get set }
 }
+

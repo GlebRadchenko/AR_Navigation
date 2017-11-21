@@ -72,8 +72,10 @@ extension NavigationManager {
         let geocoder = CLGeocoder()
         let location = CLLocation(latitude: coordinates.latitude, longitude: coordinates.longitude)
         
-        geocoder.reverseGeocodeLocation(location) { (placeMarks, error) in
-            callback(placeMarks?.first, error)
+        queue.async {
+            geocoder.reverseGeocodeLocation(location) { (placeMarks, error) in
+                callback(placeMarks?.first, error)
+            }
         }
     }
     
@@ -139,19 +141,6 @@ extension NavigationManager: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didFinishDeferredUpdatesWithError error: Error?) {
         guard let error = error else { return }
         delegate?.navigationManager(self, didFailWithError: error)
-    }
-}
-
-
-extension CLLocationCoordinate2D {
-    var placemark: MKPlacemark {
-        return MKPlacemark(coordinate: self)
-    }
-}
-
-extension Array where Element == Double {
-    var coordinate: CLLocationCoordinate2D {
-        return CLLocationCoordinate2D(latitude: self[0], longitude: self[1])
     }
 }
 

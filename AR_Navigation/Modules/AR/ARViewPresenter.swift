@@ -78,18 +78,23 @@ extension ARViewPresenter: ARViewViewOutput {
 
 extension ARViewPresenter: MapViewModuleOutput {
     func handleMapModuleError(_ error: Error) {
+        print(#function)
     }
     
     func handleMapContainerChanges() {
-        
+        print(#function)
     }
     
     func handleHeadingUpdate(_ newHeading: CLHeading) {
-        
+        print(#function)
     }
     
     func handleLocationUpdate(_ newLocation: CLLocation, previous: CLLocation?) {
-        
+        print(#function)
+    }
+    
+    func handleAnnotationTap(for container: Container<CLLocationCoordinate2D>, isSelected: Bool) {
+        print(#function)
     }
 }
 

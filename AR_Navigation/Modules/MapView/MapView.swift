@@ -33,12 +33,14 @@ protocol MapViewViewInput: PopoverDisplayer {
 protocol MapViewViewOutput: class, UISearchBarDelegate {
     func viewDidLoad()
     
-    func handleActionSelection(at index: Int)
     func handleGoAction()
     func handleLocationAction()
+    func handleActionSelection(at index: Int)
     
     func handleDragAction(for container: Container<CLLocationCoordinate2D>)
     func handleLongPressAction(for location: CLLocationCoordinate2D)
+    
+    func handleAnnotationTap(for container: Container<CLLocationCoordinate2D>, isSelected: Bool)
     
     func color(for overlay: MKOverlay) -> UIColor
 }
@@ -101,12 +103,13 @@ class MapViewController: UIViewController, View {
     
     func configureMapView() {
         mapView.delegate = self
+        
         mapView.showsScale = true
         mapView.showsCompass = true
         mapView.showsBuildings = true
         mapView.showsUserLocation = true
         mapView.showsPointsOfInterest = true
-        mapView.userTrackingMode = .followWithHeading
+        mapView.userTrackingMode = .follow
     }
     
     @objc func handleLongPress(press: UILongPressGestureRecognizer) {
@@ -288,6 +291,10 @@ extension MapViewController: UICollectionViewDataSource {
 }
 
 extension MapViewController: MKMapViewDelegate {
+    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
+        
+    }
+    
     public func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard let mapAnnotation = annotation as? MapAnnotation else { return nil }
         
@@ -306,6 +313,8 @@ extension MapViewController: MKMapViewDelegate {
     }
     
     public func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        guard let annotation = view.annotation as? MapAnnotation else { return }
+        output?.handleAnnotationTap(for: annotation.locationContainer, isSelected: true)
     }
     
     public func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
@@ -313,7 +322,8 @@ extension MapViewController: MKMapViewDelegate {
     }
     
     public func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-        
+        guard let annotation = view.annotation as? MapAnnotation else { return }
+        output?.handleAnnotationTap(for: annotation.locationContainer, isSelected: false)
     }
     
     public func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, didChange newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {

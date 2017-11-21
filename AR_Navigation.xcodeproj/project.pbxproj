@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F7037B081FC4577900BCC36C /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7037B071FC4577900BCC36C /* UIColor+Extensions.swift */; };
+		F7037B121FC4875F00BCC36C /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7037B111FC4875F00BCC36C /* Container.swift */; };
 		F71033F81F80CBE90074F6E8 /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71033F71F80CBE90074F6E8 /* NavigationManager.swift */; };
 		F71446A21FB9CEE90068AE4E /* MapModuleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71446A11FB9CEE90068AE4E /* MapModuleContainer.swift */; };
 		F71A08271FB8687E008B259C /* MatrixTransformations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71A08261FB8687E008B259C /* MatrixTransformations.swift */; };
@@ -114,6 +115,7 @@
 
 /* Begin PBXFileReference section */
 		F7037B071FC4577900BCC36C /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
+		F7037B111FC4875F00BCC36C /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
 		F71033F71F80CBE90074F6E8 /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
 		F71446A11FB9CEE90068AE4E /* MapModuleContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapModuleContainer.swift; sourceTree = "<group>"; };
 		F71A08261FB8687E008B259C /* MatrixTransformations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixTransformations.swift; sourceTree = "<group>"; };
@@ -289,6 +291,7 @@
 			isa = PBXGroup;
 			children = (
 				F7FBE2971FA37A8D008830AE /* MapAnnotation.swift */,
+				F7037B111FC4875F00BCC36C /* Container.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -590,6 +593,7 @@
 				F71446A21FB9CEE90068AE4E /* MapModuleContainer.swift in Sources */,
 				F71A08271FB8687E008B259C /* MatrixTransformations.swift in Sources */,
 				F7800B3A1F813FD500998A68 /* KeyboardEventsManager.swift in Sources */,
+				F7037B121FC4875F00BCC36C /* Container.swift in Sources */,
 				F79F16441F81117D00B6ABF6 /* ARViewInteractor.swift in Sources */,
 				F7BAFD641F827E33004734DA /* SearchResultTableViewCell.swift in Sources */,
 				F7C92C3A1F80FDCF00A5A2F5 /* ARSceneViewManager.swift in Sources */,

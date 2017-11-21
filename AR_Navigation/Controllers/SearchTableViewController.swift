@@ -41,6 +41,8 @@ class SearchTableViewController<T: SearchResultDisplayable>: UITableViewControll
         tableView.register(SearchResultTableViewCell.self)
         tableView.allowsSelection = true
         tableView.separatorStyle = .none
+        
+        tableView.reloadData()
     }
     
     override func viewDidDisappear(_ animated: Bool) {

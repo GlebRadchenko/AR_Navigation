@@ -26,6 +26,7 @@ protocol MapViewModuleOutput: class {
     func handleMapContainerChanges()
     func handleHeadingUpdate(_ newHeading: CLHeading)
     func handleLocationUpdate(_ newLocation: CLLocation, previous: CLLocation?)
+    func handleAnnotationTap(for container: Container<CLLocationCoordinate2D>, isSelected: Bool)
 }
 
 class MapViewPresenter: NSObject, Presenter, MapViewModuleInput {
@@ -119,6 +120,10 @@ extension MapViewPresenter: MapViewViewOutput {
         }
     }
     
+    func handleAnnotationTap(for container: Container<CLLocationCoordinate2D>, isSelected: Bool) {
+        moduleOutput?.handleAnnotationTap(for: container, isSelected: isSelected)
+    }
+    
     fileprivate func processAddAnnotation(for container: Container<CLLocationCoordinate2D>) {
         interactor.requestPlaces(for: container.element) { [weak self] (placemark) in
             guard let wSelf = self else { return }
@@ -177,7 +182,7 @@ extension MapViewPresenter: MapViewViewOutput {
         guard let routeContainer = moduleContainer.routes.first(where: { (container) -> Bool in
             return container.element.polyline === overlay
         }) else {
-            return UIColor.randomPrettyColor
+            return .randomPrettyColor
         }
         
         return moduleContainer.extractColor(for: routeContainer)
@@ -187,16 +192,11 @@ extension MapViewPresenter: MapViewViewOutput {
 //MARK: - Routes managing
 extension MapViewPresenter {
     func buildRouteIfNeeded() {
-        guard let start = moduleContainer.startLocation ?? moduleContainer.selectedLocations.first else {
-            moduleOutput?.handleMapContainerChanges()
-            moduleOutput?.handleMapModuleError(MapModuleError.invalidRoute)
-            return
-        }
-        
-        guard let end = moduleContainer.endLocation ?? moduleContainer.selectedLocations.last else {
-            moduleOutput?.handleMapContainerChanges()
-            moduleOutput?.handleMapModuleError(MapModuleError.invalidRoute)
-            return
+        guard let start = moduleContainer.startLocation ?? moduleContainer.selectedLocations.first,
+            let end = moduleContainer.endLocation ?? moduleContainer.selectedLocations.last else {
+                moduleOutput?.handleMapContainerChanges()
+                moduleOutput?.handleMapModuleError(MapModuleError.invalidRoute)
+                return
         }
         
         var locationContainers: [Container<CLLocationCoordinate2D>] = []
@@ -206,19 +206,19 @@ extension MapViewPresenter {
         if moduleContainer.endLocation != nil { locationContainers.append(end) }
         
         view.showActivityIndicator()
-        interactor.requestRoutes(for: locationContainers.map { $0.element },
-                                 routes: [],
-                                 type: .walking) { [weak self] (routes, error) in
-                                    guard let wSelf = self else { return }
-                                    wSelf.view.hideActivityIndicator()
-                                    
-                                    if let error = error { wSelf.moduleOutput?.handleMapModuleError(error) }
-                                    
-                                    let routes = routes ?? []
-                                    DispatchQueue.main.async {
-                                        wSelf.handleReceiveNewRoutes(routes)
-                                        wSelf.moduleOutput?.handleMapContainerChanges()
-                                    }
+        
+        let locations = locationContainers.map { $0.element }
+        interactor.requestRoutes(for: locations, routes: [], type: .walking) { [weak self] (routes, error) in
+            guard let wSelf = self else { return }
+            wSelf.view.hideActivityIndicator()
+            
+            let routes = routes ?? []
+            if let error = error { wSelf.moduleOutput?.handleMapModuleError(error) }
+            
+            DispatchQueue.main.async {
+                wSelf.handleReceiveNewRoutes(routes)
+                wSelf.moduleOutput?.handleMapContainerChanges()
+            }
         }
     }
     
@@ -265,47 +265,51 @@ extension MapViewPresenter: UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        view.endEditing()
-        
-        let searchBarType = view.type(for: searchBar)
-        guard let text = searchBar.text else { return }
-        guard !text.isEmpty else { return }
+        defer { view.endEditing() }
+        guard let text = searchBar.text, !text.isEmpty else { return }
         
         view.showActivityIndicator()
         interactor.requestPlaces(for: text) { [weak self] (region, mapItems) in
             guard let wSelf = self else { return }
-            
             DispatchQueue.main.async {
-                let vc = wSelf.preparedTableViewController(items: mapItems)
-                vc.onSelectItem = { [weak vc] (mapItem) in
-                    guard let controller = vc else { return }
-                    wSelf.handleMapItemSelection(item: mapItem, searchBarType: searchBarType)
-                    
-                    wSelf.view.mapView.setRegion(region, animated: true)
-                    wSelf.view.mapView.setCenter(mapItem.placemark.coordinate, animated: true)
-                    
-                    controller.dismiss(animated: true, completion: nil)
-                }
-                
-                wSelf.view.present(vc: vc,
-                                   popoverSize: CGSize(width: 300, height: 200 * .goldenSection),
-                                   from: searchBar,
-                                   arrowDirections: [.down, .left, .right]) {
-                                    vc.tableView.reloadData()
-                }
+                wSelf.presentSearchResults(for: mapItems, region: region, searchBar: searchBar)
             }
         }
+    }
+    
+    func presentSearchResults(for items: [MKMapItem], region: MKCoordinateRegion, searchBar: UISearchBar) {
+        let searchBarType = view.type(for: searchBar)
+        let vc = preparedTableViewController(items: items)
+        
+        vc.onSelectItem = { [weak self, weak vc] (mapItem) in
+            guard let wSelf = self else { return }
+            guard let controller = vc else { return }
+            
+            wSelf.handleMapItemSelection(item: mapItem, searchBarType: searchBarType)
+            
+            wSelf.view.mapView.setRegion(region, animated: true)
+            wSelf.view.mapView.setCenter(mapItem.placemark.coordinate, animated: true)
+            
+            controller.dismiss(animated: true, completion: nil)
+        }
+        
+        vc.onHide = { [weak self] in
+            guard let wSelf = self else { return }
+            wSelf.view.hideActivityIndicator()
+        }
+        
+        view.present(vc: vc,
+                     popoverSize: CGSize(width: 300, height: 200 * .goldenSection),
+                     from: searchBar,
+                     arrowDirections: [.down, .left, .right],
+                     completion: nil)
+        
     }
     
     func preparedTableViewController(items: [MKMapItem]) -> SearchTableViewController<MKMapItem> {
         let tableViewController = SearchTableViewController<MKMapItem>()
         tableViewController.multipleSelectionEnabled = false
         tableViewController.reload(with: items)
-        
-        tableViewController.onHide = { [weak self] in
-            guard let wSelf = self else { return }
-            wSelf.view.hideActivityIndicator()
-        }
         
         return tableViewController
     }
@@ -314,3 +318,4 @@ extension MapViewPresenter: UISearchBarDelegate {
         
     }
 }
+

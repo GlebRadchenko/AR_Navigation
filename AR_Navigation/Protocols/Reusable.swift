@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 
 protocol Reusable: class {
-    
     static var reuseIdentifier: String { get }
     static var nibName: String { get }
     

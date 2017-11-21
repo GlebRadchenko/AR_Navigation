@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreLocation
+import MapKit
 
 struct Constants {
     static var metersInLat: Double = 6373000
@@ -20,6 +21,13 @@ extension Double {
 }
 
 extension CLLocationCoordinate2D {
+    var placemark: MKPlacemark {
+        return MKPlacemark(coordinate: self)
+    }
+}
+
+extension CLLocationCoordinate2D {
+    
     func bearing(to coordinate: CLLocationCoordinate2D) -> Double {
         let a = sin(coordinate.longitude.degToRad - longitude.degToRad) * cos(coordinate.latitude.degToRad)
         let b = cos(latitude.degToRad) * sin(coordinate.latitude.degToRad) - sin(latitude.degToRad) * cos(coordinate.latitude.degToRad) * cos(coordinate.longitude.degToRad - longitude.degToRad)
