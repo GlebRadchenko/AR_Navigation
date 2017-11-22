@@ -66,7 +66,7 @@ extension MapViewPresenter: MapViewViewOutput {
     func handleLocationAction() {
         guard let lastLocation = interactor.lastLocation else { return }
         
-        let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+        let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
         let region = MKCoordinateRegion(center: lastLocation.coordinate, span: span)
         
         view.mapView.setRegion(region, animated: true)
