@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		F7037B081FC4577900BCC36C /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7037B071FC4577900BCC36C /* UIColor+Extensions.swift */; };
 		F7037B121FC4875F00BCC36C /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7037B111FC4875F00BCC36C /* Container.swift */; };
+		F7037B1A1FC5981700BCC36C /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7037B191FC5981700BCC36C /* NotificationView.swift */; };
+		F7037B1C1FC59BB100BCC36C /* NotificationDisplayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7037B1B1FC59BB100BCC36C /* NotificationDisplayer.swift */; };
 		F71033F81F80CBE90074F6E8 /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71033F71F80CBE90074F6E8 /* NavigationManager.swift */; };
 		F71446A21FB9CEE90068AE4E /* MapModuleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71446A11FB9CEE90068AE4E /* MapModuleContainer.swift */; };
 		F71A08271FB8687E008B259C /* MatrixTransformations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71A08261FB8687E008B259C /* MatrixTransformations.swift */; };
@@ -116,6 +118,8 @@
 /* Begin PBXFileReference section */
 		F7037B071FC4577900BCC36C /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		F7037B111FC4875F00BCC36C /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
+		F7037B191FC5981700BCC36C /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
+		F7037B1B1FC59BB100BCC36C /* NotificationDisplayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDisplayer.swift; sourceTree = "<group>"; };
 		F71033F71F80CBE90074F6E8 /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
 		F71446A11FB9CEE90068AE4E /* MapModuleContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapModuleContainer.swift; sourceTree = "<group>"; };
 		F71A08261FB8687E008B259C /* MatrixTransformations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixTransformations.swift; sourceTree = "<group>"; };
@@ -302,6 +306,7 @@
 				F73F3B0E1FA3414B00D3622E /* Annotations */,
 				F7C92C051F80ECDA00A5A2F5 /* Cells */,
 				F7C92C301F80F92B00A5A2F5 /* BottomSlideContainer.swift */,
+				F7037B191FC5981700BCC36C /* NotificationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -410,6 +415,7 @@
 			children = (
 				F7C92C0C1F80ED7F00A5A2F5 /* Reusable.swift */,
 				F7AAD00B1FB9E5410054BB45 /* PopoverDisplayer.swift */,
+				F7037B1B1FC59BB100BCC36C /* NotificationDisplayer.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -606,9 +612,11 @@
 				F79F9FB91FB77ED80014773A /* SCNVector3+Extensions.swift in Sources */,
 				F7ED61D31F8252EB00EE3224 /* SearchTableViewController.swift in Sources */,
 				F7C92BF71F80D72F00A5A2F5 /* MapView.swift in Sources */,
+				F7037B1C1FC59BB100BCC36C /* NotificationDisplayer.swift in Sources */,
 				F787BFFE1FB7790900079C40 /* CLLocationCoordinate2D+Extensions.swift in Sources */,
 				F7037B081FC4577900BCC36C /* UIColor+Extensions.swift in Sources */,
 				F7FFFB421F8165540039A39B /* MapAction.swift in Sources */,
+				F7037B1A1FC5981700BCC36C /* NotificationView.swift in Sources */,
 				F71A082B1FB873A2008B259C /* DirectionNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
