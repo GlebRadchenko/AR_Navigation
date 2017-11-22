@@ -33,21 +33,20 @@ class NotificationView: UIView {
         let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
         effectView.clipsToBounds = true
         effectView.layer.cornerRadius = 5
-        embed(other: effectView, insets: UIEdgeInsets(top: 4, left: 4, bottom: -4, right: -4))
+        embed(other: effectView, insets: UIEdgeInsets(top: 4, left: 8, bottom: -4, right: -8))
         
         let label = UILabel()
         label.font = UIFont(name: "HelveticaNeue", size: 13)
-        label.contentMode = .center
+        label.textAlignment = .center
         label.numberOfLines = 0
-        label.textColor = .lightGray
-        effectView.embed(other: label)
-        
-        
+        label.textColor = .white
+        effectView.contentView.embed(other: label, insets: UIEdgeInsets(top: 2, left: 4, bottom: -2, right: -4))
+                
         self.effectView = effectView
         self.label = label
     }
     
-    func setText(_ text: String, color: UIColor = .lightGray) {
+    func setText(_ text: String, color: UIColor = .white) {
         label?.text = text
         label?.textColor = color
     }

@@ -78,7 +78,7 @@ extension ARViewPresenter: ARViewViewOutput {
 
 extension ARViewPresenter: MapViewModuleOutput {
     func handleMapModuleError(_ error: Error) {
-        print(#function)
+        view.displayNotification(message: error.localizedDescription)
     }
     
     func handleMapContainerChanges() {

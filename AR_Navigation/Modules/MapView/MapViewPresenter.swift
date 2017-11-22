@@ -10,9 +10,14 @@ import Foundation
 import MapKit
 import CoreLocation
 
-
-enum MapModuleError: Error {
+enum MapModuleError: LocalizedError {
     case invalidRoute
+    
+    var errorDescription: String? {
+        switch self {
+        case .invalidRoute: return "Please, select start and end point of your route"
+        }
+    }
 }
 
 protocol MapViewModuleInput: ModuleInput {

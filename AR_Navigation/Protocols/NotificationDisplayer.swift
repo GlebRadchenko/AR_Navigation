@@ -9,13 +9,15 @@
 import Foundation
 import UIKit
 
-protocol NotificationDisplayer: class {
+protocol NotificationDisplayerInput {
+    func displayNotification(message: String)
+}
+
+protocol NotificationDisplayer: class, NotificationDisplayerInput {
     weak var notificationView: NotificationView? { get }
-    weak var topNotificationViewConstraint: NSLayoutConstraint? { get set }
+    var topNotificationViewConstraint: NSLayoutConstraint? { get set }
     
     var messageQueue: [String] { get set }
-    
-    func displayNotification(message: String)
 }
 
 extension NotificationDisplayer where Self: UIViewController {
@@ -28,9 +30,7 @@ extension NotificationDisplayer where Self: UIViewController {
             return false
         }
         
-        let delta = abs(constraint.constant)
-        
-        return delta <= 1
+        return constraint.constant >= -25
     }
     
     func addNotificationView() {
@@ -50,6 +50,13 @@ extension NotificationDisplayer where Self: UIViewController {
     }
     
     func displayNotification(message: String) {
+        DispatchQueue.main.async { [weak self] in
+            guard let wSelf = self else { return }
+            wSelf.scheduleNotification(with: message)
+        }
+    }
+    
+    internal func scheduleNotification(with message: String) {
         addNotificationView()
         messageQueue.append(message)
         
@@ -84,12 +91,10 @@ extension NotificationDisplayer where Self: UIViewController {
     }
     
     fileprivate func setNotificationView(hidden: Bool, animated: Bool, completion: (() -> Void)?) {
-        topNotificationViewConstraint?.constant = hidden ? -50 : 0
+        topNotificationViewConstraint?.constant = hidden ? -50 : 20
         let changes = { [weak self] in
             guard let wSelf = self else { return }
-            DispatchQueue.main.async {
-                wSelf.view.layoutIfNeeded()
-            }
+            wSelf.view.layoutIfNeeded()
         }
         
         if animated {

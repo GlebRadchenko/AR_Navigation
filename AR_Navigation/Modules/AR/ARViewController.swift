@@ -10,7 +10,7 @@ import UIKit
 import SceneKit
 import ARKit
 
-protocol ARViewViewInput: class {
+protocol ARViewViewInput: NotificationDisplayerInput {
     var sceneView: ARSCNView! { get }
     
     func endEditing()
@@ -25,7 +25,7 @@ protocol ARViewViewOutput: class {
     func viewWillDisappear()
 }
 
-class ARViewController: UIViewController, View {
+class ARViewController: UIViewController, View, NotificationDisplayer {
     typealias Presenter = ARViewViewOutput
     
     static var storyboardName: String { return "AR" }
@@ -38,10 +38,19 @@ class ARViewController: UIViewController, View {
     
     weak var output: ARViewViewOutput!
     
+    var topNotificationViewConstraint: NSLayoutConstraint?
+    var messageQueue: [String] = []
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         UIApplication.shared.isIdleTimerDisabled = true
+        setNeedsStatusBarAppearanceUpdate()
+        
         setupBottomContainer()
         addGestureRecognizers()
         
