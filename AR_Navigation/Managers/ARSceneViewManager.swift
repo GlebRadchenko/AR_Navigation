@@ -10,16 +10,32 @@ import Foundation
 import ARKit
 import SceneKit
 
+public protocol ARSceneViewManagerDelegate: class {
+    func manager(_ manager: ARSceneViewManager, didUpdateState newState: ARSceneViewState)
+    //func manager(_ manager: ARSceneViewManager, )
+}
+
+public protocol ARSceneViewManagerInput {
+    
+    func launchSession()
+    func pauseSession()
+    func updateSession()
+    
+    func currentCameraTransform() -> matrix_float4x4?
+}
+
 open class ARSceneViewManager: NSObject {
     
     var updateQueue: DispatchQueue = DispatchQueue(label: "scene-update-queue")
     
     public weak var scene: ARSCNView!
-    var state: ARSceneViewState = .limitedInitializing
+    public weak var delegate: ARSceneViewManagerDelegate?
     
-    var session: ARSession {
-        return scene.session
+    var state: ARSceneViewState = .limitedInitializing {
+        didSet { delegate?.manager(self, didUpdateState: state) }
     }
+    
+    var session: ARSession { return scene.session }
     
     public init(with scene: ARSCNView) {
         self.scene = scene
@@ -49,7 +65,17 @@ open class ARSceneViewManager: NSObject {
                               ARSCNDebugOptions.showFeaturePoints]
     }
     
-    //MARK: - Session Managing
+    func clearStoredDate() {
+        //platforms = [:]
+    }
+}
+
+//MARK: - Logic
+extension ARSceneViewManager: ARSceneViewManagerInput {
+    public func currentCameraTransform() -> matrix_float4x4? {
+        return session.currentFrame?.camera.transform
+    }
+    
     public func launchSession() {
         guard ARWorldTrackingConfiguration.isSupported else { return }
         
@@ -68,19 +94,10 @@ open class ARSceneViewManager: NSObject {
         guard ARWorldTrackingConfiguration.isSupported else { return }
         
         let options: ARSession.RunOptions =  []
-
+        
         let configuration = state.configuration
         session.run(configuration, options: options)
     }
-    
-    func clearStoredDate() {
-        //platforms = [:]
-    }
-}
-
-//MARK: - Logic
-extension ARSceneViewManager {
-    
 }
 
 //MARK: - ARSCNViewDelegate
@@ -106,8 +123,7 @@ extension ARSceneViewManager: ARSCNViewDelegate {
 extension ARSceneViewManager: ARSessionDelegate {
     func updateState(for frame: ARFrame, trackingState: ARCamera.TrackingState) {
         switch trackingState {
-        case .normal
-            where frame.anchors.isEmpty:
+        case .normal where frame.anchors.isEmpty:
             state = .normalEmptyAnchors
         case .normal:
             state = .normal
@@ -178,7 +194,7 @@ public enum ARSceneViewState {
     public var hint: String {
         switch self {
         case .normal:
-            return ""
+            return "AR Session prepared."
         case .normalEmptyAnchors:
             return "Move the device around to detect horizontal surfaces."
         case .notAvailable:
@@ -198,3 +214,4 @@ public enum ARSceneViewState {
         }
     }
 }
+

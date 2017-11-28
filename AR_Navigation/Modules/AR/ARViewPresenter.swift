@@ -21,7 +21,7 @@ class ARViewPresenter: NSObject, Presenter {
     var router: Router!
     
     var mapModule: MapViewModuleInput!
-    var sceneViewManager: ARSceneViewManager!
+    var sceneViewManager: ARSceneViewManagerInput!
     lazy var keyboardManager: KeyboardEventsManager = KeyboardEventsManager()
     
     override init() {
@@ -57,9 +57,18 @@ class ARViewPresenter: NSObject, Presenter {
     }
 }
 
+extension ARViewPresenter: ARSceneViewManagerDelegate {
+    func manager(_ manager: ARSceneViewManager, didUpdateState newState: ARSceneViewState) {
+        view.displayNotification(message: newState.hint)
+    }
+}
+
 extension ARViewPresenter: ARViewViewOutput {
     func viewDidLoad() {
-        sceneViewManager = ARSceneViewManager(with: view.sceneView)
+        let sceneManager = ARSceneViewManager(with: view.sceneView)
+        sceneManager.delegate = self
+        sceneViewManager = sceneManager
+        
         mapModule = try? MapViewRouter.moduleInput()
         mapModule.moduleOutput = self
         

@@ -8,6 +8,7 @@
 
 import ARKit
 import SceneKit
+import CoreLocation
 
 protocol ARViewInteractorInput: class {
     
@@ -17,8 +18,12 @@ protocol ARViewInteractorOutput: class {
     
 }
 
-class ARViewInteractor: ARViewInteractorInput, Interactor {
+class ARViewInteractor: Interactor {
     typealias Presenter = ARViewInteractorOutput
     
     weak var output: Presenter!
+}
+
+extension ARViewInteractor: ARViewInteractorInput {
+    
 }

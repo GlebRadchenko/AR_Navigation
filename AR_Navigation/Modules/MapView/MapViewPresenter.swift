@@ -247,6 +247,7 @@ extension MapViewPresenter {
 }
 
 extension MapViewPresenter: MapViewInteractorOutput {
+    
     func handleHeadingUpdate(newHeading: CLHeading) {
         view.updateUserHeading(newHeading)
         moduleOutput?.handleHeadingUpdate(newHeading)
@@ -261,6 +262,10 @@ extension MapViewPresenter: MapViewInteractorOutput {
         }
         
         moduleOutput?.handleLocationUpdate(newLocation, previous: previous)
+    }
+    
+    func handleError(_ error: Error) {
+        moduleOutput?.handleMapModuleError(error)
     }
 }
 
