@@ -9,6 +9,7 @@
 import UIKit
 import SceneKit
 import ARKit
+import PromiseSwift
 
 protocol ARViewViewInput: NotificationDisplayerInput {
     var sceneView: ARSCNView! { get }
