@@ -1,3 +1,6 @@
 [submodule "JsonMapper"]
 	path = JsonMapper
 	url = https://github.com/GlebRadchenko/JsonMapper.git
+[submodule "PromiseSwift"]
+	path = PromiseSwift
+	url = https://github.com/GlebRadchenko/PromiseSwift.git
