@@ -58,6 +58,8 @@
 		F7C92C3C1F81054D00A5A2F5 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C92C3B1F81054D00A5A2F5 /* UIView+Extensions.swift */; };
 		F7C9E9D21FCD77A900245CD7 /* PromiseSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7C9E9CF1FCD777B00245CD7 /* PromiseSwift.framework */; };
 		F7C9E9D31FCD77A900245CD7 /* PromiseSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F7C9E9CF1FCD777B00245CD7 /* PromiseSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F7C9E9E21FCDA1BF00245CD7 /* Difference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C9E9E11FCDA1BF00245CD7 /* Difference.swift */; };
+		F7C9E9E51FCDC2A400245CD7 /* DeveloperSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C9E9E41FCDC2A400245CD7 /* DeveloperSettings.swift */; };
 		F7ED61D31F8252EB00EE3224 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ED61D21F8252EB00EE3224 /* SearchTableViewController.swift */; };
 		F7FBE2941FA3777C008830AE /* MapAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FBE2931FA3777C008830AE /* MapAnnotationView.swift */; };
 		F7FBE2981FA37A8D008830AE /* MapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FBE2971FA37A8D008830AE /* MapAnnotation.swift */; };
@@ -193,6 +195,8 @@
 		F7C92C391F80FDCF00A5A2F5 /* ARSceneViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARSceneViewManager.swift; sourceTree = "<group>"; };
 		F7C92C3B1F81054D00A5A2F5 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		F7C9E9C71FCD777B00245CD7 /* PromiseSwift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PromiseSwift.xcodeproj; path = PromiseSwift/PromiseSwift/PromiseSwift.xcodeproj; sourceTree = "<group>"; };
+		F7C9E9E11FCDA1BF00245CD7 /* Difference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Difference.swift; sourceTree = "<group>"; };
+		F7C9E9E41FCDC2A400245CD7 /* DeveloperSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperSettings.swift; sourceTree = "<group>"; };
 		F7ED61D21F8252EB00EE3224 /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 		F7FBE2931FA3777C008830AE /* MapAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotationView.swift; sourceTree = "<group>"; };
 		F7FBE2971FA37A8D008830AE /* MapAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotation.swift; sourceTree = "<group>"; };
@@ -285,6 +289,7 @@
 		F77DF69C1F780EFA00E4EC42 /* AR_Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				F7C9E9E31FCDC28E00245CD7 /* DeveloperSettings */,
 				F787BFF81FB775C600079C40 /* Nodes */,
 				F79F164D1F811AC200B6ABF6 /* Application */,
 				F77B32731F781DB2004259B8 /* Modules */,
@@ -323,6 +328,7 @@
 			children = (
 				F7FBE2971FA37A8D008830AE /* MapAnnotation.swift */,
 				F7037B111FC4875F00BCC36C /* Container.swift */,
+				F7C9E9E11FCDA1BF00245CD7 /* Difference.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -454,6 +460,14 @@
 				F7C9E9D11FCD777B00245CD7 /* PromiseSwiftTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		F7C9E9E31FCDC28E00245CD7 /* DeveloperSettings */ = {
+			isa = PBXGroup;
+			children = (
+				F7C9E9E41FCDC2A400245CD7 /* DeveloperSettings.swift */,
+			);
+			path = DeveloperSettings;
 			sourceTree = "<group>";
 		};
 		F7ED61CF1F8252CE00EE3224 /* Controllers */ = {
@@ -640,11 +654,13 @@
 				F73F3B0B1FA3372600D3622E /* UIStoryboard+Extensions.swift in Sources */,
 				F7C92BFB1F80E59700A5A2F5 /* MapViewPresenter.swift in Sources */,
 				F71A082D1FB8788B008B259C /* SphereNode.swift in Sources */,
+				F7C9E9E51FCDC2A400245CD7 /* DeveloperSettings.swift in Sources */,
 				F7FBE29A1FA37D28008830AE /* MKMapView+Reusable.swift in Sources */,
 				F7C92C3C1F81054D00A5A2F5 /* UIView+Extensions.swift in Sources */,
 				F7C92BFF1F80E5FF00A5A2F5 /* MapViewRouter.swift in Sources */,
 				F79F164C1F81134700B6ABF6 /* View.swift in Sources */,
 				F7FBE2981FA37A8D008830AE /* MapAnnotation.swift in Sources */,
+				F7C9E9E21FCDA1BF00245CD7 /* Difference.swift in Sources */,
 				F79F163F1F81117000B6ABF6 /* ARViewPresenter.swift in Sources */,
 				F79F16481F81132700B6ABF6 /* Router.swift in Sources */,
 				F77B327B1F782234004259B8 /* ARViewController.swift in Sources */,

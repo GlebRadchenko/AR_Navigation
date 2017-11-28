@@ -24,11 +24,27 @@ class ARViewPresenter: NSObject, Presenter {
     var sceneViewManager: ARSceneViewManagerInput!
     lazy var keyboardManager: KeyboardEventsManager = KeyboardEventsManager()
     
+    var isARSessionReady = false
+    
     override init() {
         super.init()
         setupKeyboardManager()
     }
+}
+
+//MARK: - Nodes managing logic
+extension ARViewPresenter {
+    func displayNodesIfNeeded() {
+        print(#function)
+    }
     
+    func removeAndCacheNodesIfNeeded() {
+        print(#function)
+    }
+}
+
+//MARK: - Keyboard handler
+extension ARViewPresenter {
     func setupKeyboardManager() {
         keyboardManager.onWillShow = onWillShowKeyboard()
         keyboardManager.onWillChange = onWillChangeKeyboard()
@@ -57,12 +73,23 @@ class ARViewPresenter: NSObject, Presenter {
     }
 }
 
+//MARK: - ARSceneViewManagerDelegate
 extension ARViewPresenter: ARSceneViewManagerDelegate {
     func manager(_ manager: ARSceneViewManager, didUpdateState newState: ARSceneViewState) {
         view.displayNotification(message: newState.hint)
+        
+        switch newState {
+        case .normal, .normalEmptyAnchors:
+            isARSessionReady = true
+            displayNodesIfNeeded()
+        default:
+            isARSessionReady = false
+            removeAndCacheNodesIfNeeded()
+        }
     }
 }
 
+//MARK: - ARViewViewOutput
 extension ARViewPresenter: ARViewViewOutput {
     func viewDidLoad() {
         let sceneManager = ARSceneViewManager(with: view.sceneView)
@@ -74,6 +101,8 @@ extension ARViewPresenter: ARViewViewOutput {
         
         view.embedToContainer(viewController: mapModule.viewController)
         view.toggleContainer(open: true, animated: true)
+        
+        interactor.lastRecognizedCameraTransform = sceneManager.currentCameraTransform()
     }
     
     func viewDidAppear() {
@@ -85,29 +114,51 @@ extension ARViewPresenter: ARViewViewOutput {
     }
 }
 
+//MARK: - ARViewPresenter
 extension ARViewPresenter: MapViewModuleOutput {
     func handleMapModuleError(_ error: Error) {
         view.displayNotification(message: error.localizedDescription)
     }
     
     func handleMapContainerChanges() {
-        print(#function)
+        //print(#function)
+        //find diffs between current nodes and all and apply changes
     }
     
     func handleHeadingUpdate(_ newHeading: CLHeading) {
-        print(#function)
+        // print(#function)
     }
     
     func handleLocationUpdate(_ newLocation: CLLocation, previous: CLLocation?) {
-        print(#function)
+        guard let cameraTransform = sceneViewManager.currentCameraTransform() else { return }
+        interactor.handleLocationUpdate(newLocation: newLocation, currentCameraTransform: cameraTransform)
     }
     
     func handleAnnotationTap(for container: Container<CLLocationCoordinate2D>, isSelected: Bool) {
-        print(#function)
+        //  print(#function)
     }
 }
 
+//MARK: - ARViewInteractorOutput
 extension ARViewPresenter: ARViewInteractorOutput {
+    func handleInitialPositioning() {
+        print(#function)
+        // take camera translation and according to current location calculate positions for all existing nodes
+    }
     
+    func handlePositionUpdate(locationDiff: Difference<CLLocation>, cameraDiff: Difference<matrix_float4x4>) {
+        let locationTranslation = locationDiff.bias()
+        let cameraTranslation = cameraDiff.bias()
+        
+        let accuracy = Double(Int(abs(locationTranslation - cameraTranslation) * 1000)) / 1000
+        view.displatDebugMessage("Accuracy: ±\(accuracy)(m)")
+        
+        // iterate all displayed nodes and update: 1. distance to them; 2. Their positions if needed
+    }
+    
+    func handleReset() {
+        removeAndCacheNodesIfNeeded()
+        sceneViewManager.reloadSession()
+    }
 }
 

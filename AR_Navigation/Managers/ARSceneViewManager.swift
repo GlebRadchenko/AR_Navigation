@@ -17,9 +17,11 @@ public protocol ARSceneViewManagerDelegate: class {
 
 public protocol ARSceneViewManagerInput {
     
+    var state: ARSceneViewState { get }
+    
     func launchSession()
     func pauseSession()
-    func updateSession()
+    func reloadSession()
     
     func currentCameraTransform() -> matrix_float4x4?
 }
@@ -31,7 +33,7 @@ open class ARSceneViewManager: NSObject {
     public weak var scene: ARSCNView!
     public weak var delegate: ARSceneViewManagerDelegate?
     
-    var state: ARSceneViewState = .limitedInitializing {
+    public var state: ARSceneViewState = .limitedInitializing {
         didSet { delegate?.manager(self, didUpdateState: state) }
     }
     
@@ -41,7 +43,6 @@ open class ARSceneViewManager: NSObject {
         self.scene = scene
         
         super.init()
-        
         if ARWorldTrackingConfiguration.isSupported {
             setup()
         }
@@ -86,15 +87,12 @@ extension ARSceneViewManager: ARSceneViewManagerInput {
     
     public func pauseSession() {
         guard ARWorldTrackingConfiguration.isSupported else { return }
-        
         session.pause()
     }
     
-    public func updateSession() {
+    public func reloadSession() {
         guard ARWorldTrackingConfiguration.isSupported else { return }
-        
-        let options: ARSession.RunOptions =  []
-        
+        let options: ARSession.RunOptions =  [.resetTracking, .removeExistingAnchors]
         let configuration = state.configuration
         session.run(configuration, options: options)
     }
@@ -161,13 +159,13 @@ extension ARSceneViewManager: ARSessionDelegate {
     public func sessionInterruptionEnded(_ session: ARSession) {
         state = .interruptionEnded
         
-        updateSession()
+        reloadSession()
     }
     
     public func session(_ session: ARSession, didFailWithError error: Error) {
         state = .failed(error)
         
-        updateSession()
+        reloadSession()
     }
 }
 

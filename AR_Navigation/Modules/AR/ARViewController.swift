@@ -18,6 +18,8 @@ protocol ARViewViewInput: NotificationDisplayerInput {
     func embedToContainer(viewController: UIViewController)
     func toggleContainer(open: Bool, animated: Bool)
     func updateViews(for keyboardFrame: CGRect?, duration: TimeInterval)
+    
+    func displatDebugMessage(_ message: String)
 }
 
 protocol ARViewViewOutput: class {
@@ -36,6 +38,8 @@ class ARViewController: UIViewController, View, NotificationDisplayer {
     weak var slideContainer: BottomSlideContainer!
     var slideContainerTopConstraint: NSLayoutConstraint!
     var containerState: SlideContainerState = .hidden
+    
+    weak var debugLabel: UILabel!
     
     weak var output: ARViewViewOutput!
     
@@ -56,6 +60,10 @@ class ARViewController: UIViewController, View, NotificationDisplayer {
         addGestureRecognizers()
         
         output.viewDidLoad()
+        
+        if DeveloperSettings.isDebug {
+            addDebugView()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -113,6 +121,23 @@ class ARViewController: UIViewController, View, NotificationDisplayer {
     }
 }
 
+//MARK: - View Configuring
+extension ARViewController {
+    func addDebugView() {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(label)
+        
+        label.font = UIFont(name: "HelveticaNeue", size: 15)!
+        label.textColor = .red
+        
+        label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
+        label.bottomAnchor.constraint(equalTo: slideContainer.topAnchor, constant: 8).isActive = true
+        
+        self.debugLabel = label
+    }
+}
+
 extension ARViewController: ARViewViewInput {
     func endEditing() {
         view.endEditing(true)
@@ -136,6 +161,10 @@ extension ARViewController: ARViewViewInput {
     
     func embedToContainer(viewController: UIViewController) {
         slideContainer.embed(viewController: viewController, caller: self)
+    }
+    
+    func displatDebugMessage(_ message: String) {
+        debugLabel?.text = message
     }
 }
 
