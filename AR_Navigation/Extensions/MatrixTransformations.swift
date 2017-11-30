@@ -18,7 +18,6 @@ extension matrix_float4x4 {
     func translated(for vector: vector_float4) -> matrix_float4x4 {
         var translation = matrix_identity_float4x4
         translation.columns.3 = vector
-        
         return simd_mul(self, translation)
     }
     
@@ -44,7 +43,7 @@ extension matrix_float4x4 {
         let distance = current.distance(to: destination)
         let bearing = current.bearing(to: destination)
         
-        let position = vector_float4(0, 0, -Float(distance), 0)
+        let position = vector_float4(0, 0, -Float(distance), 1)
         
         return translated(for: position).rotatedAroundY(by: Float(bearing))
     }

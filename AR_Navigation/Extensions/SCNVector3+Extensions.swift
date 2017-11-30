@@ -31,13 +31,13 @@ extension SCNVector3: Equatable {
         return (self - vector).length
     }
     
-    func vectorWith(initialCoordinates: CLLocationCoordinate2D, destination: CLLocationCoordinate2D) -> SCNVector3 {
+    func transform(initialCoordinates: CLLocationCoordinate2D, destination: CLLocationCoordinate2D) -> matrix_float4x4 {
         var matrix = matrix_identity_float4x4
         matrix.columns.3.x = x
         matrix.columns.3.y = y
         matrix.columns.3.z = z
         
-        return matrix.transformedWithCoordinates(current: initialCoordinates, destination: destination).translationVector
+        return matrix.transformedWithCoordinates(current: initialCoordinates, destination: destination)
     }
 }
 

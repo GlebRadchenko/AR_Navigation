@@ -123,6 +123,31 @@ extension ARViewPresenter: MapViewModuleOutput {
     func handleMapContainerChanges() {
         //print(#function)
         //find diffs between current nodes and all and apply changes
+        
+        guard let currentLocation = interactor.lastRecognizedLocation else { return }
+        guard let cameraTransform = sceneViewManager.currentCameraTransform() else { return }
+        
+        let container = mapModule.moduleContainer
+        container.selectedLocations.forEach { (container) in
+            let box = SCNBox(width: 5, height: 10, length: 20, chamferRadius: 1)
+            let node = SCNNode(geometry: box)
+            
+            
+            view.sceneView.scene.rootNode.addChildNode(node)
+            
+            let bearing = currentLocation.coordinate.bearing(to: container.element)
+            let distance = currentLocation.coordinate.distance(to: container.element)
+            let scale = Float(distance * 0.3)
+            
+            let translated = SCNMatrix4Translate(SCNMatrix4Identity, 0, 0, Float(distance))
+            let rotated = SCNMatrix4Rotate(translated, Float(bearing), 0, 1, 0)
+            
+            let transform = cameraTransform.translationVector.transform(initialCoordinates: currentLocation.coordinate,
+                                                                        destination: container.element)
+            
+            node.simdTransform = transform
+        }
+        
     }
     
     func handleHeadingUpdate(_ newHeading: CLHeading) {
