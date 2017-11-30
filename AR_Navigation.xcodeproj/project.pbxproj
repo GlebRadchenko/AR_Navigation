@@ -60,6 +60,9 @@
 		F7C9E9D31FCD77A900245CD7 /* PromiseSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F7C9E9CF1FCD777B00245CD7 /* PromiseSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F7C9E9E21FCDA1BF00245CD7 /* Difference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C9E9E11FCDA1BF00245CD7 /* Difference.swift */; };
 		F7C9E9E51FCDC2A400245CD7 /* DeveloperSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C9E9E41FCDC2A400245CD7 /* DeveloperSettings.swift */; };
+		F7C9EA231FD0289500245CD7 /* PlacemarkNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C9EA1E1FD0289400245CD7 /* PlacemarkNode.swift */; };
+		F7C9EA241FD0289500245CD7 /* BannerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C9EA221FD0289400245CD7 /* BannerNode.swift */; };
+		F7C9EA261FD0295500245CD7 /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C9EA251FD0295500245CD7 /* CGPoint+Extensions.swift */; };
 		F7ED61D31F8252EB00EE3224 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ED61D21F8252EB00EE3224 /* SearchTableViewController.swift */; };
 		F7FBE2941FA3777C008830AE /* MapAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FBE2931FA3777C008830AE /* MapAnnotationView.swift */; };
 		F7FBE2981FA37A8D008830AE /* MapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FBE2971FA37A8D008830AE /* MapAnnotation.swift */; };
@@ -197,6 +200,9 @@
 		F7C9E9C71FCD777B00245CD7 /* PromiseSwift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PromiseSwift.xcodeproj; path = PromiseSwift/PromiseSwift/PromiseSwift.xcodeproj; sourceTree = "<group>"; };
 		F7C9E9E11FCDA1BF00245CD7 /* Difference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Difference.swift; sourceTree = "<group>"; };
 		F7C9E9E41FCDC2A400245CD7 /* DeveloperSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperSettings.swift; sourceTree = "<group>"; };
+		F7C9EA1E1FD0289400245CD7 /* PlacemarkNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacemarkNode.swift; sourceTree = "<group>"; };
+		F7C9EA221FD0289400245CD7 /* BannerNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerNode.swift; sourceTree = "<group>"; };
+		F7C9EA251FD0295500245CD7 /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
 		F7ED61D21F8252EB00EE3224 /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 		F7FBE2931FA3777C008830AE /* MapAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotationView.swift; sourceTree = "<group>"; };
 		F7FBE2971FA37A8D008830AE /* MapAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotation.swift; sourceTree = "<group>"; };
@@ -373,6 +379,8 @@
 		F787BFF81FB775C600079C40 /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				F7C9EA221FD0289400245CD7 /* BannerNode.swift */,
+				F7C9EA1E1FD0289400245CD7 /* PlacemarkNode.swift */,
 				F71A082A1FB873A2008B259C /* DirectionNode.swift */,
 				F71A082C1FB8788B008B259C /* SphereNode.swift */,
 				F71A082E1FB878A7008B259C /* AnnotationNode.swift */,
@@ -439,6 +447,7 @@
 				F71A08261FB8687E008B259C /* MatrixTransformations.swift */,
 				F7AAD00F1FB9E75B0054BB45 /* CLPlacemark+Extensions.swift */,
 				F7037B071FC4577900BCC36C /* UIColor+Extensions.swift */,
+				F7C9EA251FD0295500245CD7 /* CGPoint+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -650,6 +659,7 @@
 				F79F164A1F81133600B6ABF6 /* Interactor.swift in Sources */,
 				F7C92C0D1F80ED7F00A5A2F5 /* Reusable.swift in Sources */,
 				F7C92C291F80F32700A5A2F5 /* NSAttributedString+Extensions.swift in Sources */,
+				F7C9EA241FD0289500245CD7 /* BannerNode.swift in Sources */,
 				F7C92C081F80ED2300A5A2F5 /* MapActionCollectionViewCell.swift in Sources */,
 				F73F3B0B1FA3372600D3622E /* UIStoryboard+Extensions.swift in Sources */,
 				F7C92BFB1F80E59700A5A2F5 /* MapViewPresenter.swift in Sources */,
@@ -663,6 +673,7 @@
 				F7C9E9E21FCDA1BF00245CD7 /* Difference.swift in Sources */,
 				F79F163F1F81117000B6ABF6 /* ARViewPresenter.swift in Sources */,
 				F79F16481F81132700B6ABF6 /* Router.swift in Sources */,
+				F7C9EA261FD0295500245CD7 /* CGPoint+Extensions.swift in Sources */,
 				F77B327B1F782234004259B8 /* ARViewController.swift in Sources */,
 				F7C92C311F80F92B00A5A2F5 /* BottomSlideContainer.swift in Sources */,
 				F79F16461F81118800B6ABF6 /* ARViewRouter.swift in Sources */,
@@ -680,6 +691,7 @@
 				F7FBE2941FA3777C008830AE /* MapAnnotationView.swift in Sources */,
 				F7C92C151F80EF4000A5A2F5 /* UICollectionView+Reusable.swift in Sources */,
 				F7C92BFD1F80E5E900A5A2F5 /* MapViewInteractor.swift in Sources */,
+				F7C9EA231FD0289500245CD7 /* PlacemarkNode.swift in Sources */,
 				F79F9FB91FB77ED80014773A /* SCNVector3+Extensions.swift in Sources */,
 				F7ED61D31F8252EB00EE3224 /* SearchTableViewController.swift in Sources */,
 				F7C92BF71F80D72F00A5A2F5 /* MapView.swift in Sources */,

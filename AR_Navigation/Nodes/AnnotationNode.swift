@@ -19,15 +19,25 @@ class AnnotationNode: SCNNode {
     
     init(text: String, color: UIColor, size: CGFloat) {
         super.init()
-        let text = SCNText(string: text, extrusionDepth: 0.5)
-        text.font = UIFont(name: "HelveticaNeue", size: size)
-        text.firstMaterial?.diffuse.contents = color
         
-        geometry = text
+        let textShape = SCNText(string: text, extrusionDepth: 0)
+        textShape.font = UIFont(name: "HelveticaNeue", size: size)
+        textShape.firstMaterial?.diffuse.contents = color
+        textShape.isWrapped = true
+        textShape.alignmentMode = kCAAlignmentCenter
+        textShape.truncationMode = kCATruncationEnd
+        //textShape.containerFrame =
+        
+        geometry = textShape
+    }
+    
+    func setText(_ text: String) {
+        textGeometry?.string = text
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 }
+
 
