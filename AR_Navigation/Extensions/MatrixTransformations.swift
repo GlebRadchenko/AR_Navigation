@@ -40,7 +40,7 @@ extension matrix_float4x4 {
     }
     
     func transformedWithCoordinates(current: CLLocationCoordinate2D, destination: CLLocationCoordinate2D) -> matrix_float4x4 {
-        let distance = current.distance(to: destination)
+        let distance = 1//current.distance(to: destination)
         let bearing = current.bearing(to: destination)
         
         let position = vector_float4(0, 0, -Float(distance), 1)

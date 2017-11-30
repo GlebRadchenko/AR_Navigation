@@ -10,6 +10,7 @@ import ARKit
 import SceneKit
 import CoreLocation
 import MapKit
+import PromiseSwift
 
 class ARViewPresenter: NSObject, Presenter {
     typealias View = ARViewViewInput
@@ -128,26 +129,30 @@ extension ARViewPresenter: MapViewModuleOutput {
         guard let cameraTransform = sceneViewManager.currentCameraTransform() else { return }
         
         let container = mapModule.moduleContainer
-        container.selectedLocations.forEach { (container) in
-            let box = SCNBox(width: 5, height: 10, length: 20, chamferRadius: 1)
-            let node = SCNNode(geometry: box)
+        view.sceneView.scene.rootNode.childNodes.forEach { $0.removeFromParentNode() }
+        
+        container.selectedLocations.forEach { (c) in
+            let dest = c.element
             
-            
+            let node = PlacemarkNode()
             view.sceneView.scene.rootNode.addChildNode(node)
             
-            let bearing = currentLocation.coordinate.bearing(to: container.element)
-            let distance = currentLocation.coordinate.distance(to: container.element)
-            let scale = Float(distance * 0.3)
+            let bearing = currentLocation.coordinate.bearing(to: dest)
+            let distance = currentLocation.coordinate.distance(to: dest)
+            node.bannerNode.updateInfo("distance: \(distance) meters", backgroundColor: .randomPrettyColor)
             
-            let translated = SCNMatrix4Translate(SCNMatrix4Identity, 0, 0, Float(distance))
-            let rotated = SCNMatrix4Rotate(translated, Float(bearing), 0, 1, 0)
+            var transform = node.transform
+            let translation = SCNMatrix4MakeTranslation(0, Float(distance.relativeHeight()), -Float(distance))
+            transform = SCNMatrix4Mult(transform, translation)
+            let rotate = SCNMatrix4MakeRotation(Float(bearing), 0, 1, 0)
+            transform = SCNMatrix4Mult(transform, SCNMatrix4Invert(rotate))
             
-            let transform = cameraTransform.translationVector.transform(initialCoordinates: currentLocation.coordinate,
-                                                                        destination: container.element)
+            let s = Float(5 / distance)
+            let scale = SCNMatrix4MakeScale(s, s, s)
+            transform = SCNMatrix4Mult(transform, scale)
             
-            node.simdTransform = transform
+            node.transform = transform
         }
-        
     }
     
     func handleHeadingUpdate(_ newHeading: CLHeading) {

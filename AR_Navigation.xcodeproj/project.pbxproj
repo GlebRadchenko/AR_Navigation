@@ -36,6 +36,7 @@
 		F79F164C1F81134700B6ABF6 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79F164B1F81134700B6ABF6 /* View.swift */; };
 		F79F164F1F811AED00B6ABF6 /* ApplicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79F164E1F811AED00B6ABF6 /* ApplicationManager.swift */; };
 		F79F9FB91FB77ED80014773A /* SCNVector3+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79F9FB81FB77ED80014773A /* SCNVector3+Extensions.swift */; };
+		F7A664821FD0994A0028734F /* SCNTransaction+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A664811FD0994A0028734F /* SCNTransaction+Extensions.swift */; };
 		F7AAD00C1FB9E5410054BB45 /* PopoverDisplayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AAD00B1FB9E5410054BB45 /* PopoverDisplayer.swift */; };
 		F7AAD0101FB9E75B0054BB45 /* CLPlacemark+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AAD00F1FB9E75B0054BB45 /* CLPlacemark+Extensions.swift */; };
 		F7BAFD641F827E33004734DA /* SearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BAFD621F827E33004734DA /* SearchResultTableViewCell.swift */; };
@@ -177,6 +178,7 @@
 		F79F164B1F81134700B6ABF6 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		F79F164E1F811AED00B6ABF6 /* ApplicationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationManager.swift; sourceTree = "<group>"; };
 		F79F9FB81FB77ED80014773A /* SCNVector3+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNVector3+Extensions.swift"; sourceTree = "<group>"; };
+		F7A664811FD0994A0028734F /* SCNTransaction+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNTransaction+Extensions.swift"; sourceTree = "<group>"; };
 		F7AAD00B1FB9E5410054BB45 /* PopoverDisplayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverDisplayer.swift; sourceTree = "<group>"; };
 		F7AAD00F1FB9E75B0054BB45 /* CLPlacemark+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLPlacemark+Extensions.swift"; sourceTree = "<group>"; };
 		F7BAFD621F827E33004734DA /* SearchResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTableViewCell.swift; sourceTree = "<group>"; };
@@ -448,6 +450,7 @@
 				F7AAD00F1FB9E75B0054BB45 /* CLPlacemark+Extensions.swift */,
 				F7037B071FC4577900BCC36C /* UIColor+Extensions.swift */,
 				F7C9EA251FD0295500245CD7 /* CGPoint+Extensions.swift */,
+				F7A664811FD0994A0028734F /* SCNTransaction+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -687,6 +690,7 @@
 				F7C92C3A1F80FDCF00A5A2F5 /* ARSceneViewManager.swift in Sources */,
 				F79F164F1F811AED00B6ABF6 /* ApplicationManager.swift in Sources */,
 				F7BAFD691F827E54004734DA /* UITableView+Reusable.swift in Sources */,
+				F7A664821FD0994A0028734F /* SCNTransaction+Extensions.swift in Sources */,
 				F71033F81F80CBE90074F6E8 /* NavigationManager.swift in Sources */,
 				F7FBE2941FA3777C008830AE /* MapAnnotationView.swift in Sources */,
 				F7C92C151F80EF4000A5A2F5 /* UICollectionView+Reusable.swift in Sources */,
