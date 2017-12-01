@@ -19,14 +19,17 @@ class BannerNode: SCNNode {
     override init() {
         super.init()
         
-        let scale = Float(1 / BannerNode.defaultWidth)
-        
         geometry = SCNShape.bannerShape(width: BannerNode.defaultWidth)
-        transform = SCNMatrix4Scale(transform, scale, scale, scale)
+        applyScale(1)
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    func applyScale(_ scale: Float) {
+        let scale = Float(1 / BannerNode.defaultWidth) * scale
+        transform = SCNMatrix4Scale(transform, scale, scale, scale)
     }
     
     func updateInfo(_ text: String, backgroundColor: UIColor) {

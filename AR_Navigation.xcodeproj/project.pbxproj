@@ -14,7 +14,6 @@
 		F71033F81F80CBE90074F6E8 /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71033F71F80CBE90074F6E8 /* NavigationManager.swift */; };
 		F71446A21FB9CEE90068AE4E /* MapModuleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71446A11FB9CEE90068AE4E /* MapModuleContainer.swift */; };
 		F71A08271FB8687E008B259C /* MatrixTransformations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71A08261FB8687E008B259C /* MatrixTransformations.swift */; };
-		F71A082B1FB873A2008B259C /* DirectionNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71A082A1FB873A2008B259C /* DirectionNode.swift */; };
 		F71A082D1FB8788B008B259C /* SphereNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71A082C1FB8788B008B259C /* SphereNode.swift */; };
 		F71A082F1FB878A7008B259C /* AnnotationNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71A082E1FB878A7008B259C /* AnnotationNode.swift */; };
 		F73F3B0B1FA3372600D3622E /* UIStoryboard+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73F3B0A1FA3372600D3622E /* UIStoryboard+Extensions.swift */; };
@@ -64,6 +63,8 @@
 		F7C9EA231FD0289500245CD7 /* PlacemarkNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C9EA1E1FD0289400245CD7 /* PlacemarkNode.swift */; };
 		F7C9EA241FD0289500245CD7 /* BannerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C9EA221FD0289400245CD7 /* BannerNode.swift */; };
 		F7C9EA261FD0295500245CD7 /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C9EA251FD0295500245CD7 /* CGPoint+Extensions.swift */; };
+		F7C9EA301FD1611400245CD7 /* RouteNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C9EA2F1FD1611400245CD7 /* RouteNode.swift */; };
+		F7C9EA371FD161DF00245CD7 /* GlobalNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C9EA361FD161DF00245CD7 /* GlobalNode.swift */; };
 		F7ED61D31F8252EB00EE3224 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ED61D21F8252EB00EE3224 /* SearchTableViewController.swift */; };
 		F7FBE2941FA3777C008830AE /* MapAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FBE2931FA3777C008830AE /* MapAnnotationView.swift */; };
 		F7FBE2981FA37A8D008830AE /* MapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FBE2971FA37A8D008830AE /* MapAnnotation.swift */; };
@@ -153,7 +154,6 @@
 		F71033F71F80CBE90074F6E8 /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
 		F71446A11FB9CEE90068AE4E /* MapModuleContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapModuleContainer.swift; sourceTree = "<group>"; };
 		F71A08261FB8687E008B259C /* MatrixTransformations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixTransformations.swift; sourceTree = "<group>"; };
-		F71A082A1FB873A2008B259C /* DirectionNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionNode.swift; sourceTree = "<group>"; };
 		F71A082C1FB8788B008B259C /* SphereNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphereNode.swift; sourceTree = "<group>"; };
 		F71A082E1FB878A7008B259C /* AnnotationNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationNode.swift; sourceTree = "<group>"; };
 		F73F3B0A1FA3372600D3622E /* UIStoryboard+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+Extensions.swift"; sourceTree = "<group>"; };
@@ -205,6 +205,8 @@
 		F7C9EA1E1FD0289400245CD7 /* PlacemarkNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacemarkNode.swift; sourceTree = "<group>"; };
 		F7C9EA221FD0289400245CD7 /* BannerNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerNode.swift; sourceTree = "<group>"; };
 		F7C9EA251FD0295500245CD7 /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
+		F7C9EA2F1FD1611400245CD7 /* RouteNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteNode.swift; sourceTree = "<group>"; };
+		F7C9EA361FD161DF00245CD7 /* GlobalNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalNode.swift; sourceTree = "<group>"; };
 		F7ED61D21F8252EB00EE3224 /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 		F7FBE2931FA3777C008830AE /* MapAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotationView.swift; sourceTree = "<group>"; };
 		F7FBE2971FA37A8D008830AE /* MapAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotation.swift; sourceTree = "<group>"; };
@@ -381,11 +383,12 @@
 		F787BFF81FB775C600079C40 /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
-				F7C9EA221FD0289400245CD7 /* BannerNode.swift */,
-				F7C9EA1E1FD0289400245CD7 /* PlacemarkNode.swift */,
-				F71A082A1FB873A2008B259C /* DirectionNode.swift */,
 				F71A082C1FB8788B008B259C /* SphereNode.swift */,
 				F71A082E1FB878A7008B259C /* AnnotationNode.swift */,
+				F7C9EA221FD0289400245CD7 /* BannerNode.swift */,
+				F7C9EA1E1FD0289400245CD7 /* PlacemarkNode.swift */,
+				F7C9EA2F1FD1611400245CD7 /* RouteNode.swift */,
+				F7C9EA361FD161DF00245CD7 /* GlobalNode.swift */,
 			);
 			path = Nodes;
 			sourceTree = "<group>";
@@ -667,6 +670,7 @@
 				F73F3B0B1FA3372600D3622E /* UIStoryboard+Extensions.swift in Sources */,
 				F7C92BFB1F80E59700A5A2F5 /* MapViewPresenter.swift in Sources */,
 				F71A082D1FB8788B008B259C /* SphereNode.swift in Sources */,
+				F7C9EA301FD1611400245CD7 /* RouteNode.swift in Sources */,
 				F7C9E9E51FCDC2A400245CD7 /* DeveloperSettings.swift in Sources */,
 				F7FBE29A1FA37D28008830AE /* MKMapView+Reusable.swift in Sources */,
 				F7C92C3C1F81054D00A5A2F5 /* UIView+Extensions.swift in Sources */,
@@ -704,7 +708,7 @@
 				F7037B081FC4577900BCC36C /* UIColor+Extensions.swift in Sources */,
 				F7FFFB421F8165540039A39B /* MapAction.swift in Sources */,
 				F7037B1A1FC5981700BCC36C /* NotificationView.swift in Sources */,
-				F71A082B1FB873A2008B259C /* DirectionNode.swift in Sources */,
+				F7C9EA371FD161DF00245CD7 /* GlobalNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

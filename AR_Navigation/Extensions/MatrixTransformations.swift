@@ -40,11 +40,17 @@ extension matrix_float4x4 {
     }
     
     func transformedWithCoordinates(current: CLLocationCoordinate2D, destination: CLLocationCoordinate2D) -> matrix_float4x4 {
-        let distance = 1//current.distance(to: destination)
+        let distance = current.distance(to: destination)
         let bearing = current.bearing(to: destination)
         
         let position = vector_float4(0, 0, -Float(distance), 1)
+        let translatedMatrix = translated(for: position)
+        let rotatedMatrix = translatedMatrix.rotatedAroundY(by: Float(bearing))
         
-        return translated(for: position).rotatedAroundY(by: Float(bearing))
+        return rotatedMatrix
+    }
+    
+    func toSCNMatrix4() -> SCNMatrix4 {
+        return SCNMatrix4(float4x4(columns: columns))
     }
 }

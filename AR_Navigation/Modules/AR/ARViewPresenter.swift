@@ -122,37 +122,35 @@ extension ARViewPresenter: MapViewModuleOutput {
     }
     
     func handleMapContainerChanges() {
-        //print(#function)
-        //find diffs between current nodes and all and apply changes
-        
-        guard let currentLocation = interactor.lastRecognizedLocation else { return }
-        guard let cameraTransform = sceneViewManager.currentCameraTransform() else { return }
-        
         let container = mapModule.moduleContainer
-        view.sceneView.scene.rootNode.childNodes.forEach { $0.removeFromParentNode() }
-        
-        container.selectedLocations.forEach { (c) in
-            let dest = c.element
-            
-            let node = PlacemarkNode()
-            view.sceneView.scene.rootNode.addChildNode(node)
-            
-            let bearing = currentLocation.coordinate.bearing(to: dest)
-            let distance = currentLocation.coordinate.distance(to: dest)
-            node.bannerNode.updateInfo("distance: \(distance) meters", backgroundColor: .randomPrettyColor)
-            
-            var transform = node.transform
-            let translation = SCNMatrix4MakeTranslation(0, Float(distance.relativeHeight()), -Float(distance))
-            transform = SCNMatrix4Mult(transform, translation)
-            let rotate = SCNMatrix4MakeRotation(Float(bearing), 0, 1, 0)
-            transform = SCNMatrix4Mult(transform, SCNMatrix4Invert(rotate))
-            
-            let s = Float(5 / distance)
-            let scale = SCNMatrix4MakeScale(s, s, s)
-            transform = SCNMatrix4Mult(transform, scale)
-            
-            node.transform = transform
-        }
+        updateNodes(for: container.selectedLocations)
+        updateNodes(for: container.routes)
+//        view.sceneView.scene.rootNode.childNodes.forEach { $0.removeFromParentNode() }
+//
+//        container.selectedLocations.forEach { (c) in
+//            let dest = c.element
+//
+//            let node = PlacemarkNode()
+//            view.sceneView.scene.rootNode.addChildNode(node)
+//
+//            let bearing = currentLocation.coordinate.bearing(to: dest)
+//            let distance = currentLocation.coordinate.distance(to: dest)
+//            node.bannerNode.updateInfo("distance: \(distance) meters", backgroundColor: .randomPrettyColor)
+//
+//            var transform = node.transform
+//            let translation = SCNMatrix4MakeTranslation(0, 0, -Float(distance))
+//            transform = SCNMatrix4Mult(transform, translation)
+//            let rotate = SCNMatrix4MakeRotation(Float(bearing), 0, 1, 0)
+//            transform = SCNMatrix4Mult(transform, SCNMatrix4Invert(rotate))
+//
+//            matrix_identity_float4x4.transformedWithCoordinates(current: currentLocation.coordinate, destination: dest)
+//
+//            let s = Float(5 / distance)
+//            let scale = SCNMatrix4MakeScale(s, s, s)
+//            transform = SCNMatrix4Mult(transform, scale)
+//
+//            node.transform = transform
+//        }
     }
     
     func handleHeadingUpdate(_ newHeading: CLHeading) {
@@ -167,6 +165,24 @@ extension ARViewPresenter: MapViewModuleOutput {
     func handleAnnotationTap(for container: Container<CLLocationCoordinate2D>, isSelected: Bool) {
         //  print(#function)
     }
+}
+
+//MARK: - Nodes Managing
+extension ARViewPresenter {
+    func updateNodes(for routes: [Container<MKRoute>]) {
+        guard let currentLocation = interactor.lastRecognizedLocation else { return }
+        guard let cameraTransform = sceneViewManager.currentCameraTransform() else { return }
+        
+        
+    }
+    
+    func updateNodes(for placeMarks: [Container<CLLocationCoordinate2D>]) {
+        guard let currentLocation = interactor.lastRecognizedLocation else { return }
+        guard let cameraTransform = sceneViewManager.currentCameraTransform() else { return }
+        
+        
+    }
+    
 }
 
 //MARK: - ARViewInteractorOutput

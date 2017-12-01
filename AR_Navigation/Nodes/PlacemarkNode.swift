@@ -8,14 +8,17 @@
 
 import Foundation
 import SceneKit
+import MapKit
+import ARKit
 
-class PlacemarkNode: SCNNode {
+class PlacemarkNode: GlobalNode<Container<CLLocationCoordinate2D>> {
     
     var bannerNode: BannerNode!
     
-    override init() {
+    override init(element: Container<CLLocationCoordinate2D>) {
+        super.init(element: element)
+        sourceId = element.id
         bannerNode = BannerNode()
-        super.init()
         addChildNode(bannerNode)
         
         let billboardConstraint = SCNBillboardConstraint()
@@ -24,6 +27,15 @@ class PlacemarkNode: SCNNode {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func updateWith(currentCameraTransform: matrix_float4x4, currentCoordinates: CLLocationCoordinate2D) {
+        transform = currentCameraTransform.transformedWithCoordinates(current: currentCoordinates, destination: element.element).toSCNMatrix4()
+        
+    }
+    
+    override func applyScale(_ scaleFactor: Float) {
+        bannerNode.applyScale(scaleFactor)
     }
 }
