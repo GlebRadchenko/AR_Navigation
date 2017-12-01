@@ -12,7 +12,6 @@ import SceneKit
 
 public protocol ARSceneViewManagerDelegate: class {
     func manager(_ manager: ARSceneViewManager, didUpdateState newState: ARSceneViewState)
-    //func manager(_ manager: ARSceneViewManager, )
 }
 
 public protocol ARSceneViewManagerInput {
@@ -24,6 +23,7 @@ public protocol ARSceneViewManagerInput {
     func reloadSession()
     
     func currentCameraTransform() -> matrix_float4x4?
+    func estimatedHeight() -> Float
 }
 
 open class ARSceneViewManager: NSObject {
@@ -38,6 +38,8 @@ open class ARSceneViewManager: NSObject {
     }
     
     var session: ARSession { return scene.session }
+    
+    var recognizedHeights: [ARAnchor: Float] = [:]
     
     public init(with scene: ARSCNView) {
         self.scene = scene
@@ -67,14 +69,21 @@ open class ARSceneViewManager: NSObject {
     }
     
     func clearStoredDate() {
-        //platforms = [:]
+        recognizedHeights.removeAll()
     }
 }
 
 //MARK: - Logic
 extension ARSceneViewManager: ARSceneViewManagerInput {
+    
     public func currentCameraTransform() -> matrix_float4x4? {
         return session.currentFrame?.camera.transform
+    }
+    
+    public func estimatedHeight() -> Float {
+        let count = recognizedHeights.values.count
+        if count < 1 { return 0 }
+        return recognizedHeights.values.reduce(0, +) / Float(count)
     }
     
     public func launchSession() {
@@ -105,15 +114,18 @@ extension ARSceneViewManager: ARSCNViewDelegate {
     }
     
     public func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-        
+        guard let anchor = anchor as? ARPlaneAnchor else { return }
+        recognizedHeights[anchor] = node.position.y
     }
     
     public func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
-        
+        guard let anchor = anchor as? ARPlaneAnchor else { return }
+        recognizedHeights[anchor] = node.position.y
     }
     
     public func renderer(_ renderer: SCNSceneRenderer, didRemove node: SCNNode, for anchor: ARAnchor) {
-        
+        guard let anchor = anchor as? ARPlaneAnchor else { return }
+        recognizedHeights[anchor] = nil
     }
 }
 

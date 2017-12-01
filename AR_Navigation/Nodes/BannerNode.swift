@@ -29,7 +29,7 @@ class BannerNode: SCNNode {
     
     func applyScale(_ scale: Float) {
         let scale = Float(1 / BannerNode.defaultWidth) * scale
-        transform = SCNMatrix4Scale(transform, scale, scale, scale)
+        self.scale = SCNVector3(scale, scale, scale)
     }
     
     func updateInfo(_ text: String, backgroundColor: UIColor) {

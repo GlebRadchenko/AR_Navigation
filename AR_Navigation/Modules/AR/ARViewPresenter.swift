@@ -125,32 +125,6 @@ extension ARViewPresenter: MapViewModuleOutput {
         let container = mapModule.moduleContainer
         updateNodes(for: container.selectedLocations)
         updateNodes(for: container.routes)
-//        view.sceneView.scene.rootNode.childNodes.forEach { $0.removeFromParentNode() }
-//
-//        container.selectedLocations.forEach { (c) in
-//            let dest = c.element
-//
-//            let node = PlacemarkNode()
-//            view.sceneView.scene.rootNode.addChildNode(node)
-//
-//            let bearing = currentLocation.coordinate.bearing(to: dest)
-//            let distance = currentLocation.coordinate.distance(to: dest)
-//            node.bannerNode.updateInfo("distance: \(distance) meters", backgroundColor: .randomPrettyColor)
-//
-//            var transform = node.transform
-//            let translation = SCNMatrix4MakeTranslation(0, 0, -Float(distance))
-//            transform = SCNMatrix4Mult(transform, translation)
-//            let rotate = SCNMatrix4MakeRotation(Float(bearing), 0, 1, 0)
-//            transform = SCNMatrix4Mult(transform, SCNMatrix4Invert(rotate))
-//
-//            matrix_identity_float4x4.transformedWithCoordinates(current: currentLocation.coordinate, destination: dest)
-//
-//            let s = Float(5 / distance)
-//            let scale = SCNMatrix4MakeScale(s, s, s)
-//            transform = SCNMatrix4Mult(transform, scale)
-//
-//            node.transform = transform
-//        }
     }
     
     func handleHeadingUpdate(_ newHeading: CLHeading) {
@@ -173,16 +147,63 @@ extension ARViewPresenter {
         guard let currentLocation = interactor.lastRecognizedLocation else { return }
         guard let cameraTransform = sceneViewManager.currentCameraTransform() else { return }
         
-        
+        let existingNodes: [RouteNode] = view.sceneView.scene.rootNode.childs()
     }
     
     func updateNodes(for placeMarks: [Container<CLLocationCoordinate2D>]) {
+        let existingNodes: [PlacemarkNode] = view.sceneView.scene.rootNode.childs()
+        var nodesTable: [String: PlacemarkNode] = [:]
+        existingNodes.forEach { nodesTable[$0.element.id] = $0 }
+        
+        let existingPlacemarks = existingNodes.map { $0.element }
+        
+        let existingIds = Set(nodesTable.keys)
+        let currentIds = Set(placeMarks.map { $0.id })
+        
+        let placemarksToAdd = placeMarks.filter { !existingIds.contains($0.id) }
+        let placemarksToUpdate = placeMarks.filter { existingIds.contains($0.id) }
+        let placemarkToRemove = existingPlacemarks.filter { !currentIds.contains($0.id) }
+        
+        addPlacemarkNodes(placemarksToAdd)
+        updatePlacemarkNodesPosition(placemarksToUpdate)
+        updatePlacemarkNodesContent(placemarksToAdd + placemarksToUpdate)
+        removePlacemarkNodes(placemarkToRemove)
+    }
+    
+    internal func addPlacemarkNodes(_ placemarks: [Container<CLLocationCoordinate2D>]) {
+        let nodes = placemarks.map { PlacemarkNode(element: $0) }
+        nodes.forEach { view.sceneView.scene.rootNode.addChildNode($0) }
+        updatePlacemarkNodesPosition(placemarks)
+    }
+    
+    internal func updatePlacemarkNodesPosition(_ placemarks: [Container<CLLocationCoordinate2D>]) {
         guard let currentLocation = interactor.lastRecognizedLocation else { return }
         guard let cameraTransform = sceneViewManager.currentCameraTransform() else { return }
         
+        let idsToUpdate = Set(placemarks.map { $0.id })
+        let nodesToUpdate: [PlacemarkNode] = view.sceneView.scene.rootNode.childs { idsToUpdate.contains($0.element.id) }
         
+        nodesToUpdate.forEach { $0.updateWith(currentCameraTransform: cameraTransform, currentCoordinates: currentLocation.coordinate) }
+        
+        let estimatedHeight = sceneViewManager.estimatedHeight()
+        
+        nodesToUpdate.forEach { (node) in
+            let distance = currentLocation.coordinate.distance(to: node.element.element)
+            let scale = distance / 5
+            
+            node.applyScale(Float(scale))
+        }
     }
     
+    internal func updatePlacemarkNodesContent(_ placemarks: [Container<CLLocationCoordinate2D>]) {
+        // Fetch geo data and form description for each node
+    }
+    
+    internal func removePlacemarkNodes(_ placemarks: [Container<CLLocationCoordinate2D>]) {
+        let idsToRemove = Set(placemarks.map { $0.id })
+        let nodesToRemove: [PlacemarkNode] = view.sceneView.scene.rootNode.childs { idsToRemove.contains($0.element.id) }
+        nodesToRemove.forEach { $0.removeFromParentNode() }
+    }
 }
 
 //MARK: - ARViewInteractorOutput
@@ -199,7 +220,10 @@ extension ARViewPresenter: ARViewInteractorOutput {
         let accuracy = Double(Int(abs(locationTranslation - cameraTranslation) * 1000)) / 1000
         view.displatDebugMessage("Accuracy: ±\(accuracy)(m)")
         
-        // iterate all displayed nodes and update: 1. distance to them; 2. Their positions if needed
+        updatePlacemarkNodesContent(mapModule.moduleContainer.selectedLocations)
+        if accuracy <= 1 {
+            updatePlacemarkNodesPosition(mapModule.moduleContainer.selectedLocations)
+        }
     }
     
     func handleReset() {

@@ -69,6 +69,7 @@
 		F7FBE2941FA3777C008830AE /* MapAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FBE2931FA3777C008830AE /* MapAnnotationView.swift */; };
 		F7FBE2981FA37A8D008830AE /* MapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FBE2971FA37A8D008830AE /* MapAnnotation.swift */; };
 		F7FBE29A1FA37D28008830AE /* MKMapView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FBE2991FA37D28008830AE /* MKMapView+Reusable.swift */; };
+		F7FD35B71FD18E2B006D2982 /* SCNNode+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FD35B61FD18E2B006D2982 /* SCNNode+Extensions.swift */; };
 		F7FFFB421F8165540039A39B /* MapAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FFFB411F8165540039A39B /* MapAction.swift */; };
 /* End PBXBuildFile section */
 
@@ -211,6 +212,7 @@
 		F7FBE2931FA3777C008830AE /* MapAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotationView.swift; sourceTree = "<group>"; };
 		F7FBE2971FA37A8D008830AE /* MapAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotation.swift; sourceTree = "<group>"; };
 		F7FBE2991FA37D28008830AE /* MKMapView+Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKMapView+Reusable.swift"; sourceTree = "<group>"; };
+		F7FD35B61FD18E2B006D2982 /* SCNNode+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNNode+Extensions.swift"; sourceTree = "<group>"; };
 		F7FFFB411F8165540039A39B /* MapAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAction.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -454,6 +456,7 @@
 				F7037B071FC4577900BCC36C /* UIColor+Extensions.swift */,
 				F7C9EA251FD0295500245CD7 /* CGPoint+Extensions.swift */,
 				F7A664811FD0994A0028734F /* SCNTransaction+Extensions.swift */,
+				F7FD35B61FD18E2B006D2982 /* SCNNode+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -694,6 +697,7 @@
 				F7C92C3A1F80FDCF00A5A2F5 /* ARSceneViewManager.swift in Sources */,
 				F79F164F1F811AED00B6ABF6 /* ApplicationManager.swift in Sources */,
 				F7BAFD691F827E54004734DA /* UITableView+Reusable.swift in Sources */,
+				F7FD35B71FD18E2B006D2982 /* SCNNode+Extensions.swift in Sources */,
 				F7A664821FD0994A0028734F /* SCNTransaction+Extensions.swift in Sources */,
 				F71033F81F80CBE90074F6E8 /* NavigationManager.swift in Sources */,
 				F7FBE2941FA3777C008830AE /* MapAnnotationView.swift in Sources */,

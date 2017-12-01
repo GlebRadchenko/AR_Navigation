@@ -31,11 +31,23 @@ class PlacemarkNode: GlobalNode<Container<CLLocationCoordinate2D>> {
     }
     
     override func updateWith(currentCameraTransform: matrix_float4x4, currentCoordinates: CLLocationCoordinate2D) {
-        transform = currentCameraTransform.transformedWithCoordinates(current: currentCoordinates, destination: element.element).toSCNMatrix4()
+        var identity = matrix_identity_float4x4
+        identity.columns.3.x = currentCameraTransform.columns.3.x
+        identity.columns.3.y = currentCameraTransform.columns.3.y
+        identity.columns.3.z = currentCameraTransform.columns.3.z
         
+        transform = identity.toSCNMatrix4().transformedWithCoordinates(current: currentCoordinates, destination: element.element)
     }
     
     override func applyScale(_ scaleFactor: Float) {
         bannerNode.applyScale(scaleFactor)
+    }
+    
+    func updateContent(_ text: NSAttributedString, _ background: UIColor) {
+        bannerNode.updateInfo(text, backgroundColor: background)
+    }
+    
+    func updateContent(_ text: String, _ background: UIColor) {
+        bannerNode.updateInfo(text, backgroundColor: background)
     }
 }

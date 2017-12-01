@@ -36,7 +36,7 @@ extension matrix_float4x4 {
         rotation.columns.2.x = sin(radians)
         rotation.columns.2.z = cos(radians)
         
-        return simd_mul(self, rotation.inverse)
+        return simd_mul(rotation.inverse, self)
     }
     
     func transformedWithCoordinates(current: CLLocationCoordinate2D, destination: CLLocationCoordinate2D) -> matrix_float4x4 {
@@ -52,5 +52,21 @@ extension matrix_float4x4 {
     
     func toSCNMatrix4() -> SCNMatrix4 {
         return SCNMatrix4(float4x4(columns: columns))
+    }
+}
+
+
+extension SCNMatrix4 {
+    func transformedWithCoordinates(current: CLLocationCoordinate2D, destination: CLLocationCoordinate2D) -> SCNMatrix4 {
+        let distance = current.distance(to: destination)
+        let bearing = current.bearing(to: destination)
+        
+        var transform = self
+        let translation = SCNMatrix4MakeTranslation(0, 0, -Float(distance))
+        transform = SCNMatrix4Mult(transform, translation)
+        let rotate = SCNMatrix4MakeRotation(Float(bearing), 0, 1, 0)
+        transform = SCNMatrix4Mult(transform, SCNMatrix4Invert(rotate))
+        
+        return transform
     }
 }
