@@ -45,11 +45,20 @@ class PlacemarkNode: GlobalNode<Container<CLLocationCoordinate2D>> {
         bannerNode.applyScale(scaleFactor)
     }
     
-    func updateContent(_ text: NSAttributedString, _ background: UIColor) {
+    func updateContent(_ text: NSAttributedString, _ background: UIColor = .defaultPinColor) {
         bannerNode.updateInfo(text, backgroundColor: background)
     }
     
-    func updateContent(_ text: String, _ background: UIColor) {
+    func updateContent(_ text: String, _ background: UIColor = .defaultPinColor) {
         bannerNode.updateInfo(text, backgroundColor: background)
     }
+    
+    func startAnimatedMoving() {
+        bannerNode?.startAnimatedMoving()
+    }
+    
+    func stopAnimatedMoving() {
+        bannerNode?.stopAnimatedMoving()
+    }
 }
+

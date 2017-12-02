@@ -35,5 +35,9 @@ extension UIColor {
         let randomIndex = Int(arc4random_uniform(UInt32(prettyColors.count)))
         return prettyColors[randomIndex]
     }
+    
+    static var defaultPinColor: UIColor {
+        return UIColor(red: 199 / 255, green: 105 / 255, blue: 221 / 255, alpha: 1.0)
+    }
 }
 

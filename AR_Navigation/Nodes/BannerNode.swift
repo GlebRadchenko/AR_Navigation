@@ -20,6 +20,7 @@ class BannerNode: SCNNode {
         
         geometry = BannerShape(width: CGFloat(DeveloperSettings.maxSceneRadius))
         applyScale(1)
+        updateContentLayer(text: "")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -31,15 +32,28 @@ class BannerNode: SCNNode {
         self.scale = SCNVector3(scaleValue, scaleValue, scaleValue)
     }
     
-    func updateInfo(_ text: String, backgroundColor: UIColor) {
+    func updateInfo(_ text: String, backgroundColor: UIColor = .defaultPinColor) {
         updateContentLayer(text: text, backgroundColor: backgroundColor)
     }
     
-    func updateInfo(_ text: NSAttributedString, backgroundColor: UIColor) {
+    func updateInfo(_ text: NSAttributedString, backgroundColor: UIColor = .defaultPinColor) {
         updateContentLayer(text: text, backgroundColor: backgroundColor)
     }
     
-    fileprivate func updateContentLayer(text: Any, backgroundColor: UIColor) {
+    func startAnimatedMoving() {
+        if action(forKey: Constants.movingActionKey) != nil { return }
+        
+        let originHeight = simdTransform.columns.3.y
+        let repeatingAction: SCNAction = .repeatForever(.sequence([.move(to: SCNVector3(0, originHeight - 4, 0), duration: 0.6),
+                                                                   .move(to: SCNVector3(0, originHeight + 4, 0), duration: 0.6)]))
+        runAction(repeatingAction, forKey: Constants.movingActionKey)
+    }
+    
+    func stopAnimatedMoving() {
+        removeAllActions()
+    }
+    
+    fileprivate func updateContentLayer(text: Any, backgroundColor: UIColor = .defaultPinColor) {
         let layer = CALayer()
         let pointerHeight = DeveloperSettings.maxSceneRadius / 12
         let rectHeight = DeveloperSettings.maxSceneRadius * 0.3
@@ -60,6 +74,12 @@ class BannerNode: SCNNode {
         geometry?.firstMaterial?.diffuse.contents = layer
     }
     
+}
+
+extension BannerNode {
+    struct Constants {
+        static var movingActionKey = "moving_action"
+    }
 }
 
 class BannerShape: SCNShape {
