@@ -10,17 +10,15 @@ import Foundation
 import SceneKit
 
 class BannerNode: SCNNode {
-    
-    static var defaultWidth: CGFloat = 400
     static var defaultFontSize: CGFloat {
+        let defaultWidth = CGFloat(DeveloperSettings.maxSceneRadius)
         return (defaultWidth * 0.3 + defaultWidth / 12) / 8
     }
     
     override init() {
         super.init()
         
-        geometry = SCNShape.bannerShape(width: BannerNode.defaultWidth)
-        applyScale(1)
+        geometry = BannerShape(width: CGFloat(DeveloperSettings.maxSceneRadius))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -28,8 +26,7 @@ class BannerNode: SCNNode {
     }
     
     func applyScale(_ scale: Float) {
-        let scale = Float(1 / BannerNode.defaultWidth) * scale
-        self.scale = SCNVector3(scale, scale, scale)
+        
     }
     
     func updateInfo(_ text: String, backgroundColor: UIColor) {
@@ -42,10 +39,10 @@ class BannerNode: SCNNode {
     
     fileprivate func updateContentLayer(text: Any, backgroundColor: UIColor) {
         let layer = CALayer()
-        let pointerHeight = BannerNode.defaultWidth / 12
-        let rectHeight = BannerNode.defaultWidth * 0.3
+        let pointerHeight = DeveloperSettings.maxSceneRadius / 12
+        let rectHeight = DeveloperSettings.maxSceneRadius * 0.3
         
-        layer.frame = CGRect(x: 0, y: 0, width: BannerNode.defaultWidth, height: rectHeight + pointerHeight)
+        layer.frame = CGRect(x: 0, y: 0, width: DeveloperSettings.maxSceneRadius, height: rectHeight + pointerHeight)
         layer.backgroundColor = backgroundColor.cgColor
         
         let textLayer = CATextLayer()
@@ -63,9 +60,18 @@ class BannerNode: SCNNode {
     
 }
 
-extension SCNShape {
-    static func bannerShape(width: CGFloat) -> SCNShape {
-        let shape = SCNShape()
+class BannerShape: SCNShape {
+    
+    init(width: CGFloat) {
+        super.init()
+        self.path = bannerPath(with: width)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func bannerPath(with width: CGFloat) -> UIBezierPath {
         let height = width * 0.3
         
         let contentRect = CGRect(x: -width / 2, y: -height / 2, width: width, height: height)
@@ -88,9 +94,7 @@ extension SCNShape {
         
         rectPath.append(pointerPath)
         
-        shape.path = rectPath
-        
-        return shape
+        return rectPath
     }
 }
 

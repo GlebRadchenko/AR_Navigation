@@ -44,10 +44,10 @@ class PlacemarkNode: GlobalNode<Container<CLLocationCoordinate2D>> {
     }
     
     func updateContent(_ text: NSAttributedString, _ background: UIColor) {
-        bannerNode.updateInfo(text, backgroundColor: background)
+        //bannerNode.updateInfo(text, backgroundColor: background)
     }
     
     func updateContent(_ text: String, _ background: UIColor) {
-        bannerNode.updateInfo(text, backgroundColor: background)
+        //bannerNode.updateInfo(text, backgroundColor: background)
     }
 }

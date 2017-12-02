@@ -63,7 +63,6 @@ open class ARSceneViewManager: NSObject {
         
         scene.scene = SCNScene()
         scene.automaticallyUpdatesLighting = true
-        
         scene.debugOptions = [ARSCNDebugOptions.showWorldOrigin,
                               ARSCNDebugOptions.showFeaturePoints]
     }
