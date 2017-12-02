@@ -30,13 +30,15 @@ class PlacemarkNode: GlobalNode<Container<CLLocationCoordinate2D>> {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func updateWith(currentCameraTransform: matrix_float4x4, currentCoordinates: CLLocationCoordinate2D) {
+    override func updateWith(currentCameraTransform: matrix_float4x4, currentCoordinates: CLLocationCoordinate2D, thresholdDistance: Double) {
         var identity = matrix_identity_float4x4
         identity.columns.3.x = currentCameraTransform.columns.3.x
-        identity.columns.3.y = currentCameraTransform.columns.3.y
+        identity.columns.3.y = simdTransform.columns.3.y
         identity.columns.3.z = currentCameraTransform.columns.3.z
         
-        transform = identity.toSCNMatrix4().transformedWithCoordinates(current: currentCoordinates, destination: element.element)
+        transform = identity.toSCNMatrix4().transformedWithCoordinates(current: currentCoordinates,
+                                                                       destination: element.element,
+                                                                       thresholdDistance: thresholdDistance)
     }
     
     override func applyScale(_ scaleFactor: Float) {
@@ -44,10 +46,10 @@ class PlacemarkNode: GlobalNode<Container<CLLocationCoordinate2D>> {
     }
     
     func updateContent(_ text: NSAttributedString, _ background: UIColor) {
-        //bannerNode.updateInfo(text, backgroundColor: background)
+        bannerNode.updateInfo(text, backgroundColor: background)
     }
     
     func updateContent(_ text: String, _ background: UIColor) {
-        //bannerNode.updateInfo(text, backgroundColor: background)
+        bannerNode.updateInfo(text, backgroundColor: background)
     }
 }

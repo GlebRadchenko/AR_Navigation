@@ -15,6 +15,8 @@ protocol ARViewInteractorInput: class {
     var lastRecognizedCameraTransform: matrix_float4x4? { get set }
     
     func handleLocationUpdate(newLocation: CLLocation, currentCameraTransform: matrix_float4x4)
+    func cacheNodes(_ nodes: [SCNNode])
+    func restoreNodes() -> [SCNNode]
 }
 
 protocol ARViewInteractorOutput: class {
@@ -34,6 +36,8 @@ class ARViewInteractor: Interactor {
     
     var lastRecognizedLocation: CLLocation?
     var lastRecognizedCameraTransform: matrix_float4x4?
+    
+    var storedNodes: [SCNNode] = []
 }
 
 extension ARViewInteractor: ARViewInteractorInput {
@@ -60,6 +64,16 @@ extension ARViewInteractor: ARViewInteractorInput {
             lastRecognizedCameraTransform = currentCameraTransform
             output.handleInitialPositioning()
         }
+    }
+    
+    func cacheNodes(_ nodes: [SCNNode]) {
+        storedNodes = nodes
+    }
+    
+    func restoreNodes() -> [SCNNode] {
+        let nodes = storedNodes
+        storedNodes.removeAll()
+        return nodes
     }
     
     fileprivate func isChangesAcceptable(locationDiff: Difference<CLLocation>, cameraDiff: Difference<matrix_float4x4>) -> Bool {

@@ -36,11 +36,13 @@ class ARViewPresenter: NSObject, Presenter {
 //MARK: - Nodes managing logic
 extension ARViewPresenter {
     func displayNodesIfNeeded() {
-        print(#function)
+        let nodesToDisplay = interactor.restoreNodes()
+        sceneViewManager.addNodes(nodesToDisplay)
     }
     
     func removeAndCacheNodesIfNeeded() {
-        print(#function)
+        let nodesToCache = sceneViewManager.removeAllNodes()
+        interactor.cacheNodes(nodesToCache)
     }
 }
 
@@ -183,16 +185,41 @@ extension ARViewPresenter {
         let idsToUpdate = Set(placemarks.map { $0.id })
         let nodesToUpdate: [PlacemarkNode] = view.sceneView.scene.rootNode.childs { idsToUpdate.contains($0.element.id) }
         
-        nodesToUpdate.forEach { $0.updateWith(currentCameraTransform: cameraTransform, currentCoordinates: currentLocation.coordinate) }
+        nodesToUpdate.forEach { $0.updateWith(currentCameraTransform: cameraTransform,
+                                              currentCoordinates: currentLocation.coordinate,
+                                              thresholdDistance: DeveloperSettings.maxSceneRadius) }
         
-        let estimatedHeight = sceneViewManager.estimatedHeight()
+        let estimatedFloorHeight = sceneViewManager.estimatedHeight()
         
-        nodesToUpdate.forEach { (node) in
-            let distance = currentLocation.coordinate.distance(to: node.element.element)
-            let scale = distance / 5
+        SCNTransaction.animate(with: 0.25, { [weak self] in
+            guard let wSelf = self else { return }
             
-            node.applyScale(Float(scale))
+            nodesToUpdate.forEach { (node) in
+                let distance = currentLocation.coordinate.distance(to: node.element.element)
+                let projectedDistance = distance > DeveloperSettings.maxSceneRadius ? DeveloperSettings.maxSceneRadius : distance
+                
+                node.applyScale(wSelf.scaleForDistance(projectedDistance))
+                node.applyHeight(wSelf.heightForDistance(distance, floorHeight: estimatedFloorHeight))
+            }
+        })
+    }
+    
+    internal func heightForDistance(_ distance: Double, floorHeight: Float) -> Float {
+        if distance > DeveloperSettings.maxSceneRadius {
+            return 100 * Float((DeveloperSettings.maxSceneRadius / distance)) + floorHeight
         }
+        
+        return 5 + floorHeight
+    }
+    
+    internal func scaleForDistance(_ distance: Double) -> Float {
+        var scale = Float(distance) * 0.3
+        
+        if scale < 2 {
+            scale = 2
+        }
+        
+        return scale
     }
     
     internal func updatePlacemarkNodesContent(_ placemarks: [Container<CLLocationCoordinate2D>]) {

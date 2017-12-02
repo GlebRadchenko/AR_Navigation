@@ -12,13 +12,14 @@ import SceneKit
 class BannerNode: SCNNode {
     static var defaultFontSize: CGFloat {
         let defaultWidth = CGFloat(DeveloperSettings.maxSceneRadius)
-        return (defaultWidth * 0.3 + defaultWidth / 12) / 8
+        return (defaultWidth * 0.3 + defaultWidth / 12) / 6
     }
     
     override init() {
         super.init()
         
         geometry = BannerShape(width: CGFloat(DeveloperSettings.maxSceneRadius))
+        applyScale(1)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -26,7 +27,8 @@ class BannerNode: SCNNode {
     }
     
     func applyScale(_ scale: Float) {
-        
+        let scaleValue = (1 / Float(DeveloperSettings.maxSceneRadius)) * scale
+        self.scale = SCNVector3(scaleValue, scaleValue, scaleValue)
     }
     
     func updateInfo(_ text: String, backgroundColor: UIColor) {
@@ -61,10 +63,13 @@ class BannerNode: SCNNode {
 }
 
 class BannerShape: SCNShape {
+    var boundingSphere: (center: SCNVector3, radius: Float) {
+        return (SCNVector3(0, 0, 0), 1)
+    }
     
     init(width: CGFloat) {
         super.init()
-        self.path = bannerPath(with: width)
+        path = bannerPath(with: width)
     }
     
     required init?(coder aDecoder: NSCoder) {

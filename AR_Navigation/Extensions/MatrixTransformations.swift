@@ -57,8 +57,13 @@ extension matrix_float4x4 {
 
 
 extension SCNMatrix4 {
-    func transformedWithCoordinates(current: CLLocationCoordinate2D, destination: CLLocationCoordinate2D) -> SCNMatrix4 {
-        let distance = current.distance(to: destination)
+    func transformedWithCoordinates(current: CLLocationCoordinate2D, destination: CLLocationCoordinate2D, thresholdDistance: Double) -> SCNMatrix4 {
+        var distance = current.distance(to: destination)
+        
+        if distance > thresholdDistance {
+            distance = thresholdDistance
+        }
+        
         let bearing = current.bearing(to: destination)
         
         var transform = self

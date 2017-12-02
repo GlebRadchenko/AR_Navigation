@@ -21,11 +21,7 @@ class RouteNode: GlobalNode<Container<MKRoute>> {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func updateWith(currentCameraTransform: matrix_float4x4, currentCoordinates: CLLocationCoordinate2D) {
-        
-    }
-    
-    override func applyScale(_ scaleFactor: Float) {
+    override func updateWith(currentCameraTransform: matrix_float4x4, currentCoordinates: CLLocationCoordinate2D, thresholdDistance: Double) {
         
     }
 }

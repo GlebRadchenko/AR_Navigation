@@ -25,11 +25,15 @@ class GlobalNode<Source>: SCNNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func updateWith(currentCameraTransform: matrix_float4x4, currentCoordinates: CLLocationCoordinate2D) {
+    func updateWith(currentCameraTransform: matrix_float4x4, currentCoordinates: CLLocationCoordinate2D, thresholdDistance: Double) {
         fatalError("Not implemented")
     }
     
     func applyScale(_ scaleFactor: Float) {
         fatalError("Not implemented")
+    }
+    
+    func applyHeight(_ newHeight: Float) {
+        simdTransform.columns.3.y = newHeight
     }
 }

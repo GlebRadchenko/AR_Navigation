@@ -24,6 +24,10 @@ public protocol ARSceneViewManagerInput {
     
     func currentCameraTransform() -> matrix_float4x4?
     func estimatedHeight() -> Float
+    
+    func addNode(_ node: SCNNode)
+    func addNodes(_ nodes: [SCNNode])
+    func removeAllNodes() -> [SCNNode]
 }
 
 open class ARSceneViewManager: NSObject {
@@ -103,6 +107,20 @@ extension ARSceneViewManager: ARSceneViewManagerInput {
         let options: ARSession.RunOptions =  [.resetTracking, .removeExistingAnchors]
         let configuration = state.configuration
         session.run(configuration, options: options)
+    }
+    
+    public func addNode(_ node: SCNNode) {
+        scene?.scene.rootNode.addChildNode(node)
+    }
+    
+    public func addNodes(_ nodes: [SCNNode]) {
+        nodes.forEach { addNode($0) }
+    }
+    
+    public func removeAllNodes() -> [SCNNode] {
+        let nodesToRemove = scene?.scene.rootNode.childNodes ?? []
+        nodesToRemove.forEach { $0.removeFromParentNode() }
+        return nodesToRemove
     }
 }
 
