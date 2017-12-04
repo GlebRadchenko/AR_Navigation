@@ -37,11 +37,13 @@ class ARViewPresenter: NSObject, Presenter {
 extension ARViewPresenter {
     func displayNodesIfNeeded() {
         let nodesToDisplay = interactor.restoreNodes()
+        if nodesToDisplay.isEmpty { return }
         sceneViewManager.addNodes(nodesToDisplay)
     }
     
     func removeAndCacheNodesIfNeeded() {
         let nodesToCache = sceneViewManager.removeAllNodes()
+        if nodesToCache.isEmpty { return }
         interactor.cacheNodes(nodesToCache)
     }
 }
@@ -160,7 +162,7 @@ extension ARViewPresenter {
         let routesToRemove = existingRoutes.filter { !currentIds.contains($0.id) }
         
         addRouteNodes(routesToAdd)
-        updateRouteNodesPosition(routesToUpdate)
+        updateRouteNodes(routesToUpdate)
         removeRouteNodes(routesToRemove)
     }
     
@@ -171,25 +173,25 @@ extension ARViewPresenter {
             view.sceneView.scene.rootNode.addChildNode($0)
         }
         
-        updateRouteNodesPosition(routes)
+        updateRouteNodes(routes)
     }
     
-    internal func updateRouteNodesPosition(_ placemarks: [Container<MKRoute>]) {
+    internal func updateRouteNodes(_ placemarks: [Container<MKRoute>]) {
         guard let currentLocation = interactor.lastRecognizedLocation else { return }
         guard let cameraTransform = sceneViewManager.currentCameraTransform() else { return }
         
         let idsToUpdate = Set(placemarks.map { $0.id })
-        let nodesToUpdate: [PlacemarkNode] = view.sceneView.scene.rootNode.childs { idsToUpdate.contains($0.element.id) }
+        let nodesToUpdate: [RouteNode] = view.sceneView.scene.rootNode.childs { idsToUpdate.contains($0.element.id) }
         
         nodesToUpdate.forEach { $0.updateWith(currentCameraTransform: cameraTransform,
                                               currentCoordinates: currentLocation.coordinate,
-                                              thresholdDistance: DeveloperSettings.maxSceneRadius) }
+                                              thresholdDistance: .greatestFiniteMagnitude) }
         
         let estimatedFloorHeight = sceneViewManager.estimatedHeight()
         
         nodesToUpdate.forEach { (node) in
             node.applyHeight(estimatedFloorHeight)
-            //color for route
+            node.applyColor(mapModule.moduleContainer.extractColor(for: node.element))
         }
     }
     
@@ -224,7 +226,6 @@ extension ARViewPresenter {
         
         nodes.forEach {
             view.sceneView.scene.rootNode.addChildNode($0)
-            $0.bannerNode.startAnimatedMoving()
         }
         
         updatePlacemarkNodesPosition(placemarks)
@@ -242,7 +243,6 @@ extension ARViewPresenter {
                                               thresholdDistance: DeveloperSettings.maxSceneRadius) }
         
         let estimatedFloorHeight = sceneViewManager.estimatedHeight()
-        
         SCNTransaction.animate(with: 0.25, { [weak self] in
             guard let wSelf = self else { return }
             
@@ -253,7 +253,18 @@ extension ARViewPresenter {
                 node.applyScale(wSelf.scaleForDistance(projectedDistance))
                 node.applyHeight(wSelf.heightForDistance(distance, floorHeight: estimatedFloorHeight))
             }
-        })
+        }) {
+            
+            nodesToUpdate.forEach { (node) in
+                let distance = currentLocation.coordinate.distance(to: node.element.element)
+                
+                if distance < 100 {
+                    node.stopAnimatedMoving()
+                } else {
+                    node.startAnimatedMoving()
+                }
+            }
+        }
     }
     
     internal func heightForDistance(_ distance: Double, floorHeight: Float) -> Float {

@@ -37,7 +37,7 @@ extension UIColor {
     }
     
     static var defaultPinColor: UIColor {
-        return UIColor(red: 199 / 255, green: 105 / 255, blue: 221 / 255, alpha: 1.0)
+        return UIColor(hex: "#E67757")
     }
 }
 

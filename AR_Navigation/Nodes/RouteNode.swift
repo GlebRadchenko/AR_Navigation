@@ -12,6 +12,8 @@ import MapKit
 
 class RouteNode: GlobalNode<Container<MKRoute>> {
     
+    var spheres: [SphereNode] = []
+    
     override init(element: Container<MKRoute>) {
         super.init(element: element)
         sourceId = element.id
@@ -22,6 +24,10 @@ class RouteNode: GlobalNode<Container<MKRoute>> {
     }
     
     override func updateWith(currentCameraTransform: matrix_float4x4, currentCoordinates: CLLocationCoordinate2D, thresholdDistance: Double) {
+        
+    }
+    
+    func applyColor(_ color: UIColor) {
         
     }
 }
