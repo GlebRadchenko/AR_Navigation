@@ -63,8 +63,10 @@ extension NavigationManager {
         request.transportType = type
         
         let directions = MKDirections(request: request)
-        directions.calculate { (response, error) in
-            completion(response?.routes.first, error)
+        queue.async {
+            directions.calculate { (response, error) in
+                completion(response?.routes.first, error)
+            }
         }
     }
     

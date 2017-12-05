@@ -169,10 +169,7 @@ extension ARViewPresenter {
     internal func addRouteNodes(_ routes: [Container<MKRoute>]) {
         let nodes = routes.map { RouteNode(element: $0) }
         
-        nodes.forEach {
-            view.sceneView.scene.rootNode.addChildNode($0)
-        }
-        
+        nodes.forEach { view.sceneView.scene.rootNode.addChildNode($0) }
         updateRouteNodes(routes)
     }
     
@@ -224,10 +221,7 @@ extension ARViewPresenter {
     internal func addPlacemarkNodes(_ placemarks: [Container<CLLocationCoordinate2D>]) {
         let nodes = placemarks.map { PlacemarkNode(element: $0) }
         
-        nodes.forEach {
-            view.sceneView.scene.rootNode.addChildNode($0)
-        }
-        
+        nodes.forEach { view.sceneView.scene.rootNode.addChildNode($0) }
         updatePlacemarkNodesPosition(placemarks)
     }
     
@@ -286,7 +280,28 @@ extension ARViewPresenter {
     }
     
     internal func updatePlacemarkNodesContent(_ placemarks: [Container<CLLocationCoordinate2D>]) {
-        // Fetch geo data and form description for each node
+        guard let currentLocation = interactor.lastRecognizedLocation else { return }
+        let idsToUpdate = Set(placemarks.map { $0.id })
+        let nodesToUpdate: [PlacemarkNode] = view.sceneView.scene.rootNode.childs { idsToUpdate.contains($0.element.id) }
+        
+        nodesToUpdate.forEach { (node) in
+            interactor.requestPlaces(for: node.element.element) { [weak self] (placemark) in
+                guard let wSelf = self else { return }
+                
+                guard let placemark = placemark else { return }
+                let distance = currentLocation.coordinate.distance(to: node.element.element)
+                
+                let description = wSelf.formAttributedDescription(for: placemark, distance: distance)
+                DispatchQueue.main.async {
+                    node.updateContent(description)
+                }
+            }
+        }
+    }
+    
+    internal func formAttributedDescription(for placemark: CLPlacemark, distance: Double) -> NSAttributedString {
+        
+        return NSAttributedString(string: "")
     }
     
     internal func removePlacemarkNodes(_ placemarks: [Container<CLLocationCoordinate2D>]) {
@@ -311,7 +326,7 @@ extension ARViewPresenter: ARViewInteractorOutput {
         view.displatDebugMessage("Accuracy: ±\(accuracy)(m)")
         
         updatePlacemarkNodesContent(mapModule.moduleContainer.selectedLocations)
-        if accuracy <= 1 {
+        if accuracy <= 1 && accuracy >= 0.0001 {
             updatePlacemarkNodesPosition(mapModule.moduleContainer.selectedLocations)
         }
     }

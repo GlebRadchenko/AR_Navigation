@@ -14,6 +14,7 @@ protocol ARViewInteractorInput: class {
     var lastRecognizedLocation: CLLocation? { get set }
     var lastRecognizedCameraTransform: matrix_float4x4? { get set }
     
+    func requestPlaces(for coordinate: CLLocationCoordinate2D, callback: @escaping (CLPlacemark?) -> Void)
     func handleLocationUpdate(newLocation: CLLocation, currentCameraTransform: matrix_float4x4)
     func cacheNodes(_ nodes: [SCNNode])
     func restoreNodes() -> [SCNNode]
@@ -34,6 +35,8 @@ class ARViewInteractor: Interactor {
     fileprivate let errorThreshold = 10
     fileprivate let acceptableDistanceDiff: Double = 5 // in meters
     
+    lazy var navigationManager: NavigationManager = NavigationManager()
+    
     var lastRecognizedLocation: CLLocation?
     var lastRecognizedCameraTransform: matrix_float4x4?
     
@@ -41,6 +44,13 @@ class ARViewInteractor: Interactor {
 }
 
 extension ARViewInteractor: ARViewInteractorInput {
+    func requestPlaces(for coordinate: CLLocationCoordinate2D, callback: @escaping (CLPlacemark?) -> Void) {
+        navigationManager.requestPlaces(for: coordinate) { (placemark, error) in
+            if let error = error { debugPrint(error) }
+            callback(placemark)
+        }
+    }
+    
     func handleLocationUpdate(newLocation: CLLocation, currentCameraTransform: matrix_float4x4) {
         if let lastLocation = lastRecognizedLocation, let lastTransform = lastRecognizedCameraTransform {
             let locationDifference = Difference(oldValue: lastLocation, newValue: newLocation)
