@@ -12,7 +12,7 @@ import SceneKit
 class BannerNode: SCNNode {
     static var defaultFontSize: CGFloat {
         let defaultWidth = CGFloat(DeveloperSettings.maxSceneRadius)
-        return (defaultWidth * 0.3 + defaultWidth / 12) / 6
+        return (defaultWidth * 0.3 + defaultWidth / 12) / 7
     }
     
     override init() {

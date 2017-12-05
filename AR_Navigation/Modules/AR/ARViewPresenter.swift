@@ -300,9 +300,18 @@ extension ARViewPresenter {
     }
     
     internal func formAttributedDescription(for placemark: CLPlacemark, distance: Double) -> NSAttributedString {
-        print(placemark)
-        print(distance)
-        return NSAttributedString(string: "")
+        let fullString = NSMutableAttributedString(string: "")
+        let placemarkInfo = NSAttributedString(string: placemark.mainInfo + "\n" + placemark.subInfo + "\n",
+                                               attributes: [.font: UIFont(name: "HelveticaNeue", size: BannerNode.defaultFontSize)!,
+                                                            .foregroundColor: UIColor.white])
+        let truncatedDistance = Double(Int(distance * 100)) / 100
+        let distanceInfo = NSAttributedString(string: "\(truncatedDistance) meters",
+            attributes: [.font: UIFont(name: "HelveticaNeue", size: BannerNode.defaultFontSize)!,
+                         .foregroundColor: UIColor(red: 217 / 255, green: 217 / 255, blue: 217 / 255, alpha: 1)])
+        fullString.append(placemarkInfo)
+        fullString.append(distanceInfo)
+        
+        return fullString
     }
     
     internal func removePlacemarkNodes(_ placemarks: [Container<CLLocationCoordinate2D>]) {
@@ -337,3 +346,4 @@ extension ARViewPresenter: ARViewInteractorOutput {
         sceneViewManager.reloadSession()
     }
 }
+
