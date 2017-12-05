@@ -11,7 +11,7 @@ import ARKit
 import SceneKit
 import CoreLocation
 
-class SphereNode: SCNNode {
+class SphereNode: SCNNode, ColorApplicable {
     
     var sphereGeometry: SCNSphere? {
         return geometry as? SCNSphere
@@ -27,10 +27,6 @@ class SphereNode: SCNNode {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-    }
-    
-    func applyColor(_ color: UIColor) {
-        sphereGeometry?.firstMaterial?.diffuse.contents = color
     }
 }
 

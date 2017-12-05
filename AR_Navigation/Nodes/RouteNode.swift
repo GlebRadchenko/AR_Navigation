@@ -13,6 +13,7 @@ import MapKit
 class RouteNode: GlobalNode<Container<MKRoute>> {
     
     var stepNodes: [StepNode] = []
+    var lineNodes: [LineNode] = []
     
     override init(element: Container<MKRoute>) {
         super.init(element: element)
@@ -33,9 +34,29 @@ class RouteNode: GlobalNode<Container<MKRoute>> {
         stepNodes.forEach { $0.updateWith(currentCameraTransform: currentCameraTransform,
                                           currentCoordinates: currentCoordinates,
                                           thresholdDistance: thresholdDistance) }
+        clearLineNodes()
+        addLineNodes()
+    }
+    
+    func addLineNodes() {
+        let stepsCount = stepNodes.count
+        guard stepsCount >= 2 else { return }
+        
+        let indexPairs: [(firstIndex: Int, secondIndex: Int)] = (0..<stepsCount - 1).map { ($0, $0 + 1) }
+        let stepPairs: [(firstStep: StepNode, secondStep: StepNode)] = indexPairs.map { (stepNodes[$0.firstIndex], stepNodes[$0.secondIndex]) }
+        
+        let lineNodes = stepPairs.map { LineNode(from: $0.firstStep, to: $0.secondStep, radius: 0.2) }
+        lineNodes.forEach { addChildNode($0) }
+        self.lineNodes = lineNodes
+    }
+    
+    func clearLineNodes() {
+        lineNodes.forEach { $0.removeFromParentNode() }
+        lineNodes.removeAll()
     }
     
     func applyColor(_ color: UIColor) {
         stepNodes.forEach { $0.applyColor(color) }
+        lineNodes.forEach { $0.applyColor(color) }
     }
 }

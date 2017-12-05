@@ -59,6 +59,11 @@ open class ARSceneViewManager: NSObject {
         UIApplication.shared.isIdleTimerDisabled = true
         
         setupScene()
+        
+        if let camera = scene.pointOfView?.camera {
+            camera.wantsHDR = true
+            camera.wantsExposureAdaptation = true
+        }
     }
     
     func setupScene() {

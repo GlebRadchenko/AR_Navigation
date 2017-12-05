@@ -11,6 +11,8 @@
 		F7037B121FC4875F00BCC36C /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7037B111FC4875F00BCC36C /* Container.swift */; };
 		F7037B1A1FC5981700BCC36C /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7037B191FC5981700BCC36C /* NotificationView.swift */; };
 		F7037B1C1FC59BB100BCC36C /* NotificationDisplayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7037B1B1FC59BB100BCC36C /* NotificationDisplayer.swift */; };
+		F7099FEB1FD6DC0B007D8B81 /* LineNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7099FEA1FD6DC0B007D8B81 /* LineNode.swift */; };
+		F7099FF01FD6DCBC007D8B81 /* ColorApplicable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7099FEF1FD6DCBC007D8B81 /* ColorApplicable.swift */; };
 		F71033F81F80CBE90074F6E8 /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71033F71F80CBE90074F6E8 /* NavigationManager.swift */; };
 		F71446A21FB9CEE90068AE4E /* MapModuleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71446A11FB9CEE90068AE4E /* MapModuleContainer.swift */; };
 		F71A08271FB8687E008B259C /* MatrixTransformations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71A08261FB8687E008B259C /* MatrixTransformations.swift */; };
@@ -153,6 +155,8 @@
 		F7037B111FC4875F00BCC36C /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
 		F7037B191FC5981700BCC36C /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		F7037B1B1FC59BB100BCC36C /* NotificationDisplayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDisplayer.swift; sourceTree = "<group>"; };
+		F7099FEA1FD6DC0B007D8B81 /* LineNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineNode.swift; sourceTree = "<group>"; };
+		F7099FEF1FD6DCBC007D8B81 /* ColorApplicable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorApplicable.swift; sourceTree = "<group>"; };
 		F71033F71F80CBE90074F6E8 /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
 		F71446A11FB9CEE90068AE4E /* MapModuleContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapModuleContainer.swift; sourceTree = "<group>"; };
 		F71A08261FB8687E008B259C /* MatrixTransformations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixTransformations.swift; sourceTree = "<group>"; };
@@ -394,6 +398,7 @@
 				F7C9EA2F1FD1611400245CD7 /* RouteNode.swift */,
 				F7C9EA361FD161DF00245CD7 /* GlobalNode.swift */,
 				F7F15EDE1FD6AFE00083307D /* StepNode.swift */,
+				F7099FEA1FD6DC0B007D8B81 /* LineNode.swift */,
 			);
 			path = Nodes;
 			sourceTree = "<group>";
@@ -470,6 +475,7 @@
 				F7C92C0C1F80ED7F00A5A2F5 /* Reusable.swift */,
 				F7AAD00B1FB9E5410054BB45 /* PopoverDisplayer.swift */,
 				F7037B1B1FC59BB100BCC36C /* NotificationDisplayer.swift */,
+				F7099FEF1FD6DCBC007D8B81 /* ColorApplicable.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -683,6 +689,7 @@
 				F7C92BFF1F80E5FF00A5A2F5 /* MapViewRouter.swift in Sources */,
 				F79F164C1F81134700B6ABF6 /* View.swift in Sources */,
 				F7FBE2981FA37A8D008830AE /* MapAnnotation.swift in Sources */,
+				F7099FEB1FD6DC0B007D8B81 /* LineNode.swift in Sources */,
 				F7C9E9E21FCDA1BF00245CD7 /* Difference.swift in Sources */,
 				F7F15EDF1FD6AFE00083307D /* StepNode.swift in Sources */,
 				F79F163F1F81117000B6ABF6 /* ARViewPresenter.swift in Sources */,
@@ -708,6 +715,7 @@
 				F7C92C151F80EF4000A5A2F5 /* UICollectionView+Reusable.swift in Sources */,
 				F7C92BFD1F80E5E900A5A2F5 /* MapViewInteractor.swift in Sources */,
 				F7C9EA231FD0289500245CD7 /* PlacemarkNode.swift in Sources */,
+				F7099FF01FD6DCBC007D8B81 /* ColorApplicable.swift in Sources */,
 				F79F9FB91FB77ED80014773A /* SCNVector3+Extensions.swift in Sources */,
 				F7ED61D31F8252EB00EE3224 /* SearchTableViewController.swift in Sources */,
 				F7C92BF71F80D72F00A5A2F5 /* MapView.swift in Sources */,

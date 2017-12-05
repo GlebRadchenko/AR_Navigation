@@ -46,7 +46,9 @@ class ARViewInteractor: Interactor {
 extension ARViewInteractor: ARViewInteractorInput {
     func requestPlaces(for coordinate: CLLocationCoordinate2D, callback: @escaping (CLPlacemark?) -> Void) {
         navigationManager.requestPlaces(for: coordinate) { (placemark, error) in
-            if let error = error { debugPrint(error) }
+            if let error = error {
+                debugPrint(error)
+            }
             callback(placemark)
         }
     }

@@ -173,11 +173,11 @@ extension ARViewPresenter {
         updateRouteNodes(routes)
     }
     
-    internal func updateRouteNodes(_ placemarks: [Container<MKRoute>]) {
+    internal func updateRouteNodes(_ routes: [Container<MKRoute>]) {
         guard let currentLocation = interactor.lastRecognizedLocation else { return }
         guard let cameraTransform = sceneViewManager.currentCameraTransform() else { return }
         
-        let idsToUpdate = Set(placemarks.map { $0.id })
+        let idsToUpdate = Set(routes.map { $0.id })
         let nodesToUpdate: [RouteNode] = view.sceneView.scene.rootNode.childs { idsToUpdate.contains($0.element.id) }
         
         nodesToUpdate.forEach { $0.updateWith(currentCameraTransform: cameraTransform,
@@ -300,7 +300,8 @@ extension ARViewPresenter {
     }
     
     internal func formAttributedDescription(for placemark: CLPlacemark, distance: Double) -> NSAttributedString {
-        
+        print(placemark)
+        print(distance)
         return NSAttributedString(string: "")
     }
     
