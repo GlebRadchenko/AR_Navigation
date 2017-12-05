@@ -1,5 +1,5 @@
 //
-//  AnnotationNode.swift
+//  TextNode.swift
 //  AR_Navigation
 //
 //  Created by Gleb Radchenko on 11/12/17.
@@ -11,7 +11,7 @@ import ARKit
 import SceneKit
 import CoreLocation
 
-class AnnotationNode: SCNNode {
+class TextNode: SCNNode {
     
     var textGeometry: SCNText? {
         return geometry as? SCNText

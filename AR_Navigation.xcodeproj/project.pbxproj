@@ -15,7 +15,7 @@
 		F71446A21FB9CEE90068AE4E /* MapModuleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71446A11FB9CEE90068AE4E /* MapModuleContainer.swift */; };
 		F71A08271FB8687E008B259C /* MatrixTransformations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71A08261FB8687E008B259C /* MatrixTransformations.swift */; };
 		F71A082D1FB8788B008B259C /* SphereNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71A082C1FB8788B008B259C /* SphereNode.swift */; };
-		F71A082F1FB878A7008B259C /* AnnotationNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71A082E1FB878A7008B259C /* AnnotationNode.swift */; };
+		F71A082F1FB878A7008B259C /* TextNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71A082E1FB878A7008B259C /* TextNode.swift */; };
 		F73F3B0B1FA3372600D3622E /* UIStoryboard+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73F3B0A1FA3372600D3622E /* UIStoryboard+Extensions.swift */; };
 		F77B32691F78183A004259B8 /* JsonMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F77B32641F781827004259B8 /* JsonMapper.framework */; };
 		F77B326A1F78183A004259B8 /* JsonMapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F77B32641F781827004259B8 /* JsonMapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -66,6 +66,7 @@
 		F7C9EA301FD1611400245CD7 /* RouteNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C9EA2F1FD1611400245CD7 /* RouteNode.swift */; };
 		F7C9EA371FD161DF00245CD7 /* GlobalNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C9EA361FD161DF00245CD7 /* GlobalNode.swift */; };
 		F7ED61D31F8252EB00EE3224 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ED61D21F8252EB00EE3224 /* SearchTableViewController.swift */; };
+		F7F15EDF1FD6AFE00083307D /* StepNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F15EDE1FD6AFE00083307D /* StepNode.swift */; };
 		F7FBE2941FA3777C008830AE /* MapAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FBE2931FA3777C008830AE /* MapAnnotationView.swift */; };
 		F7FBE2981FA37A8D008830AE /* MapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FBE2971FA37A8D008830AE /* MapAnnotation.swift */; };
 		F7FBE29A1FA37D28008830AE /* MKMapView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FBE2991FA37D28008830AE /* MKMapView+Reusable.swift */; };
@@ -156,7 +157,7 @@
 		F71446A11FB9CEE90068AE4E /* MapModuleContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapModuleContainer.swift; sourceTree = "<group>"; };
 		F71A08261FB8687E008B259C /* MatrixTransformations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixTransformations.swift; sourceTree = "<group>"; };
 		F71A082C1FB8788B008B259C /* SphereNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphereNode.swift; sourceTree = "<group>"; };
-		F71A082E1FB878A7008B259C /* AnnotationNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationNode.swift; sourceTree = "<group>"; };
+		F71A082E1FB878A7008B259C /* TextNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextNode.swift; sourceTree = "<group>"; };
 		F73F3B0A1FA3372600D3622E /* UIStoryboard+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+Extensions.swift"; sourceTree = "<group>"; };
 		F77B325D1F781827004259B8 /* JsonMapper.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JsonMapper.xcodeproj; path = JsonMapper/JsonMapper/JsonMapper.xcodeproj; sourceTree = "<group>"; };
 		F77B327A1F782234004259B8 /* ARViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
@@ -209,6 +210,7 @@
 		F7C9EA2F1FD1611400245CD7 /* RouteNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteNode.swift; sourceTree = "<group>"; };
 		F7C9EA361FD161DF00245CD7 /* GlobalNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalNode.swift; sourceTree = "<group>"; };
 		F7ED61D21F8252EB00EE3224 /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
+		F7F15EDE1FD6AFE00083307D /* StepNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepNode.swift; sourceTree = "<group>"; };
 		F7FBE2931FA3777C008830AE /* MapAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotationView.swift; sourceTree = "<group>"; };
 		F7FBE2971FA37A8D008830AE /* MapAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotation.swift; sourceTree = "<group>"; };
 		F7FBE2991FA37D28008830AE /* MKMapView+Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKMapView+Reusable.swift"; sourceTree = "<group>"; };
@@ -386,11 +388,12 @@
 			isa = PBXGroup;
 			children = (
 				F71A082C1FB8788B008B259C /* SphereNode.swift */,
-				F71A082E1FB878A7008B259C /* AnnotationNode.swift */,
+				F71A082E1FB878A7008B259C /* TextNode.swift */,
 				F7C9EA221FD0289400245CD7 /* BannerNode.swift */,
 				F7C9EA1E1FD0289400245CD7 /* PlacemarkNode.swift */,
 				F7C9EA2F1FD1611400245CD7 /* RouteNode.swift */,
 				F7C9EA361FD161DF00245CD7 /* GlobalNode.swift */,
+				F7F15EDE1FD6AFE00083307D /* StepNode.swift */,
 			);
 			path = Nodes;
 			sourceTree = "<group>";
@@ -664,7 +667,7 @@
 				F7C92C041F80E85400A5A2F5 /* Presenter.swift in Sources */,
 				F7AAD0101FB9E75B0054BB45 /* CLPlacemark+Extensions.swift in Sources */,
 				F7C92C351F80FCF900A5A2F5 /* FloatingPoint+Extensions.swift in Sources */,
-				F71A082F1FB878A7008B259C /* AnnotationNode.swift in Sources */,
+				F71A082F1FB878A7008B259C /* TextNode.swift in Sources */,
 				F79F164A1F81133600B6ABF6 /* Interactor.swift in Sources */,
 				F7C92C0D1F80ED7F00A5A2F5 /* Reusable.swift in Sources */,
 				F7C92C291F80F32700A5A2F5 /* NSAttributedString+Extensions.swift in Sources */,
@@ -681,6 +684,7 @@
 				F79F164C1F81134700B6ABF6 /* View.swift in Sources */,
 				F7FBE2981FA37A8D008830AE /* MapAnnotation.swift in Sources */,
 				F7C9E9E21FCDA1BF00245CD7 /* Difference.swift in Sources */,
+				F7F15EDF1FD6AFE00083307D /* StepNode.swift in Sources */,
 				F79F163F1F81117000B6ABF6 /* ARViewPresenter.swift in Sources */,
 				F79F16481F81132700B6ABF6 /* Router.swift in Sources */,
 				F7C9EA261FD0295500245CD7 /* CGPoint+Extensions.swift in Sources */,

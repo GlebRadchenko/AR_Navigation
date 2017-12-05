@@ -28,5 +28,9 @@ class SphereNode: SCNNode {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+    
+    func applyColor(_ color: UIColor) {
+        sphereGeometry?.firstMaterial?.diffuse.contents = color
+    }
 }
 
