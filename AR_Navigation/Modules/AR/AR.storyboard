@@ -29,6 +29,9 @@
                                 </constraints>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" image="icon_reload"/>
+                                <connections>
+                                    <action selector="reloadButtonTouched:" destination="BV1-FR-VrT" eventType="touchUpInside" id="gzw-8w-vvd"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

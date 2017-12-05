@@ -26,6 +26,7 @@ protocol ARViewViewOutput: class {
     func viewDidLoad()
     func viewDidAppear()
     func viewWillDisappear()
+    func handleReloadAction()
 }
 
 class ARViewController: UIViewController, View, NotificationDisplayer {
@@ -118,6 +119,9 @@ class ARViewController: UIViewController, View, NotificationDisplayer {
             view.endEditing(true)
             completeSliding(with: yTranslation)
         }
+    }
+    @IBAction func reloadButtonTouched(_ sender: UIButton) {
+        output?.handleReloadAction()
     }
 }
 

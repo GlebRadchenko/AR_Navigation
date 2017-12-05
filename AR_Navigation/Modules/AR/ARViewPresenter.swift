@@ -96,6 +96,7 @@ extension ARViewPresenter: ARSceneViewManagerDelegate {
 
 //MARK: - ARViewViewOutput
 extension ARViewPresenter: ARViewViewOutput {
+    
     func viewDidLoad() {
         let sceneManager = ARSceneViewManager(with: view.sceneView)
         sceneManager.delegate = self
@@ -116,6 +117,10 @@ extension ARViewPresenter: ARViewViewOutput {
     
     func viewWillDisappear() {
         sceneViewManager?.pauseSession()
+    }
+    
+    func handleReloadAction() {
+        sceneViewManager?.reloadSession()
     }
 }
 
@@ -325,7 +330,6 @@ extension ARViewPresenter {
 extension ARViewPresenter: ARViewInteractorOutput {
     func handleInitialPositioning() {
         print(#function)
-        // take camera translation and according to current location calculate positions for all existing nodes
     }
     
     func handlePositionUpdate(locationDiff: Difference<CLLocation>, cameraDiff: Difference<matrix_float4x4>) {
