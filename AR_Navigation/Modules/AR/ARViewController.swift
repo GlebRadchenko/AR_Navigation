@@ -19,7 +19,7 @@ protocol ARViewViewInput: NotificationDisplayerInput {
     func toggleContainer(open: Bool, animated: Bool)
     func updateViews(for keyboardFrame: CGRect?, duration: TimeInterval)
     
-    func displatDebugMessage(_ message: String)
+    func displayDebugMessage(_ message: String)
 }
 
 protocol ARViewViewOutput: class {
@@ -167,7 +167,7 @@ extension ARViewController: ARViewViewInput {
         slideContainer.embed(viewController: viewController, caller: self)
     }
     
-    func displatDebugMessage(_ message: String) {
+    func displayDebugMessage(_ message: String) {
         debugLabel?.text = message
     }
 }

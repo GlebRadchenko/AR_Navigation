@@ -190,7 +190,6 @@ extension ARViewPresenter {
                                               thresholdDistance: .greatestFiniteMagnitude) }
         
         let estimatedFloorHeight = sceneViewManager.estimatedHeight()
-        
         nodesToUpdate.forEach { (node) in
             node.applyHeight(estimatedFloorHeight)
             node.applyColor(mapModule.moduleContainer.extractColor(for: node.element))
@@ -271,7 +270,7 @@ extension ARViewPresenter {
             return 100 * Float((DeveloperSettings.maxSceneRadius / distance)) + floorHeight
         }
         
-        return 5 + floorHeight
+        return 10 + floorHeight
     }
     
     internal func scaleForDistance(_ distance: Double) -> Float {
@@ -337,7 +336,7 @@ extension ARViewPresenter: ARViewInteractorOutput {
         let cameraTranslation = cameraDiff.bias()
         
         let accuracy = Double(Int(abs(locationTranslation - cameraTranslation) * 1000)) / 1000
-        view.displatDebugMessage("Accuracy: ±\(accuracy)(m)")
+        view.displayDebugMessage("Accuracy: ±\(accuracy)(m)")
         
         updatePlacemarkNodesContent(mapModule.moduleContainer.selectedLocations)
         if accuracy <= 1 && accuracy >= 0.0001 {
