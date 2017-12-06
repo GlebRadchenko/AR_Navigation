@@ -22,7 +22,10 @@ class LineNode: SCNNode, ColorApplicable {
         let rotatedNode = SCNNode()
         rotatedNode.eulerAngles.x = -.pi / 2
         
-        let cylinderNode = SCNNode(geometry: SCNCylinder(radius: radius, height: CGFloat(length)))
+        let cylinderGeometry = SCNCylinder(radius: radius, height: CGFloat(length))
+        cylinderGeometry.firstMaterial?.lightingModel = .physicallyBased
+        let cylinderNode = SCNNode(geometry: cylinderGeometry)
+        
         rotatedNode.addChildNode(cylinderNode)
         cylinder = cylinderNode
         cylinder.position.y = length / 2

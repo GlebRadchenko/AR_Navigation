@@ -72,6 +72,7 @@ open class ARSceneViewManager: NSObject {
         
         scene.scene = SCNScene()
         scene.automaticallyUpdatesLighting = true
+        scene.autoenablesDefaultLighting = false
         scene.debugOptions = [ARSCNDebugOptions.showWorldOrigin,
                               ARSCNDebugOptions.showFeaturePoints]
     }
@@ -89,9 +90,7 @@ extension ARSceneViewManager: ARSceneViewManagerInput {
     }
     
     public func estimatedHeight() -> Float {
-        let count = recognizedHeights.values.count
-        if count < 1 { return 0 }
-        return recognizedHeights.values.reduce(0, +) / Float(count)
+        return recognizedHeights.values.min() ?? -1.5
     }
     
     public func launchSession() {
@@ -132,7 +131,8 @@ extension ARSceneViewManager: ARSceneViewManagerInput {
 //MARK: - ARSCNViewDelegate
 extension ARSceneViewManager: ARSCNViewDelegate {
     public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-        
+        guard let lightEstimate = scene.session.currentFrame?.lightEstimate else { return }
+        scene.scene.lightingEnvironment.intensity = lightEstimate.ambientIntensity / 1000
     }
     
     public func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
@@ -217,6 +217,7 @@ public enum ARSceneViewState {
     
     var configuration: ARWorldTrackingConfiguration {
         let configuration = ARWorldTrackingConfiguration()
+        configuration.isLightEstimationEnabled = true
         configuration.worldAlignment = .gravityAndHeading
         configuration.planeDetection = .horizontal
         

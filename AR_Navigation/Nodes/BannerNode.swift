@@ -72,6 +72,7 @@ class BannerNode: SCNNode {
         
         geometry?.firstMaterial?.locksAmbientWithDiffuse = true
         geometry?.firstMaterial?.diffuse.contents = layer
+        geometry?.firstMaterial?.lightingModel = .physicallyBased
     }
     
 }
