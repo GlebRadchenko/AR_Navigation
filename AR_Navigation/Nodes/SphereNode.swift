@@ -21,7 +21,6 @@ class SphereNode: SCNNode, ColorApplicable {
         super.init()
         let sphere = SCNSphere(radius: radius)
         sphere.firstMaterial?.diffuse.contents = color
-        sphere.firstMaterial?.lightingModel = .physicallyBased
         
         geometry = sphere
     }

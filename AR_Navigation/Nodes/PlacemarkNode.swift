@@ -15,6 +15,10 @@ class PlacemarkNode: GlobalNode<Container<CLLocationCoordinate2D>> {
     
     var bannerNode: BannerNode!
     
+    override var geometryHeightOffSet: Float {
+        return 1
+    }
+    
     override init(element: Container<CLLocationCoordinate2D>) {
         super.init(element: element)
         sourceId = element.id

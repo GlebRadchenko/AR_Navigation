@@ -33,7 +33,11 @@ class GlobalNode<Source>: SCNNode {
         fatalError("Not implemented")
     }
     
+    var geometryHeightOffSet: Float {
+        return 0
+    }
+    
     func applyHeight(_ newHeight: Float) {
-        simdTransform.columns.3.y = newHeight
+        simdTransform.columns.3.y = newHeight + geometryHeightOffSet
     }
 }

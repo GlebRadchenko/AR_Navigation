@@ -20,6 +20,17 @@ extension Double {
     var metersToLon: Double { return self / Constants.metersInLon }
 }
 
+extension CLLocationCoordinate2D: Hashable {
+    public var hashValue: Int {
+        //TODO: - Maybe change it?
+        return Int(latitude * 1000) + Int(longitude * 1000)
+    }
+    
+    public static func ==(lhs: CLLocationCoordinate2D, rhs: CLLocationCoordinate2D) -> Bool {
+        return abs(lhs.latitude - rhs.latitude) <= 0.001 && abs(lhs.longitude - rhs.longitude) <= 0.001
+    }
+}
+
 extension CLLocationCoordinate2D {
     var placemark: MKPlacemark {
         return MKPlacemark(coordinate: self)

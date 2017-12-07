@@ -43,7 +43,9 @@ open class ARSceneViewManager: NSObject {
     
     var session: ARSession { return scene.session }
     
+    var displayFloor = true
     var recognizedHeights: [ARAnchor: Float] = [:]
+    var floorNodes: [ARAnchor: FloorNode] = [:]
     
     public init(with scene: ARSCNView) {
         self.scene = scene
@@ -71,14 +73,17 @@ open class ARSceneViewManager: NSObject {
         session.delegate = self
         
         scene.scene = SCNScene()
+        
         scene.automaticallyUpdatesLighting = true
-        scene.autoenablesDefaultLighting = false
+        scene.autoenablesDefaultLighting = true
+        
         scene.debugOptions = [ARSCNDebugOptions.showWorldOrigin,
                               ARSCNDebugOptions.showFeaturePoints]
     }
     
     func clearStoredDate() {
         recognizedHeights.removeAll()
+        floorNodes.removeAll()
     }
 }
 
@@ -131,23 +136,30 @@ extension ARSceneViewManager: ARSceneViewManagerInput {
 //MARK: - ARSCNViewDelegate
 extension ARSceneViewManager: ARSCNViewDelegate {
     public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-        guard let lightEstimate = scene.session.currentFrame?.lightEstimate else { return }
-        scene.scene.lightingEnvironment.intensity = lightEstimate.ambientIntensity / 1000
     }
     
     public func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard let anchor = anchor as? ARPlaneAnchor else { return }
         recognizedHeights[anchor] = node.position.y
+        
+        let floorNode = FloorNode(anchor: anchor)
+        floorNode.applyColor(UIColor.white.withAlphaComponent(0.2))
+        node.addChildNode(floorNode)
+        floorNodes[anchor] = floorNode
     }
     
     public func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
         guard let anchor = anchor as? ARPlaneAnchor else { return }
         recognizedHeights[anchor] = node.position.y
+        
+        guard let floorNode = floorNodes[anchor] else { return }
+        floorNode.updatePostition(anchor)
     }
     
     public func renderer(_ renderer: SCNSceneRenderer, didRemove node: SCNNode, for anchor: ARAnchor) {
         guard let anchor = anchor as? ARPlaneAnchor else { return }
         recognizedHeights[anchor] = nil
+        floorNodes[anchor] = nil
     }
 }
 

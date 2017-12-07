@@ -30,6 +30,8 @@ class NavigationManager: NSObject {
     fileprivate var currentSearch: MKLocalSearch?
     fileprivate var queue = DispatchQueue(label: "navigation-manager-queue", qos: .default, attributes: .concurrent)
     
+    var coordinateRequestCache: [CLLocationCoordinate2D: CLPlacemark] = [:]
+    
     override init() {
         super.init()
         
@@ -71,11 +73,19 @@ extension NavigationManager {
     }
     
     func requestPlaces(for coordinates: CLLocationCoordinate2D, callback: @escaping (_ mark: CLPlacemark?, _ error: Error?) -> Void) {
+        if let cachedValue = coordinateRequestCache[coordinates] {
+            callback(cachedValue, nil); return
+        }
+        
         let geocoder = CLGeocoder()
         let location = CLLocation(latitude: coordinates.latitude, longitude: coordinates.longitude)
         
         queue.async {
             geocoder.reverseGeocodeLocation(location) { (placeMarks, error) in
+                if let placemark = placeMarks?.first {
+                    self.coordinateRequestCache[coordinates] = placemark
+                }
+                
                 callback(placeMarks?.first, error)
             }
         }

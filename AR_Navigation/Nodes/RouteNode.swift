@@ -13,7 +13,11 @@ import MapKit
 class RouteNode: GlobalNode<Container<MKRoute>> {
     
     var stepNodes: [StepNode] = []
-    var lineNodes: [LineNode] = []
+    var lineNodes: [PathNode] = []
+    
+    override var geometryHeightOffSet: Float {
+        return 0.11
+    }
     
     override init(element: Container<MKRoute>) {
         super.init(element: element)
@@ -42,10 +46,9 @@ class RouteNode: GlobalNode<Container<MKRoute>> {
         let stepsCount = stepNodes.count
         guard stepsCount >= 2 else { return }
         
-        let indexPairs: [(firstIndex: Int, secondIndex: Int)] = (0..<stepsCount - 1).map { ($0, $0 + 1) }
-        let stepPairs: [(firstStep: StepNode, secondStep: StepNode)] = indexPairs.map { (stepNodes[$0.firstIndex], stepNodes[$0.secondIndex]) }
+        let stepPairs: [(firstStep: StepNode, secondStep: StepNode)] = (0..<stepsCount - 1).map { (stepNodes[$0], stepNodes[$0 + 1]) }
         
-        let lineNodes = stepPairs.map { LineNode(from: $0.firstStep, to: $0.secondStep, radius: 0.2) }
+        let lineNodes = stepPairs.map { PathNode(from: $0.firstStep, to: $0.secondStep) }
         lineNodes.forEach { addChildNode($0) }
         self.lineNodes = lineNodes
     }

@@ -17,7 +17,7 @@ class StepNode: GlobalNode<MKRouteStep> {
     override init(element: MKRouteStep) {
         super.init(element: element)
         
-        let node = SphereNode(radius: 0.4, color: .randomPrettyColor)
+        let node = SphereNode(radius: 0.5, color: .randomPrettyColor)
         addChildNode(node)
         sphereNode = node
     }

@@ -190,6 +190,7 @@ extension ARViewPresenter {
                                               thresholdDistance: .greatestFiniteMagnitude) }
         
         let estimatedFloorHeight = sceneViewManager.estimatedHeight()
+        print(estimatedFloorHeight)
         nodesToUpdate.forEach { (node) in
             node.applyHeight(estimatedFloorHeight)
             node.applyColor(mapModule.moduleContainer.extractColor(for: node.element))
