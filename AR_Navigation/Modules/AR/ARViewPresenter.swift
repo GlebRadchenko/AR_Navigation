@@ -190,7 +190,6 @@ extension ARViewPresenter {
                                               thresholdDistance: .greatestFiniteMagnitude) }
         
         let estimatedFloorHeight = sceneViewManager.estimatedHeight()
-        print(estimatedFloorHeight)
         nodesToUpdate.forEach { (node) in
             node.applyHeight(estimatedFloorHeight)
             node.applyColor(mapModule.moduleContainer.extractColor(for: node.element))
@@ -340,8 +339,10 @@ extension ARViewPresenter: ARViewInteractorOutput {
         view.displayDebugMessage("Accuracy: ±\(accuracy)(m)")
         
         updatePlacemarkNodesContent(mapModule.moduleContainer.selectedLocations)
+        
         if accuracy <= 1 && accuracy >= 0.0001 {
             updatePlacemarkNodesPosition(mapModule.moduleContainer.selectedLocations)
+            updateRouteNodes(mapModule.moduleContainer.routes)
         }
     }
     

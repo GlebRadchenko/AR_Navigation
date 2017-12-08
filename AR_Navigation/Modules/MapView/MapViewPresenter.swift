@@ -73,16 +73,23 @@ extension MapViewPresenter: MapViewViewOutput {
     }
     
     func handleActionSelection(at index: Int) {
-        state = MapAction.actions(except: state)[index]
-        view.updateViews(for: state, animated: true)
-        view.updateActions(with: MapAction.actions(except: state))
+        let oldState = state
+        let newState = MapAction.actions(except: state)[index]
+        updateState(newState)
         
         if state == .clear {
             view.clearAllPins()
             clearRoutes()
             moduleContainer.clear()
+            updateState(oldState)
             moduleOutput?.handleMapContainerChanges()
         }
+    }
+    
+    internal func updateState(_ newState: MapAction) {
+        state = newState
+        view.updateViews(for: state, animated: true)
+        view.updateActions(with: MapAction.actions(except: state))
     }
     
     func handleGoAction() {
