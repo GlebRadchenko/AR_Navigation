@@ -152,6 +152,17 @@ extension ARViewPresenter: MapViewModuleOutput {
 
 //MARK: - Nodes Managing
 extension ARViewPresenter {
+    
+    func displayNodesIfNeeded() {
+        let nodesToDisplay = interactor.restoreNodes()
+        sceneViewManager.addNodes(nodesToDisplay)
+    }
+    
+    func removeAndCacheNodesIfNeeded() {
+        let nodesToCache = sceneViewManager.removeAllNodes()
+        interactor.cacheNodes(nodesToCache)
+    }
+    
     func updateNodes(for routes: [Container<MKRoute>]) {
         let existingNodes: [RouteNode] = view.sceneView.scene.rootNode.childs()
         var nodesTable: [String: RouteNode] = [:]
@@ -328,7 +339,7 @@ extension ARViewPresenter {
 //MARK: - ARViewInteractorOutput
 extension ARViewPresenter: ARViewInteractorOutput {
     func handleInitialPositioning() {
-        print(#function)
+        
     }
     
     func handlePositionUpdate(locationDiff: Difference<CLLocation>, cameraDiff: Difference<matrix_float4x4>) {
