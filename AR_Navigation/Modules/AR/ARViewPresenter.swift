@@ -152,17 +152,6 @@ extension ARViewPresenter: MapViewModuleOutput {
 
 //MARK: - Nodes Managing
 extension ARViewPresenter {
-    
-    func displayNodesIfNeeded() {
-        let nodesToDisplay = interactor.restoreNodes()
-        sceneViewManager.addNodes(nodesToDisplay)
-    }
-    
-    func removeAndCacheNodesIfNeeded() {
-        let nodesToCache = sceneViewManager.removeAllNodes()
-        interactor.cacheNodes(nodesToCache)
-    }
-    
     func updateNodes(for routes: [Container<MKRoute>]) {
         let existingNodes: [RouteNode] = view.sceneView.scene.rootNode.childs()
         var nodesTable: [String: RouteNode] = [:]
@@ -257,28 +246,17 @@ extension ARViewPresenter {
             
             nodesToUpdate.forEach { (node) in
                 let distance = currentLocation.coordinate.distance(to: node.element.element)
-                let projectedDistance = distance > DeveloperSettings.maxSceneRadius ? DeveloperSettings.maxSceneRadius : distance
+                let sceneDistance = distance > DeveloperSettings.maxSceneRadius ? DeveloperSettings.maxSceneRadius : distance
                 
-                node.applyScale(wSelf.scaleForDistance(projectedDistance))
+                node.applyScale(wSelf.scaleForDistance(sceneDistance))
                 node.applyHeight(wSelf.heightForDistance(distance, floorHeight: estimatedFloorHeight))
             }
-        }) {
-            
-            nodesToUpdate.forEach { (node) in
-                let distance = currentLocation.coordinate.distance(to: node.element.element)
-                
-                if distance < 100 {
-                    node.stopAnimatedMoving()
-                } else {
-                    node.startAnimatedMoving()
-                }
-            }
-        }
+        })
     }
     
     internal func heightForDistance(_ distance: Double, floorHeight: Float) -> Float {
-        if distance > DeveloperSettings.maxSceneRadius {
-            return 100 * Float((DeveloperSettings.maxSceneRadius / distance)) + floorHeight
+        if distance < 10 {
+            return 1 + Float(distance) + floorHeight
         }
         
         return 10 + floorHeight
