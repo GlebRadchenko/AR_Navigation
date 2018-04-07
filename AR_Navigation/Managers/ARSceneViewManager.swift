@@ -179,6 +179,8 @@ extension ARSceneViewManager: ARSessionDelegate {
             state = .limitedInsufficientFeatures
         case .limited(.initializing):
             state = .limitedInitializing
+        case .limited(.relocalizing):
+            state = .relocalizing
         }
     }
     
@@ -222,6 +224,7 @@ public enum ARSceneViewState {
     case limitedExcessiveMotion
     case limitedInsufficientFeatures
     case limitedInitializing
+    case relocalizing
     
     case interrupted
     case interruptionEnded
@@ -250,6 +253,8 @@ public enum ARSceneViewState {
             return "Tracking limited - Point the device at an area with visible surface detail, or improve lighting conditions."
         case .limitedInitializing:
             return "Initializing AR session."
+        case .relocalizing:
+            return "Relocalizing AR session."
         case .interrupted:
             return "Session was interrupted"
         case .interruptionEnded:
@@ -259,4 +264,3 @@ public enum ARSceneViewState {
         }
     }
 }
-

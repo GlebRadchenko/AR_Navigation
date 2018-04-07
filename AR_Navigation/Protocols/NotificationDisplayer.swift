@@ -14,7 +14,7 @@ protocol NotificationDisplayerInput {
 }
 
 protocol NotificationDisplayer: class, NotificationDisplayerInput {
-    weak var notificationView: NotificationView? { get }
+    var notificationView: NotificationView? { get }
     var topNotificationViewConstraint: NSLayoutConstraint? { get set }
     
     var messageQueue: [String] { get set }
@@ -105,4 +105,3 @@ extension NotificationDisplayer where Self: UIViewController {
         }
     }
 }
-
