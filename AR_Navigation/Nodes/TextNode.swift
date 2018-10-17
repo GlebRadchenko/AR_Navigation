@@ -24,8 +24,8 @@ class TextNode: SCNNode {
         textShape.font = UIFont(name: "HelveticaNeue", size: size)
         textShape.firstMaterial?.diffuse.contents = color
         textShape.isWrapped = true
-        textShape.alignmentMode = kCAAlignmentCenter
-        textShape.truncationMode = kCATruncationEnd
+        textShape.alignmentMode = convertFromCATextLayerAlignmentMode(CATextLayerAlignmentMode.center)
+        textShape.truncationMode = convertFromCATextLayerTruncationMode(CATextLayerTruncationMode.end)
         //textShape.containerFrame =
         
         geometry = textShape
@@ -41,3 +41,13 @@ class TextNode: SCNNode {
 }
 
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromCATextLayerAlignmentMode(_ input: CATextLayerAlignmentMode) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromCATextLayerTruncationMode(_ input: CATextLayerTruncationMode) -> String {
+	return input.rawValue
+}

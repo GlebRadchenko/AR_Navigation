@@ -35,16 +35,16 @@ class BottomSlideContainer: UIView {
     }
     
     func embed(viewController: UIViewController, caller: UIViewController?) {
-        embededViewController?.willMove(toParentViewController: nil)
+        embededViewController?.willMove(toParent: nil)
         embededViewController?.view.removeFromSuperview()
-        embededViewController?.removeFromParentViewController()
+        embededViewController?.removeFromParent()
         
         guard let embedingView = viewController.view else { return }
         
-        caller?.addChildViewController(viewController)
+        caller?.addChild(viewController)
         containerView.embed(other: embedingView)
         containerView.layoutIfNeeded()
-        viewController.didMove(toParentViewController: caller)
+        viewController.didMove(toParent: caller)
     }
 }
 

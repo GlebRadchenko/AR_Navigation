@@ -33,7 +33,7 @@ class MapActionCollectionViewCell: UICollectionViewCell, Reusable {
         let font = UIFont(name: "HelveticaNeue", size: 15)
         
         let attributedString = NSAttributedString(string: text,
-                                                  attributes: [NSAttributedStringKey.font: font!])
+                                                  attributes: [NSAttributedString.Key.font: font!])
         
         return attributedString.estimatedSize(height: height).width + 16
     }

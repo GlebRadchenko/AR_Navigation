@@ -65,8 +65,8 @@ class BannerNode: SCNNode {
         textLayer.frame = layer.bounds
         textLayer.fontSize = BannerNode.defaultFontSize
         textLayer.string = text
-        textLayer.alignmentMode = kCAAlignmentCenter
-        textLayer.truncationMode = kCATruncationEnd
+        textLayer.alignmentMode = CATextLayerAlignmentMode.center
+        textLayer.truncationMode = CATextLayerTruncationMode.end
         textLayer.isWrapped = true
         layer.addSublayer(textLayer)
         

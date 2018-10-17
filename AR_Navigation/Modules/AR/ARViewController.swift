@@ -239,7 +239,7 @@ extension ARViewController {
         containerState = open ? .presented : .hidden
         
         if animated {
-            var options: UIViewAnimationOptions = [.beginFromCurrentState]
+            var options: UIView.AnimationOptions = [.beginFromCurrentState]
             open ? options.formUnion(.curveEaseIn) : options.formUnion(.curveEaseOut)
             
             UIView.animate(withDuration: 0.2,

@@ -16,15 +16,15 @@ public enum SCNTransactionTimingFunction {
     var value: String {
         switch self {
         case .linear:
-            return kCAMediaTimingFunctionLinear
+            return convertFromCAMediaTimingFunctionName(CAMediaTimingFunctionName.linear)
         case .easeIn:
-            return kCAMediaTimingFunctionEaseIn
+            return convertFromCAMediaTimingFunctionName(CAMediaTimingFunctionName.easeIn)
         case .easeOut:
-            return kCAMediaTimingFunctionEaseOut
+            return convertFromCAMediaTimingFunctionName(CAMediaTimingFunctionName.easeOut)
         case .easeInOut:
-            return kCAMediaTimingFunctionEaseInEaseOut
+            return convertFromCAMediaTimingFunctionName(CAMediaTimingFunctionName.easeInEaseOut)
         case .default:
-            return kCAMediaTimingFunctionDefault
+            return convertFromCAMediaTimingFunctionName(CAMediaTimingFunctionName.default)
         }
     }
 }
@@ -36,7 +36,7 @@ extension SCNTransaction {
                                _ completion: (() -> Void)? = nil) {
         
         SCNTransaction.begin()
-        SCNTransaction.animationTimingFunction = CAMediaTimingFunction(name: timingFunction.value)
+        SCNTransaction.animationTimingFunction = CAMediaTimingFunction(name: convertToCAMediaTimingFunctionName(timingFunction.value))
         SCNTransaction.animationDuration = duration
         
         animation()
@@ -45,4 +45,14 @@ extension SCNTransaction {
         
         SCNTransaction.commit()
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromCAMediaTimingFunctionName(_ input: CAMediaTimingFunctionName) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToCAMediaTimingFunctionName(_ input: String) -> CAMediaTimingFunctionName {
+	return CAMediaTimingFunctionName(rawValue: input)
 }

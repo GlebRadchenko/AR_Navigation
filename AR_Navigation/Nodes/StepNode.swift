@@ -10,11 +10,11 @@ import Foundation
 import MapKit
 import SceneKit
 
-class StepNode: GlobalNode<MKRouteStep> {
+class StepNode: GlobalNode<MKRoute.Step> {
     
     var sphereNode: SphereNode!
     
-    override init(element: MKRouteStep) {
+    override init(element: MKRoute.Step) {
         super.init(element: element)
         
         let node = SphereNode(radius: 0.5, color: .randomPrettyColor)

@@ -248,7 +248,7 @@ extension MapViewPresenter {
         clearRoutes()
         moduleContainer.routes = Container<MKRoute>.containers(for: newRoutes)
         moduleContainer.routes.forEach { (container) in
-            view.mapView.add(container.element.polyline, level: .aboveRoads)
+            view.mapView.addOverlay(container.element.polyline, level: .aboveRoads)
         }
     }
 }

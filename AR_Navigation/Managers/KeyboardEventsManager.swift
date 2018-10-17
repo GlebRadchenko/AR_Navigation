@@ -24,9 +24,9 @@ class KeyboardEventsManager: NSObject {
     
     public func subscribe() {
         let center = NotificationCenter.default
-        center.addObserver(self, selector: #selector(keyboardWillShow), name: Notification.Name.UIKeyboardWillShow, object: nil)
-        center.addObserver(self, selector: #selector(keyboardWillHide), name: Notification.Name.UIKeyboardWillHide, object: nil)
-        center.addObserver(self, selector: #selector(keyboardWillChangeFrame), name: Notification.Name.UIKeyboardDidChangeFrame, object: nil)
+        center.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        center.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        center.addObserver(self, selector: #selector(keyboardWillChangeFrame), name: UIResponder.keyboardDidChangeFrameNotification, object: nil)
     }
     
     public func unsubscribe() {
@@ -59,19 +59,19 @@ class KeyboardEventsManager: NSObject {
     
     func keyboardBeginFrame(from notification: Notification) -> CGRect? {
         let userInfo = notification.userInfo
-        let value = userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue
+        let value = userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue
         return value?.cgRectValue
     }
     
     func keyboardEndFrame(from notification: Notification) -> CGRect? {
         let userInfo = notification.userInfo
-        let value = userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue
+        let value = userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue
         return value?.cgRectValue
     }
     
     func keyboardAnimationDuration(from notification: Notification) -> TimeInterval? {
         let userInfo = notification.userInfo
-        let value = userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber
+        let value = userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber
         return value?.doubleValue
     }
 }

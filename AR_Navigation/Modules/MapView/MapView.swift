@@ -326,7 +326,7 @@ extension MapViewController: MKMapViewDelegate {
         output?.handleAnnotationTap(for: annotation.locationContainer, isSelected: false)
     }
     
-    public func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, didChange newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
+    public func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, didChange newState: MKAnnotationView.DragState, fromOldState oldState: MKAnnotationView.DragState) {
         guard let annotation = view.annotation as? MapAnnotation else { return }
         switch newState {
         case .ending, .canceling:

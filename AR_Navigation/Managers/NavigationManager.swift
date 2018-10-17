@@ -59,7 +59,7 @@ extension NavigationManager {
                            type: MKDirectionsTransportType,
                            completion: @escaping (_ route: MKRoute?, _ error: Error?) -> Void) {
         
-        let request = MKDirectionsRequest()
+        let request = MKDirections.Request()
         request.source = MKMapItem(placemark: source.placemark)
         request.destination = MKMapItem(placemark: destination.placemark)
         request.transportType = type
@@ -92,7 +92,7 @@ extension NavigationManager {
     }
     
     func requestPlaces(for text: String, from location: CLLocation?, callback: @escaping (_ region: MKCoordinateRegion, _ items: [MKMapItem]) -> Void) {
-        let request = MKLocalSearchRequest()
+        let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = text
         
         if let location = location {

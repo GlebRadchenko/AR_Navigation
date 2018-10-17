@@ -77,8 +77,8 @@ open class ARSceneViewManager: NSObject {
         scene.automaticallyUpdatesLighting = true
         scene.autoenablesDefaultLighting = true
         
-        scene.debugOptions = [ARSCNDebugOptions.showWorldOrigin,
-                              ARSCNDebugOptions.showFeaturePoints]
+        scene.debugOptions = [SCNDebugOptions.showWorldOrigin,
+                              SCNDebugOptions.showFeaturePoints]
     }
     
     func clearStoredDate() {
