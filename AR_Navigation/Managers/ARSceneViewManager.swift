@@ -181,6 +181,8 @@ extension ARSceneViewManager: ARSessionDelegate {
             state = .limitedInitializing
         case .limited(.relocalizing):
             state = .relocalizing
+        @unknown default:
+            state = .normal
         }
     }
     
